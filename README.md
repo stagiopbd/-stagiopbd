@@ -3,3 +3,6 @@
 ## Prof. Dr. Adilson Marques da Cunha
 ## Prof. Dr. Luiz Alberto Vieira Dias
 
+----------- 
+
+Changing the file to solve merge conflicts.
