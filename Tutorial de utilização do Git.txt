@@ -1,3 +1,5 @@
-Tutorial de utilização do Git:
+Tutorial para utilizar do Git.
+
+Video em ingles.
 
 https://www.youtube.com/watch?v=SWYqp7iY_Tc
