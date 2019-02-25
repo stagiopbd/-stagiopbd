@@ -1,1 +1,3 @@
 Arquivo criado para exercicio Listex0
+
+Commit
