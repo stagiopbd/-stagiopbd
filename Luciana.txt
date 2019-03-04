@@ -1,6 +1,6 @@
 
 teste de commit da Luciana
 
-edicao linha 4
+remocao da edicao linha 4
 
-
+edicao linha 6
