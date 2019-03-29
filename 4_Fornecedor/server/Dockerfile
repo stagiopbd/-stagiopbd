@@ -50,6 +50,12 @@ WORKDIR /app
 # the containers working directory (/app).
 # COPY --chown=www-data:www-data . .
 COPY . .
+
+# RUN chown -R $USER:www-data storage
+# RUN chown -R $USER:www-data bootstrap/cache
+
+RUN chmod -R 777 storage
+
 COPY ./config.development.sh /tmp 
 # ENTRYPOINT ["/tmp/config.development.sh"]
 
