@@ -1,0 +1,24 @@
+INSERT INTO `stagiop`.`hospital_situation` (`stt_desc`) VALUES ('Normal');
+COMMIT;
+
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (1, '04163722016895', 'Abbott-Kiehn', '66074 Del Sol Avenue', '+86-920-561-9019');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (2, '95323094585520', 'Denesik-Dickinson', '3985 Northwestern Drive', '+55-107-587-5614');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (3, '85782131512311', 'Hermiston, Gutkowski and Koss', '68 Eggendart Court', '+47-192-766-9840');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (4, '96727237099524', 'Stracke, Watsica and Ziemann', '24342 Westend Terrace', '+64-429-600-8231');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (5, '35606770951852', 'Watsica, Stokes and Hyatt', '92 Mayfield Center', '+62-630-937-0249');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (6, '97053454868223', 'Durgan, Walker and Kilback', '0421 Hoepker Junction', '+33-162-805-5635');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (7, '04844141795086', 'Kunze, Braun and Carroll', '7 Glendale Plaza', '+31-648-106-8167');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (8, '23457263924004', 'Roob-Russel', '5312 Thierer Parkway', '+86-923-534-9194');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (9, '20802470536646', 'Fahey-Dibbert', '96344 Ridgeway Street', '+57-386-677-5656');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (10, '45120178448425', 'Keeling Inc', '61884 7th Street', '+62-378-712-0422');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (11, '66884277236491', 'Zulauf-Heathcote', '12260 Pearson Road', '+66-782-443-5984');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (12, '30063006468300', 'Leuschke Group', '03285 Ridge Oak Lane', '+358-250-656-5829');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (13, '18127560631041', 'Cassin LLC', '964 Old Gate Pass', '+57-705-639-3540');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (14, '42507629319786', 'Kuphal-Swaniawski', '92 Leroy Trail', '+1-924-733-9532');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (15, '92044243239757', 'Erdman and Sons', '4 Southridge Hill', '+62-424-214-0510');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (16, '71856565505212', 'Fahey-Larkin', '73 Commercial Center', '+81-590-924-3490');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (17, '34893670752971', 'Koch-Harber', '51411 Lawn Junction', '+1-626-108-3417');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (18, '48663294942533', 'Bruen, Frami and Jenkins', '786 Sutherland Terrace', '+63-728-484-6291');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (19, '89227827769525', 'Bode, Lubowitz and Hickle', '1 Nova Street', '+7-114-616-4555');
+insert into stagiop.hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone) values (20, '23299583421965', 'Cartwright Group', '03 Hintze Crossing', '+375-881-129-6279');
+COMMIT;
