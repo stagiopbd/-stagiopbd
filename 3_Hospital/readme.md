@@ -26,8 +26,9 @@
 ##### Download da Aplicação e artefatos:
 
 Faça Download/Clone o repositório do git em sua máquina de desenvolvimento
-> git clone <url repositório>
-
+```
+ git clone https://github.com/stagiopbd/ipbl2019.git
+```
 
 #### Passo 2:
 
