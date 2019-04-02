@@ -34,8 +34,9 @@ Faça Download/Clone o repositório do git em sua máquina de desenvolvimento
 #####  Banco de Dados (Mysql):
 
 Crie a base de dados:
-> create database stagiop;
-
+```
+ create database stagiop;
+```
 Após a criação do Banco de Dados disponibilizado o Script que se encontra na pasta (3_Hospital/public/sql/)
 
 
@@ -47,14 +48,16 @@ Para executar a aplicação será necessário realizar os seguintes passos:
 
 Na pasta raiz da aplicação "3_Hospital/"
 execute o comando:
-> npm install 
-
+```
+ npm install 
+```
 para instalar as depencias da aplicação.
 
 
 Em seguida execute o comando: 
-> npm start
-
+```
+ npm start
+```
 para executar a aplicação.
 
 Assim será necessário abrir o navegador e acessar a url:
