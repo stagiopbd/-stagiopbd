@@ -16,7 +16,7 @@
 
 
 
-## Projeto -  Seguimento "Hospital"
+## Projeto -  Segmento "Hospital"
 
 
 ### Tutorial para iniciar a aplicação.
