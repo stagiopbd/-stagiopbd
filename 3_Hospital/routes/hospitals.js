@@ -10,14 +10,20 @@ router.get('/', function(req, res, next) {
 	});
 
 	con.connect(function(err) {
-		if (err) throw err;
+		if (err) {
+			next(err);
+			return;
+		}
 
 		var sql = `	SELECT	*
 					  FROM	stagiop.hospital
 				  ORDER BY	hsp_name`;
 
 		con.query(sql, function (err, result) {
-			if (err) throw err;
+			if (err) {
+				next(err);
+				return;
+			}
 			res.send(result);
 	    });
 	});
@@ -33,7 +39,10 @@ router.get('/:seq', function(req, res, next) {
 	});
 
 	con.connect(function(err) {
-		if (err) throw err;
+		if (err) {
+			next(err);
+			return;
+		}
 
 		var sql = `	SELECT	*
 					  FROM	stagiop.hospital
@@ -41,7 +50,10 @@ router.get('/:seq', function(req, res, next) {
 				  ORDER BY	hsp_name`;
 
 		con.query(sql, function (err, result) {
-			if (err) throw err;
+			if (err) {
+				next(err);
+				return;
+			}
 
 			if (result.length == 0)
 				res.send('Hospital n&atilde;o encontrado!');
