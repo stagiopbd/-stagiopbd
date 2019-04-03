@@ -5,11 +5,12 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework.routers import SimpleRouter
 
-from api.views import PacienteViewSet
+from api.views import PacienteViewSet, QuadroClinicoViewSet
 from api.views import index
 
 router = SimpleRouter(trailing_slash=False)
 router.register(r'paciente', PacienteViewSet)
+router.register(r'quadro-clinico', QuadroClinicoViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -24,8 +25,10 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    url(r'^swagger(?P<format>.json|.yaml)$', schema_view.without_ui(
-        cache_timeout=None), name='schema-json'),
+    url(r'^swagger(?P<format>\.json|\.yaml)$',
+        schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    url(r'^swagger/$', schema_view.with_ui('swagger',
+                                           cache_timeout=0), name='schema-swagger-ui'),
     path('api/', include(router.urls)),
     path('paciente', index, name='index'),
 ]
