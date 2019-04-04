@@ -9,10 +9,11 @@ from .serializers import PacienteSerializer, QuadroClinicoSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from copy import deepcopy
+import numpy as np
 
 
-def index(request):
-    return render(request, 'index.html')
+def index_quadro_clinico(request):
+    return render(request, 'quadro_clinico.index.html')
 
 
 class PacienteViewSet(ModelViewSet):
@@ -34,6 +35,28 @@ class QuadroClinicoViewSet(ModelViewSet):
         data = deepcopy(request.data)
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
+            imc = np.divide(
+                data['peso'], np.power(data['altura'], 2))
+
+            if imc < 16:
+                imc_classe = "Magreza grau III"
+            elif imc < 17:
+                imc_classe = "Magreza grau II"
+            elif imc < 18.5:
+                imc_classe = "Magreza grau II"
+            elif imc < 25:
+                imc_classe = "Saudável"
+            elif imc < 30:
+                imc_classe = "Sobrepeso"
+            elif imc < 35:
+                imc_classe = "Obesidade Grau I"
+            elif imc < 40:
+                imc_classe = "Obesidade Grau II (severa)"
+            else:
+                imc_classe = "Obesidade Grau III (mórbida)"
+
+            serializer.validated_data['imc'] = imc_classe
+
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

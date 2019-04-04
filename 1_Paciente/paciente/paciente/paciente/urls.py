@@ -6,7 +6,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework.routers import SimpleRouter
 
 from api.views import PacienteViewSet, QuadroClinicoViewSet
-from api.views import index
+from api.views import index_quadro_clinico
 
 router = SimpleRouter(trailing_slash=False)
 router.register(r'paciente', PacienteViewSet)
@@ -30,5 +30,5 @@ urlpatterns = [
     url(r'^swagger/$', schema_view.with_ui('swagger',
                                            cache_timeout=0), name='schema-swagger-ui'),
     path('api/', include(router.urls)),
-    path('paciente', index, name='index'),
+    path('quadro-clinico', index_quadro_clinico, name='index_quadro_clinico'),
 ]

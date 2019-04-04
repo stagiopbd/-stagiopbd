@@ -35,7 +35,7 @@ class QuadroClinico(models.Model):
     paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE)
     peso = models.FloatField()
     altura = models.FloatField()
-    imc = models.CharField(max_length=120)
+    imc = models.CharField(max_length=120, blank=True, null=True)
     fuma = models.BooleanField()
     fuma_frequencia = models.CharField(max_length=120, blank=True, null=True)
     bebe = models.BooleanField()
