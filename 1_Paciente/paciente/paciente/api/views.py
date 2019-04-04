@@ -65,10 +65,10 @@ class QuadroClinicoViewSet(ModelViewSet):
         return Response(self.get_serializer_class()(self.queryset.all(), many=True).data, status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):
-        elements = self.queryset.filter(paciente_id=kwargs.get("pk")).all()
+        elements = self.queryset.filter(paciente_id=kwargs.get("pk")).first()
         if elements:
-            return Response(self.get_serializer_class()(elements, many=True).data, status.HTTP_200_OK)
-        return Response({"message": "Not Found"}, status.HTTP_404_NOT_FOUND)
+            return Response(self.get_serializer_class()(elements).data, status.HTTP_200_OK)
+        return Response({"message": "Quadro clínico não encontrado!"}, status.HTTP_404_NOT_FOUND)
 
     def update(self, request, *args, **kwargs):
         element = self.queryset.filter(paciente_id=kwargs.get("pk")).first()
@@ -79,4 +79,4 @@ class QuadroClinicoViewSet(ModelViewSet):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"message": "Not Found"}, status.HTTP_404_NOT_FOUND)
+        return Response({"message": "Quadro clínico não encontrado!"}, status.HTTP_404_NOT_FOUND)
