@@ -330,6 +330,11 @@
 
 <body>
     <div style="padding: 16px">
+        <a href="http://127.0.0.1:8000/stagiop_bd" class="btn btn-outline-primary">Home</a>
+    </div>
+
+
+    <div style="padding: 16px">
 
         <button class="btn btn-info" id="cadastrar-quadro-clinico">Cadastrar Quadro Clínico</button>
         <button class="btn btn-secondary" id="visualizar-quadros-clinico">Visualizar Quadros Clínicos</button>
@@ -445,7 +450,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "http://127.0.0.1:8000/api/quadro-clinico",
+                url: "http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico",
                 success: function (resultado) {
                     tableHtml = ''
                     resultado.forEach(data => {
@@ -485,7 +490,7 @@
         $("#cadastrar").click(() => {
             $.ajax({
                 type: "POST",
-                url: "http://127.0.0.1:8000/api/quadro-clinico",
+                url: "http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico",
                 data: JSON.stringify({
                     "paciente": $("#cpf").val(),
                     "peso": parseFloat($("#peso").val()),
@@ -504,6 +509,7 @@
                     $("#visualizar-paciente").show()
                     $("#div-buscar").hide()
                     mostrarInfoPaciente(resultado)
+                    mostrarSwal('OK', 'success', 'Quadro clínico cadastrado com sucesso!')
                 },
                 error: function (e) {
                     mostrarErro(e)
@@ -559,7 +565,7 @@
             } else {
                 $.ajax({
                     type: "GET",
-                    url: `http://127.0.0.1:8000/api/quadro-clinico/${cpfBusca}`,
+                    url: `http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico/${cpfBusca}`,
                     success: function (data) {
                         if (data.message) {
                             mostrarSwal('Atenção', 'warning', `Quadro clínico não encontrado para o paciente ${cpfBusca}`)

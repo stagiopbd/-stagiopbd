@@ -7,13 +7,13 @@ cd 1_Paciente/paciente/paciente
 if it runs in docker:
     sudo docker-compose up --build -d
     sudo docker exec -ti paciente bash
-    python3 manage.py makemigrations api
+    python3 manage.py makemigrations paciente quadro_clinico alergia
     python3 manage.py migrate
 else:
     # start mysql
     sudo apt install python3-dev python3-pip
     sudo pip3 install -r requirements.txt
-    python3 manage.py makemigrations api
+    python3 manage.py makemigrations paciente quadro_clinico alergia
     python3 manage.py migrate
     
 ```
@@ -25,12 +25,14 @@ OR
 sudo docker-compose up -d
 ```
 
-### Documentation & API
+### API
 ```sh
-http://127.0.0.1:8000/api/paciente
+http://127.0.0.1:8000/stagiop_bd/api/paciente
+http://127.0.0.1:8000/stagiop_bd/api/alergia
+http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico
 ```
 
 ### GUI
 ```sh
-http://127.0.0.1:8000/paciente
+http://127.0.0.1:8000/stagiop_bd
 ```

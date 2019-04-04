@@ -13,40 +13,6 @@ class Paciente(models.Model):
         db_table = "paciente"
 
 
-class Alergia(models.Model):
-    principio_ativo = models.CharField(max_length=120)
-    descricao = models.CharField(max_length=120)
-    grau_risco = models.IntegerField()
-
-    class Meta:
-        db_table = "alergia"
-
-
-class PacienteTemAlergia(models.Model):
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-    alergia = models.ForeignKey(Alergia, on_delete=models.CASCADE)
-    consulta_id = models.IntegerField()
-
-    class Meta:
-        db_table = "paciente_tem_alergia"
-
-
-class QuadroClinico(models.Model):
-    paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE)
-    peso = models.FloatField()
-    altura = models.FloatField()
-    imc = models.CharField(max_length=120, blank=True, null=True)
-    fuma = models.BooleanField()
-    fuma_frequencia = models.CharField(max_length=120, blank=True, null=True)
-    bebe = models.BooleanField()
-    bebe_frequencia = models.CharField(max_length=120, blank=True, null=True)
-    pratica_atividade = models.BooleanField()
-    pratica_frequencia = models.CharField(max_length=120, blank=True, null=True)
-
-    class Meta:
-        db_table = "quadro_clinico"
-
-
 # Table paciente {
 #     pac_cpf varchar[primary key]
 #     pac_nomeCompleto varchar[not null]

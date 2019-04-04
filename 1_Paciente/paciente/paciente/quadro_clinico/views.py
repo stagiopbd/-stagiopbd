@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from .models import Paciente, QuadroClinico
-from .serializers import PacienteSerializer, QuadroClinicoSerializer
+from .serializers import QuadroClinicoSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from copy import deepcopy
@@ -14,14 +14,6 @@ import numpy as np
 
 def index_quadro_clinico(request):
     return render(request, 'quadro_clinico.index.html')
-
-
-class PacienteViewSet(ModelViewSet):
-    queryset = Paciente.objects
-    serializer_class = PacienteSerializer
-
-    def get_object(self):
-        return get_object_or_404(Paciente, cpf=self.kwargs.get("pk"))
 
 
 class QuadroClinicoViewSet(ModelViewSet):
