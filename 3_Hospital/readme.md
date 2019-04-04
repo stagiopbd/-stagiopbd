@@ -38,7 +38,7 @@ Crie a base de dados:
 ```
  create database stagiop;
 ```
-Após a criação do Banco de Dados disponibilizado o Script que se encontra na pasta (3_Hospital/public/sql/)
+Após a criação do Banco de Dados disponibilizado o Script que se encontra na pasta (3_Hospital/public/database/)
 
 
 #### Passo 3:
