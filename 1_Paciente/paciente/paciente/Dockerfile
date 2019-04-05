@@ -1,4 +1,4 @@
-FROM python:3.6.5-jessie
+FROM python:3.6.8-jessie
 RUN mkdir /code
 ADD . /code/
 WORKDIR /code

@@ -325,6 +325,10 @@
                 width: 1.25em
             }
         }
+
+        option {
+            color: dodgerblue
+        }
     </style>
 </head>
 
@@ -357,23 +361,37 @@
                 <label for="altura">Altura</label>
                 <input type="number" class="form-control" id="altura" maxlength="120">
             </div>
-            <input type="checkbox" id="fuma" name="fuma">Fuma?<br>
-            <br>
-            <div class="form-group" id="div-fuma-frequencia">
-                <label for="fuma_frequencia">Frequência de Fumo</label>
-                <input type="text" class="form-control" id="fuma_frequencia" maxlength="120">
-            </div>
-            <input type="checkbox" id="bebe" name="bebe">Bebe?<br>
-            <br>
-            <div class="form-group" id="div-bebe-frequencia">
-                <label for="bebe_frequencia">Frequência da Bebida</label>
-                <input type="text" class="form-control" id="bebe_frequencia" maxlength="120">
-            </div>
-            <input type="checkbox" id="pratica_atividade" name="pratica_atividade">Pratica Atividade Física?<br>
-            <br>
-            <div class="form-group" id="div-atividade-frequencia">
-                <label for="pratica_frequencia">Frequência atividade física?</label>
-                <input type="text" class="form-control" id="pratica_frequencia" maxlength="120">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">Fuma</label>
+                    <select multiple class="form-control" id="select-fuma-frequencia">
+                        <option value="nunca" selected>nunca</option>
+                        <option value="raramente">raramente</option>
+                        <option value="normalmente">normalmente</option>
+                        <option value="frequentemente">frequentemente</option>
+                        <option value="sempre">sempre</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Bebe</label>
+                    <select multiple class="form-control" id="select-bebe-frequencia">
+                        <option value="nunca" selected>nunca</option>
+                        <option value="raramente">raramente</option>
+                        <option value="normalmente">normalmente</option>
+                        <option value="frequentemente">frequentemente</option>
+                        <option value="sempre">sempre</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Pratica Atividade Física</label>
+                    <select multiple class="form-control" id="select-atividade-frequencia">
+                        <option value="nunca" selected>nunca</option>
+                        <option value="raramente">raramente</option>
+                        <option value="normalmente">normalmente</option>
+                        <option value="frequentemente">frequentemente</option>
+                        <option value="sempre">sempre</option>
+                    </select>
+                </div>
             </div>
 
         </form>
@@ -391,11 +409,8 @@
                 <th>Altura</th>
                 <th>IMC</th>
                 <th>Fuma?</th>
-                <th>Fuma Frequência</th>
                 <th>Bebe?</th>
-                <th>Bebe Frequência</th>
                 <th>Pratica Atividade?</th>
-                <th>Pratica Frequência</th>
                 <th>-</th>
             </tr>
         </table>
@@ -420,11 +435,8 @@
                     <th>Altura</th>
                     <th>IMC</th>
                     <th>Fuma?</th>
-                    <th>Fuma Frequência</th>
                     <th>Bebe?</th>
-                    <th>Bebe Frequência</th>
                     <th>Pratica Atividade?</th>
-                    <th>Pratica Frequência</th>
                     <th>-</th>
                 </tr>
             </table>
@@ -438,13 +450,18 @@
                 $(`#${div}`).hide()
             })
         }
+        function setSelect(selects, field) {
+            selects.map((select) => {
+                $(`#${select}`).val(field).change();
+            })
+        }
         $('#form-cadastrar').trigger("reset");
-        hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-paciente', 'div-table-paciente',
-            'div-fuma-frequencia', 'div-bebe-frequencia', 'div-atividade-frequencia', 'atualizar'])
+        hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-paciente', 'div-table-paciente', 'atualizar'])
+        setSelect(['select-fuma-frequencia', 'select-bebe-frequencia', 'select-atividade-frequencia'], "nunca")
 
         $("#cadastrar-quadro-clinico").click(() => {
-            hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente',
-                'div-fuma-frequencia', 'div-bebe-frequencia', 'div-atividade-frequencia'])
+            hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente'])
+            setSelect(['select-fuma-frequencia', 'select-bebe-frequencia', 'select-atividade-frequencia'], "nunca")
             $('#form-cadastrar').trigger("reset");
             $("#cpf").prop("disabled", false);
             $("#cadastrar").show()
@@ -472,11 +489,8 @@
                                 <td>` + data.peso + `</td>
                                 <td>` + data.altura + `</td>
                                 <td>` + data.imc + `</td>
-                                <td>` + (data.fuma ? 'Sim' : 'Não') + `</td>
                                 <td>` + (data.fuma_frequencia ? data.fuma_frequencia : '-') + `</td>
-                                <td>` + (data.bebe ? 'Sim' : 'Não') + `</td>
                                 <td>` + (data.bebe_frequencia ? data.bebe_frequencia : '-') + `</td>
-                                <td>` + (data.pratica_atividade ? 'Sim' : 'Não') + `</td>
                                 <td>` + (data.pratica_frequencia ? data.pratica_frequencia : '-') + `</td>
                                 <td>` + criarBotaoAtualizar(data.paciente, JSON.stringify(data)) + `</td>
                             </tr>`
@@ -500,9 +514,14 @@
             $("#div-table-paciente").hide()
 
         })
-        function setFalse(campoPai, campoFilho) {
-            if (!$(`#${campoPai}`)[0].checked) {
-                $(`#${campoFilho}`).val(false)
+        function setFalse(campoFilho) {
+            option = $(`#${campoFilho}  option:selected`).text().toLocaleLowerCase()
+            status = true
+            if (option === 'nunca') {
+                status = false
+            }
+            return {
+                status, option
             }
         }
         function cadastrarAtualizarPaciente(cpfPaciente) {
@@ -515,9 +534,9 @@
                 message = 'Quadro clínico atualizado com sucesso!'
             }
 
-            setFalse('fuma', 'fuma_frequencia')
-            setFalse('bebe', 'bebe_frequencia')
-            setFalse('pratica_atividade', 'pratica_frequencia')
+            var fuma = setFalse('select-fuma-frequencia');
+            var bebe = setFalse('select-bebe-frequencia');
+            var atividade = setFalse('select-atividade-frequencia');
 
             $.ajax({
                 type: type,
@@ -526,12 +545,12 @@
                     "paciente": $("#cpf").val(),
                     "peso": parseFloat($("#peso").val()),
                     "altura": parseFloat($("#altura").val()),
-                    "fuma": $('#fuma')[0].checked,
-                    "fuma_frequencia": $("#fuma_frequencia").val(),
-                    "bebe": $('#bebe')[0].checked,
-                    "bebe_frequencia": $("#bebe_frequencia").val(),
-                    "pratica_atividade": $('#pratica_atividade')[0].checked,
-                    "pratica_frequencia": $("#pratica_frequencia").val()
+                    "fuma": fuma.status,
+                    "fuma_frequencia": fuma.option,
+                    "bebe": bebe.status,
+                    "bebe_frequencia": bebe.option,
+                    "pratica_atividade": atividade.status,
+                    "pratica_frequencia": atividade.option
                 }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -563,11 +582,8 @@
                 <td>` + data.peso + `</td>
                 <td>` + data.altura + `</td>
                 <td>` + data.imc + `</td>
-                <td>` + (data.fuma ? 'Sim' : 'Não') + `</td>
                 <td>` + (data.fuma_frequencia ? data.fuma_frequencia : '-') + `</td>
-                <td>` + (data.bebe ? 'Sim' : 'Não') + `</td>
                 <td>` + (data.bebe_frequencia ? data.bebe_frequencia : '-') + `</td>
-                <td>` + (data.pratica_atividade ? 'Sim' : 'Não') + `</td>
                 <td>` + (data.pratica_frequencia ? data.pratica_frequencia : '-') + `</td>
                 <td>` + criarBotaoAtualizar(data.paciente, JSON.stringify(data)) + `</td>
             </tr>`
@@ -599,22 +615,16 @@
             $("#peso").val(data.peso)
             $("#altura").val(data.altura)
 
-            $("#fuma").prop("checked", data.fuma);
             if (data.fuma) {
-                $("#fuma_frequencia").val(data.fuma_frequencia)
-                $("#div-fuma-frequencia").show()
+                setSelect(['select-fuma-frequencia'], data.fuma_frequencia)
             }
 
-            $("#bebe").prop("checked", data.bebe);
             if (data.bebe) {
-                $("#bebe_frequencia").val(data.bebe_frequencia)
-                $("#div-bebe-frequencia").show()
+                setSelect(['select-bebe-frequencia'], data.bebe_frequencia)
             }
 
-            $("#pratica_atividade").prop("checked", data.pratica_atividade);
             if (data.pratica_atividade) {
-                $("#pratica_frequencia").val(data.pratica_frequencia)
-                $("#div-atividade-frequencia").show()
+                setSelect(['select-atividade-frequencia'], data.pratica_frequencia)
             }
         }
 
@@ -664,30 +674,6 @@
             }
 
         })
-
-        $('#fuma').change(function () {
-            if ($(this).is(':checked')) {
-                $("#div-fuma-frequencia").show()
-            } else {
-                $("#div-fuma-frequencia").hide()
-            }
-        });
-
-        $('#bebe').change(function () {
-            if ($(this).is(':checked')) {
-                $("#div-bebe-frequencia").show()
-            } else {
-                $("#div-bebe-frequencia").hide()
-            }
-        });
-
-        $('#pratica_atividade').change(function () {
-            if ($(this).is(':checked')) {
-                $("#div-atividade-frequencia").show()
-            } else {
-                $("#div-atividade-frequencia").hide()
-            }
-        });
     </script>
 </body>
 
