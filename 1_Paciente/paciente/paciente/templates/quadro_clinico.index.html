@@ -346,7 +346,7 @@
     <div style="padding: 16px" id="div-cadastrar">
         <form id="form-cadastrar">
             <div class="form-group">
-                <label for="cpf">CPF</label>
+                <label for="cpf">CPF Paciente</label>
                 <input type="text" class="form-control" id="cpf" maxlength="11">
             </div>
             <div class="form-group">
@@ -359,24 +359,26 @@
             </div>
             <input type="checkbox" id="fuma" name="fuma">Fuma?<br>
             <br>
-            <div class="form-group">
+            <div class="form-group" id="div-fuma-frequencia">
                 <label for="fuma_frequencia">Frequência de Fumo</label>
                 <input type="text" class="form-control" id="fuma_frequencia" maxlength="120">
             </div>
             <input type="checkbox" id="bebe" name="bebe">Bebe?<br>
             <br>
-            <div class="form-group">
+            <div class="form-group" id="div-bebe-frequencia">
                 <label for="bebe_frequencia">Frequência da Bebida</label>
                 <input type="text" class="form-control" id="bebe_frequencia" maxlength="120">
             </div>
             <input type="checkbox" id="pratica_atividade" name="pratica_atividade">Pratica Atividade Física?<br>
             <br>
-            <div class="form-group">
+            <div class="form-group" id="div-atividade-frequencia">
                 <label for="pratica_frequencia">Frequência atividade física?</label>
                 <input type="text" class="form-control" id="pratica_frequencia" maxlength="120">
             </div>
+
         </form>
         <button class="btn btn-info" id="cadastrar">Cadastrar</button>
+        <button class="btn btn-info" id="atualizar">Atualizar</button>
     </div>
 
     <!-- VISUALIZAR TODOS -->
@@ -394,6 +396,7 @@
                 <th>Bebe Frequência</th>
                 <th>Pratica Atividade?</th>
                 <th>Pratica Frequência</th>
+                <th>-</th>
             </tr>
         </table>
     </div>
@@ -403,7 +406,7 @@
         <div id="div-buscar">
             <form>
                 <div class="form-group">
-                    <label for="cpf-busca">CPF</label>
+                    <label for="cpf-busca">CPF Paciente</label>
                     <input type="text" class="form-control" id="cpf-busca" maxlength="11">
                 </div>
             </form>
@@ -422,6 +425,7 @@
                     <th>Bebe Frequência</th>
                     <th>Pratica Atividade?</th>
                     <th>Pratica Frequência</th>
+                    <th>-</th>
                 </tr>
             </table>
         </div>
@@ -435,13 +439,22 @@
             })
         }
         $('#form-cadastrar').trigger("reset");
-        hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-paciente', 'div-table-paciente'])
+        hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-paciente', 'div-table-paciente',
+            'div-fuma-frequencia', 'div-bebe-frequencia', 'div-atividade-frequencia', 'atualizar'])
 
         $("#cadastrar-quadro-clinico").click(() => {
-            hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente'])
+            hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente',
+                'div-fuma-frequencia', 'div-bebe-frequencia', 'div-atividade-frequencia'])
             $('#form-cadastrar').trigger("reset");
+            $("#cpf").prop("disabled", false);
+            $("#cadastrar").show()
+            $("#atualizar").hide()
             $("#div-cadastrar").show()
         })
+
+        function criarBotaoAtualizar(cpf, data) {
+            return `<button class="btn btn-info" id="atualizar-${cpf}" onClick='atualizarPaciente(${data})'>Atualizar</button>`
+        }
 
         $("#visualizar-quadros-clinico").click(() => {
             hide_pages(['div-cadastrar', 'visualizar-paciente', 'div-table-paciente'])
@@ -465,6 +478,7 @@
                                 <td>` + (data.bebe_frequencia ? data.bebe_frequencia : '-') + `</td>
                                 <td>` + (data.pratica_atividade ? 'Sim' : 'Não') + `</td>
                                 <td>` + (data.pratica_frequencia ? data.pratica_frequencia : '-') + `</td>
+                                <td>` + criarBotaoAtualizar(data.paciente, JSON.stringify(data)) + `</td>
                             </tr>`
                     })
                     $('#table-todos-quadros > tbody:last-child').append(tableHtml);
@@ -486,11 +500,28 @@
             $("#div-table-paciente").hide()
 
         })
+        function setFalse(campoPai, campoFilho) {
+            if (!$(`#${campoPai}`)[0].checked) {
+                $(`#${campoFilho}`).val(false)
+            }
+        }
+        function cadastrarAtualizarPaciente(cpfPaciente) {
+            url = "http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico"
+            type = 'POST'
+            message = 'Quadro clínico cadastrado com sucesso!'
+            if (cpfPaciente) {
+                url += `/${cpfPaciente}`
+                type = 'PUT'
+                message = 'Quadro clínico atualizado com sucesso!'
+            }
 
-        $("#cadastrar").click(() => {
+            setFalse('fuma', 'fuma_frequencia')
+            setFalse('bebe', 'bebe_frequencia')
+            setFalse('pratica_atividade', 'pratica_frequencia')
+
             $.ajax({
-                type: "POST",
-                url: "http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico",
+                type: type,
+                url: url,
                 data: JSON.stringify({
                     "paciente": $("#cpf").val(),
                     "peso": parseFloat($("#peso").val()),
@@ -509,12 +540,20 @@
                     $("#visualizar-paciente").show()
                     $("#div-buscar").hide()
                     mostrarInfoPaciente(resultado)
-                    mostrarSwal('OK', 'success', 'Quadro clínico cadastrado com sucesso!')
+                    mostrarSwal('OK', 'success', message)
                 },
                 error: function (e) {
                     mostrarErro(e)
                 }
             });
+        }
+
+        $("#cadastrar").click(() => {
+            cadastrarAtualizarPaciente()
+        });
+
+        $("#atualizar").click(() => {
+            cadastrarAtualizarPaciente($("#cpf").val())
         });
 
         function mostrarInfoPaciente(data) {
@@ -530,9 +569,53 @@
                 <td>` + (data.bebe_frequencia ? data.bebe_frequencia : '-') + `</td>
                 <td>` + (data.pratica_atividade ? 'Sim' : 'Não') + `</td>
                 <td>` + (data.pratica_frequencia ? data.pratica_frequencia : '-') + `</td>
+                <td>` + criarBotaoAtualizar(data.paciente, JSON.stringify(data)) + `</td>
             </tr>`
             $('#table-quadro-paciente > tbody:last-child').append(tableHtml);
             $("#div-table-paciente").show()
+        }
+
+        function atualizarPaciente(data) {
+            $("#table-todos-quadros tr:gt(0)").remove();
+            $("#table-quadro-paciente tr:gt(0)").remove();
+            $("#div-table-paciente").hide();
+            $("#visualizar-paciente").hide();
+            $("#visualizar-todos").hide();
+
+            $('#form-cadastrar').trigger("reset");
+            $("#div-fuma-frequencia").hide()
+            $("#div-bebe-frequencia").hide()
+            $("#div-atividade-frequencia").hide()
+
+            $("#cadastrar").hide()
+            $("#atualizar").show()
+            setarForm(data)
+            $("#div-cadastrar").show()
+        }
+
+        function setarForm(data) {
+            $("#cpf").val(data.paciente)
+            $("#cpf").prop("disabled", true);
+            $("#peso").val(data.peso)
+            $("#altura").val(data.altura)
+
+            $("#fuma").prop("checked", data.fuma);
+            if (data.fuma) {
+                $("#fuma_frequencia").val(data.fuma_frequencia)
+                $("#div-fuma-frequencia").show()
+            }
+
+            $("#bebe").prop("checked", data.bebe);
+            if (data.bebe) {
+                $("#bebe_frequencia").val(data.bebe_frequencia)
+                $("#div-bebe-frequencia").show()
+            }
+
+            $("#pratica_atividade").prop("checked", data.pratica_atividade);
+            if (data.pratica_atividade) {
+                $("#pratica_frequencia").val(data.pratica_frequencia)
+                $("#div-atividade-frequencia").show()
+            }
         }
 
         function mostrarSwal(title, type, text) {
@@ -581,6 +664,30 @@
             }
 
         })
+
+        $('#fuma').change(function () {
+            if ($(this).is(':checked')) {
+                $("#div-fuma-frequencia").show()
+            } else {
+                $("#div-fuma-frequencia").hide()
+            }
+        });
+
+        $('#bebe').change(function () {
+            if ($(this).is(':checked')) {
+                $("#div-bebe-frequencia").show()
+            } else {
+                $("#div-bebe-frequencia").hide()
+            }
+        });
+
+        $('#pratica_atividade').change(function () {
+            if ($(this).is(':checked')) {
+                $("#div-atividade-frequencia").show()
+            } else {
+                $("#div-atividade-frequencia").hide()
+            }
+        });
     </script>
 </body>
 

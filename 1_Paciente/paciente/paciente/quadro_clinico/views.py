@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from .models import Paciente, QuadroClinico
 from .serializers import QuadroClinicoSerializer
+from .utils import calc_imc
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from copy import deepcopy
@@ -27,31 +28,14 @@ class QuadroClinicoViewSet(ModelViewSet):
         data = deepcopy(request.data)
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
-            imc = np.divide(
-                data['peso'], np.power(data['altura'], 2))
-
-            if imc < 16:
-                imc_classe = "Magreza grau III"
-            elif imc < 17:
-                imc_classe = "Magreza grau II"
-            elif imc < 18.5:
-                imc_classe = "Magreza grau II"
-            elif imc < 25:
-                imc_classe = "Saudável"
-            elif imc < 30:
-                imc_classe = "Sobrepeso"
-            elif imc < 35:
-                imc_classe = "Obesidade Grau I"
-            elif imc < 40:
-                imc_classe = "Obesidade Grau II (severa)"
-            else:
-                imc_classe = "Obesidade Grau III (mórbida)"
-
-            serializer.validated_data['imc'] = imc_classe
-
+            serializer.validated_data['imc'] = calc_imc(
+                data['peso'], data['altura'])
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            'errors': serializer.errors,
+            'message': 'Preencha todos os campos corretamente!'
+        }, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request):
         return Response(self.get_serializer_class()(self.queryset.all(), many=True).data, status.HTTP_200_OK)
@@ -68,7 +52,14 @@ class QuadroClinicoViewSet(ModelViewSet):
             serializer = self.serializer_class(
                 element, data=request.data, partial=True)
             if serializer.is_valid():
+                peso = serializer.validated_data.get('peso', element.peso)
+                altura = serializer.validated_data.get(
+                    'altura', element.altura)
+                serializer.validated_data['imc'] = calc_imc(peso, altura)
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                'errors': serializer.errors,
+                'message': 'Preencha todos os campos corretamente!'
+            }, status=status.HTTP_400_BAD_REQUEST)
         return Response({"message": "Quadro clínico não encontrado!"}, status.HTTP_404_NOT_FOUND)
