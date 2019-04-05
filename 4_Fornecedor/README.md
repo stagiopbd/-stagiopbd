@@ -9,7 +9,7 @@ cd 4_Fornecedor
 ./start_dev.sh
 
 # after all the containers being up, connect to the php container and run the script
-docker exec -it 4fornecedor_docker-laravel_1 /bin/bash
+docker exec -it 4_fornecedor_docker-laravel_1 /bin/bash
 
 # already in the container terminal
 . /tmp/config.development.sh
