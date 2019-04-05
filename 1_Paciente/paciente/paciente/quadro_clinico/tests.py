@@ -71,7 +71,7 @@ class QuadroClinicoTest(TestCase):
         response = self.client.put(
             '/stagiop_bd/api/quadro_clinico/222222222', {
                 "fuma": True,
-                "fuma_frequencia": "todo_dia"
+                "fuma_frequencia": "sempre"
             }, format='json')
         self.assertEqual(response.status_code, 201)
 
@@ -85,4 +85,4 @@ class QuadroClinicoTest(TestCase):
 
     def testeImc(self):
         imc = calc_imc(78, 1.65)
-        self.assertEqual(imc, 'Sobrepeso')
+        self.assertEqual(imc, 'Levemente acima do peso')

@@ -36,3 +36,10 @@ http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico
 ```sh
 http://127.0.0.1:8000/stagiop_bd
 ```
+
+### TESTES
+```sh
+python3 manage.py test paciente
+python3 manage.py test alergia
+python3 manage.py test quadro_clinico
+```
