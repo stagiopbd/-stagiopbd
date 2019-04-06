@@ -50,7 +50,7 @@ Para executar a aplicação será necessário realizar os seguintes passos:
 Na pasta raiz da aplicação "3_Hospital/"
 execute o comando:
 ```
- npm install 
+ npm install --save
 ```
 para instalar as depencias da aplicação.
 

@@ -1,17 +1,29 @@
+//bibliotecas principais
+const express = require('express');
+const app = express(); //cria e configura a aplicacao
+const handlebars = require("express-handlebars")
+const bodyParser = require('body-parser')
+
+//Outras bibliotecas
 var createError = require('http-errors');
-var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var hospitalsRouter = require('./routes/hospitals');
+//configuracoes gerais
+  // view engine setup
+  app.engine("handlebars", handlebars({defaultLayout: "main"}))
+  app.set('view engine', 'handlebars');
 
-var app = express();
+  // body Parser
+  app.use(bodyParser.urlencoded({extended: false})) //para codificar as urls
+  app.use(bodyParser.json()) //todo conteudo deve convertido para json
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+
+//configuracao de Rotas
+  app.use('/', require('./routes/index-route')(app));
+  app.use('/hospital', require('./routes/hospital-route')(app));
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -19,8 +31,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/hospitals', hospitalsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
