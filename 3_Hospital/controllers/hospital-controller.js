@@ -1,10 +1,16 @@
 'use strict';
-
+var hospital = require('../models/hospital-model')
 
 exports.post = (req, res, next) => {
-    console.log(req.body)
-    //console.log(res)
-    res.send('seja bem vindo. ' + req.body.inputNome)
+    var me = req.body
+    hospital.create({ 
+        nome:      me.inputNome, 
+        cnpj:      me.inputCnpj,
+        endereco:  me.inputAddress,
+        telefone:  me.inputAddress
+    })
+    //console.log(req.body)
+    res.send('seja bem vindo. ' + req.body.inputPhone) 
 }; 
 
 exports.get = (req, res, next) => {
