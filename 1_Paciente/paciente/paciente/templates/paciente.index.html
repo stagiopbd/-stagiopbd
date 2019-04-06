@@ -325,6 +325,10 @@
                 width: 1.25em
             }
         }
+
+        option {
+            color: dodgerblue
+        }
     </style>
 </head>
 
@@ -333,10 +337,349 @@
         <a href="http://127.0.0.1:8000/stagiop_bd" class="btn btn-outline-primary">Home</a>
     </div>
 
+
     <div style="padding: 16px">
-        <button class="btn btn-info">Cadastrar Paciente</button>
+
+        <button class="btn btn-info" id="button-cadastrar-paciente">Cadastrar Paciente</button>
+        <button class="btn btn-secondary" id="button-visualizar-pacientes">Visualizar Pacientes</button>
+        <button class="btn btn-primary" id="button-visualizar-paciente">Visualizar Paciente</button>
     </div>
 
+    <!-- CADASTRAR -->
+    <div style="padding: 16px" id="div-cadastrar">
+        <form id="form-cadastrar">
+            <div class="form-group">
+                <label for="cpf">CPF Paciente</label>
+                <input type="text" class="form-control" id="cpf" maxlength="11">
+            </div>
+            <div class="form-group">
+                <label for="nome-completo">Nome Completo</label>
+                <input type="text" class="form-control" id="nome-completo" maxlength="120">
+            </div>
+            <div class="form-group">
+                <label for="data-nascimento">Data Nascimento</label>
+                <input type="date" class="form-control" id="data-nascimento" maxlength="120">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">Sexo</label>
+                    <select multiple class="form-control" id="select-sexo">
+                        <option value="M" selected>M</option>
+                        <option value="F">F</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Tipo Sanguíneo</label>
+                    <select multiple class="form-control" id="select-tipo-sanguineo">
+                        <option value='A+' selected>A+</option>
+                        <option value='A-'>A-</option>
+                        <option value='B+'>B+</option>
+                        <option value='B-'>B-</option>
+                        <option value='AB+'>AB+</option>
+                        <option value='AB-'>AB-</option>
+                        <option value='O+'>O+</option>
+                        <option value='O-'>O-</option>
+                    </select>
+                </div>
+            </div>
+
+        </form>
+        <button class="btn btn-info" id="cadastrar">Cadastrar</button>
+        <button class="btn btn-info" id="atualizar">Atualizar</button>
+    </div>
+
+    <!-- VISUALIZAR TODOS -->
+    <div style="padding: 16px" id="visualizar-todos">
+        <h4 style="text-align: center">Pacientes</h4>
+        <table id="table-pacientes">
+            <tr>
+                <th>CPF</th>
+                <th>Nome Completo</th>
+                <th>Data Nascimento</th>
+                <th>Sexo</th>
+                <th>Tipo Sanguíneo</th>
+                <th>Inativo</th>
+                <th>-</th>
+                <th>-</th>
+            </tr>
+        </table>
+    </div>
+
+    <!-- VISUALIZAR PACIENTE -->
+    <div style="padding: 16px" id="visualizar-paciente">
+        <div id="div-buscar">
+            <form>
+                <div class="form-group">
+                    <label for="cpf-busca">CPF Paciente</label>
+                    <input type="text" class="form-control" id="cpf-busca" maxlength="11">
+                </div>
+            </form>
+            <button class="btn btn-info" id="buscar">Buscar</button>
+        </div>
+        <div style="padding: 16px" id="div-table-paciente">
+            <table id="table-paciente">
+                <tr>
+                    <th>CPF</th>
+                    <th>Nome Completo</th>
+                    <th>Data Nascimento</th>
+                    <th>Sexo</th>
+                    <th>Tipo Sanguíneo</th>
+                    <th>Inativo</th>
+                    <th>-</th>
+                    <th>-</th>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        function hide_pages(divs) {
+            divs.map((div) => {
+                $(`#${div}`).hide()
+            })
+        }
+        function setSelect(selects, field) {
+            selects.map((select) => {
+                $(`#${select}`).val(field).change();
+            })
+        }
+        $('#form-cadastrar').trigger("reset");
+        hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-paciente', 'div-table-paciente', 'atualizar'])
+        setSelect(['select-sexo'], "M")
+        setSelect(['select-tipo-sanguineo'], "A+")
+
+        $("#button-cadastrar-paciente").click(() => {
+            hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente'])
+            setSelect(['select-sexo'], "M")
+            setSelect(['select-tipo-sanguineo'], "A+")
+            $('#form-cadastrar').trigger("reset");
+            $("#cpf").prop("disabled", false);
+            $("#cadastrar").show()
+            $("#atualizar").hide()
+            $("#inativar").hide()
+            $("#div-cadastrar").show()
+        })
+
+        function criarBotaoAtualizar(cpf, data, id) {
+            nome = id.charAt(0).toUpperCase() + id.slice(1)
+            return `<button class="btn btn-info" id="${id}-${cpf}" onClick='${id}Paciente(${data})'>${nome}</button>`
+        }
+
+        function getPacientes() {
+            hide_pages(['div-cadastrar', 'visualizar-paciente', 'div-table-paciente'])
+            $("#table-pacientes tr:gt(0)").remove();
+            $("#table-paciente tr:gt(0)").remove();
+
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/stagiop_bd/api/paciente",
+                success: function (resultado) {
+                    tableHtml = ''
+                    resultado.forEach(data => {
+                        inativar = data.inativo ? 'ativar' : 'inativar'
+                        tableHtml += `<tr>
+                                <td>` + data.cpf + `</td>
+                                <td>` + data.nome_completo + `</td>
+                                <td>` + data.data_nascimento + `</td>
+                                <td>` + data.sexo + `</td>
+                                <td>` + data.tipo_sanguineo + `</td>
+                                <td>` + (data.inativo ? 'Sim' : 'Não') + `</td>
+                                <td>` + criarBotaoAtualizar(data.cpf, JSON.stringify(data), 'atualizar') + `</td>
+                                <td>` + criarBotaoAtualizar(data.cpf, JSON.stringify(data), inativar) + `</td>
+                            </tr>`
+                    })
+                    $('#table-pacientes > tbody:last-child').append(tableHtml);
+                    $("#visualizar-todos").show()
+                },
+                error: function (e) {
+                    mostrarErro(e)
+                }
+            });
+
+        }
+
+        $("#button-visualizar-pacientes").click(() => {
+            getPacientes()
+        })
+
+        $("#button-visualizar-paciente").click(() => {
+            hide_pages(['div-cadastrar', 'visualizar-todos'])
+            $("#table-pacientes tr:gt(0)").remove();
+            $("#table-paciente tr:gt(0)").remove();
+            $("#visualizar-paciente").show()
+            $("#div-buscar").show()
+            $("#div-table-paciente").hide()
+
+        })
+
+        function formatarData(data) {
+            data = data.split('-')
+            return new Date(data[0], data[1] - 1, data[2]).toLocaleDateString('pt-BR')
+        }
+
+        function cadastrarAtualizarPaciente(cpfPaciente) {
+            url = "http://127.0.0.1:8000/stagiop_bd/api/paciente"
+            type = 'POST'
+            message = 'Paciente cadastrado com sucesso!'
+            if (cpfPaciente) {
+                url += `/${cpfPaciente}`
+                type = 'PUT'
+                message = 'Paciente atualizado com sucesso!'
+            }
+
+            $.ajax({
+                type: type,
+                url: url,
+                data: JSON.stringify({
+                    "cpf": $("#cpf").val(),
+                    "nome_completo": $("#nome-completo").val(),
+                    "data_nascimento": formatarData($("#data-nascimento").val()),
+                    "sexo": $(`#select-sexo  option:selected`).text().toLocaleUpperCase(),
+                    "tipo_sanguineo": $(`#select-tipo-sanguineo  option:selected`).text().toLocaleUpperCase()
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (resultado) {
+                    $("#div-cadastrar").hide()
+                    $("#visualizar-paciente").show()
+                    $("#div-buscar").hide()
+                    mostrarInfoPaciente(resultado)
+                    mostrarSwal('OK', 'success', message)
+                },
+                error: function (e) {
+                    mostrarErro(e)
+                }
+            });
+        }
+
+        $("#cadastrar").click(() => {
+            cadastrarAtualizarPaciente()
+        });
+
+        $("#atualizar").click(() => {
+            cadastrarAtualizarPaciente($("#cpf").val())
+        });
+
+        function mostrarInfoPaciente(data) {
+            $("#table-paciente tr:gt(0)").remove();
+            inativar = data.inativo ? 'ativar' : 'inativar'
+            tableHtml = `<tr>
+                    <td>` + data.cpf + `</td>
+                    <td>` + data.nome_completo + `</td>
+                    <td>` + data.data_nascimento + `</td>
+                    <td>` + data.sexo + `</td>
+                    <td>` + data.tipo_sanguineo + `</td>
+                    <td>` + (data.inativo ? 'Sim' : 'Não') + `</td>
+                    <td>` + criarBotaoAtualizar(data.cpf, JSON.stringify(data), 'atualizar') + `</td>
+                    <td>` + criarBotaoAtualizar(data.cpf, JSON.stringify(data), inativar) + `</td>
+            </tr>`
+            $('#table-paciente > tbody:last-child').append(tableHtml);
+            $("#div-table-paciente").show()
+        }
+
+        function atualizarPaciente(data) {
+            $("#table-pacientes tr:gt(0)").remove();
+            $("#table-paciente tr:gt(0)").remove();
+            $("#div-table-paciente").hide();
+            $("#visualizar-todos").hide()
+            $("#visualizar-paciente").hide();
+            $("#visualizar-pacientes").hide();
+
+            $('#form-cadastrar').trigger("reset");
+
+            $("#cadastrar").hide()
+            $("#atualizar").show()
+            setarForm(data)
+            $("#div-cadastrar").show()
+        }
+
+        function ativarInativarPaciente(data, ativar) {
+            $.ajax({
+                type: 'PUT',
+                url: `http://127.0.0.1:8000/stagiop_bd/api/paciente/${data.cpf}`,
+                data: JSON.stringify({
+                    "inativo": ativar
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (resultado) {
+                    getPacientes()
+                    message = `Paciente ${(ativar ? 'inativado' : 'ativado')} com sucesso!`
+                    mostrarSwal('OK', 'success', message)
+                },
+                error: function (e) {
+                    mostrarErro(e)
+                }
+            });
+        }
+
+        function ativarPaciente(data) {
+            ativarInativarPaciente(data, null)
+        }
+
+        function inativarPaciente(data) {
+            ativarInativarPaciente(data, true)
+        }
+
+        function setarForm(data) {
+            $("#cpf").val(data.cpf)
+            $("#cpf").prop("disabled", true);
+            $("#nome-completo").val(data.nome_completo)
+            $("#data-nascimento").val(data.data_nascimento)
+
+            setSelect(['select-sexo'], data.sexo)
+
+            setSelect(['select-tipo-sanguineo'], data.tipo_sanguineo)
+        }
+
+        function mostrarSwal(title, type, text) {
+            swal({
+                title: title,
+                type: type,
+                text: text,
+                showCloseButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'OK'
+            })
+        }
+
+        function mostrarErro(e) {
+            var text = '';
+            if (e.responseJSON.message === undefined) {
+                text = JSON.stringify(e.responseJSON);
+            } else {
+                text = e.responseJSON.message;
+            }
+            mostrarSwal('Atenção', 'error', text)
+        }
+
+        $("#buscar").click(() => {
+            $("#table-paciente tr:gt(0)").remove();
+
+            const cpfBusca = $("#cpf-busca").val();
+            if (!cpfBusca) {
+                mostrarSwal('Atenção', 'warning', "Favor informar o CPF do paciente!")
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: `http://127.0.0.1:8000/stagiop_bd/api/paciente/${cpfBusca}`,
+                    success: function (data) {
+                        if (data.message) {
+                            mostrarSwal('Atenção', 'warning', `Paciente  ${cpfBusca} não encontrado`)
+                        } else {
+                            mostrarInfoPaciente(data)
+                        }
+                    },
+                    error: function (e) {
+                        $("#table-paciente tr:gt(0)").remove();
+                        mostrarErro(e)
+                    }
+                });
+            }
+
+        })
+    </script>
 </body>
 
 </html>
