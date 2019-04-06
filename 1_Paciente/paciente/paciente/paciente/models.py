@@ -22,6 +22,7 @@ class Paciente(models.Model):
     data_nascimento = models.DateField()
     sexo = models.CharField(max_length=1, choices=SEXO)
     tipo_sanguineo = models.CharField(max_length=120, choices=SANGUE)
+    inativo = models.NullBooleanField(default=False)
 
     class Meta:
         db_table = "paciente"
