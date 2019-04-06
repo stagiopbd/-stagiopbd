@@ -23,6 +23,11 @@ exports.get = (req, res, next) => {
     //res.render('hospital', { title: 'Cadastro de Hospital' })
 };
 
+exports.getOne =  (req,res,next) =>{
+    hospital.findByPk(req.id).then(function(hspOne){
+        res.reder('hospital-list', {title: 'Lista de Hospitais', hsp : hspOne})
+    })
+}
 exports.cadastro = (req, res, next) => {
     res.render('hospital-cadastro', { title: 'Cadastro de Hospital' })
 };
