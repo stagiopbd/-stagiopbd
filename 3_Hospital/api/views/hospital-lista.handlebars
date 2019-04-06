@@ -1,0 +1,34 @@
+
+
+<link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<br>
+<table id="listaHospital" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>CNPJ</th>
+            <th>Endereco</th>
+            <th>Telefone</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+{{#each hsp}}
+    <tr>
+        <td>{{hsp_id}}</td>
+        <td>{{nome}}</td>
+        <td>{{cnpj}}</td>
+        <td>{{endereco}}</td>
+        <td>{{telefone}}</td>
+    </tr>
+{{/each}}
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function() {
+        $('#listaHospital').DataTable();
+    } );
+</script>
