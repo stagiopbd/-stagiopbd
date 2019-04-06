@@ -24,6 +24,7 @@ class QuadroClinicoViewSet(ModelViewSet):
     def get_object(self):
         return get_object_or_404(QuadroClinico, paciente_id=self.kwargs.get("pk"))
 
+    # POST
     def create(self, request, *args, **kwargs):
         data = deepcopy(request.data)
         serializer = self.serializer_class(data=data)
@@ -37,15 +38,18 @@ class QuadroClinicoViewSet(ModelViewSet):
             'message': 'Preencha todos os campos corretamente!'
         }, status=status.HTTP_400_BAD_REQUEST)
 
+    # GET ALL
     def list(self, request):
         return Response(self.get_serializer_class()(self.queryset.all(), many=True).data, status.HTTP_200_OK)
 
+    # GET POR ID
     def retrieve(self, request, *args, **kwargs):
         elements = self.queryset.filter(paciente_id=kwargs.get("pk")).first()
         if elements:
             return Response(self.get_serializer_class()(elements).data, status.HTTP_200_OK)
         return Response({"message": "Quadro clínico não encontrado!"}, status.HTTP_404_NOT_FOUND)
 
+    # PUT
     def update(self, request, *args, **kwargs):
         element = self.queryset.filter(paciente_id=kwargs.get("pk")).first()
         if element:

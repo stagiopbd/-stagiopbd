@@ -2,12 +2,26 @@ from django.db import models
 
 
 class Paciente(models.Model):
+    SEXO = (
+        ("M", "M"),
+        ("F", "F")
+    )
+    SANGUE = (
+        ('A+', 'A+'),
+        ('A-', 'A-'),
+        ('B+', 'B+'),
+        ('B-', 'B-'),
+        ('AB+', 'AB+'),
+        ('AB-', 'AB-'),
+        ('O+', 'O+'),
+        ('O-', 'O-')
+    )
     cpf = models.CharField(
         primary_key=True, max_length=11)
     nome_completo = models.CharField(max_length=120)
     data_nascimento = models.DateField()
-    sexo = models.CharField(max_length=1)
-    tipo_sanguineo = models.CharField(max_length=120)
+    sexo = models.CharField(max_length=1, choices=SEXO)
+    tipo_sanguineo = models.CharField(max_length=120, choices=SANGUE)
 
     class Meta:
         db_table = "paciente"
