@@ -70,4 +70,67 @@ ou
 
 
 
+#### Atualizando aplicação no "Heroku"
+
+#####  Passo 1:
+
+Instale o heroku cli em sua máquina:
+
+[doc Heroku: ](https://devcenter.heroku.com/articles/heroku-cli)
+
+ - Instalação linux: 
+
+```
+$ sudo snap install --classic heroku
+```
+ - Instalação MacOs: 
+```
+$ brew tap heroku/brew && brew install heroku
+```
+
+#### Passo 2 
+
+Com seu repositório atualizado navegue até a pasta da api usando seu terminal: cd  /ipbl2019/3_Hospital/api
+ &
+
+Execute o comando de login no Heroku:
+```
+$ heroku login 
+```
+
+#### Passo 3
+
+Agora precisamos somente atualizar o repositório no heroku para que a aplicação seja atualiza.
+
+Execute os seguintes comandos:
+
+ - Verifique os arquivos que foram atualizados:
+```
+$ git status
+```
+
+ - Use . no final do comando para adicionar "Todos"  ou especcifique o nome do arquivo
+```
+$ git add .
+```
+ou
+
+```
+$ git add <file>
+```
+
+ - Salve as alterações. (Não esqueça de comentar a respeito da atualização)
+```
+$ git commit -am "Seu comentário"
+```
+
+ - Por fim, atualize o repositório para que o Deploy seja executado.
+```
+$ git push heroku master
+```
+
+
+
+
+
 

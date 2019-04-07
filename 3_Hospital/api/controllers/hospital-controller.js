@@ -1,33 +1,54 @@
 'use strict';
 var hospital = require('../models/hospital-model')
 //http://docs.sequelizejs.com/manual/models-usage.html
-
+ 
 exports.post = (req, res, next) => {
     var me = req.body
-    hospital.create({ 
-        nome:      me.inputNome, 
-        cnpj:      me.inputCnpj,
-        endereco:  me.inputAddress,
-        telefone:  me.inputAddress
+    hospital.create({
+        nome: me.inputNome,
+        cnpj: me.inputCnpj,
+        endereco: me.inputAddress,
+        telefone: me.inputPhone
     })
     //console.log(req.body)
     //res.send('seja bem vindo. ' + req.body.inputPhone) 
     res.redirect('/Hospital')
-}; 
+};
 
 exports.get = (req, res, next) => {
-    hospital.findAll({order : [['Nome', 'ASC']]}).then(function(hsp){
+    hospital.findAll({ order: [['Nome', 'ASC']] }).then(function (hsp) {
         //console.log(hsp)
         res.render('hospital-lista', { title: 'Lista de Hospitais', hsp: hsp })
     })
     //res.render('hospital', { title: 'Cadastro de Hospital' })
 };
 
-exports.getOne =  (req,res,next) =>{
-    hospital.findByPk(req.id).then(function(hspOne){
-        res.reder('hospital-list', {title: 'Lista de Hospitais', hsp : hspOne})
-    })
-}
 exports.cadastro = (req, res, next) => {
     res.render('hospital-cadastro', { title: 'Cadastro de Hospital' })
 };
+
+
+
+exports.update =  (req, res, next) => {
+    var me = req.body;
+    hospital.update(
+        {
+            nome: me.inputNome,
+            cnpj: me.inputCnpj,
+            endereco: me.inputAddress,
+            telefone: me.inputPhone
+        },
+        {returning: true, where: {HSP_ID: req.params.id} }
+      )
+      .then(function() {    
+        res.redirect('/Hospital');
+      })
+}
+           
+exports.delete = (req, res, next) => {
+    hospital.destroy({ where: { HSP_ID: req.params.id } }
+        , { truncate: true }).then(() => {
+            res.redirect('/Hospital');
+            
+        })
+}
