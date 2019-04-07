@@ -47,6 +47,8 @@ COPY --chown=www-data:www-data . /var/www/html
 # Change current user to www
 USER www-data
 
+ENTRYPOINT ["./postconfig.sh"]
+
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
