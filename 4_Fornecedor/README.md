@@ -15,6 +15,15 @@ docker exec -it 4fornecedor_docker-laravel_1 /bin/bash
 . /tmp/config.development.sh
 ```
 
+After working with the containers, you can bring them down using the following command:
+```shellscript
+# shutdown containers
+docker-compose down
+
+# shutdown containers and exclude mounted volumes (prefered)
+docker-compose down -v
+```
+
 
 ## Consuming the APIs
 ### Using Postman
