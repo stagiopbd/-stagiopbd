@@ -2,27 +2,27 @@ version: '3'
 
 services:
 
-  # paciente:
-  #   build: ./
-  #   container_name: paciente
-  #   restart: unless-stopped
-  #   environment:
-  #     - DB_HOST=db-paciente
-  #     - DB_PORT=3306
-  #     - DB_USER=paciente
-  #     - DB_NAME=paciente
-  #     - DB_PASSWORD=paciente#123
-  #   ports:
-  #     - "8000:8000"
-  #   links:
-  #     - db-paciente
-  #     # - mongo-paciente
-  #   depends_on:
-  #     - db-paciente
-  #     # - mongo-paciente
-  #   working_dir: /code
-  #   networks:
-  #     - paciente_net
+  paciente:
+    build: ./
+    container_name: paciente
+    restart: unless-stopped
+    environment:
+      - DB_HOST=db-paciente
+      - DB_PORT=3306
+      - DB_USER=paciente
+      - DB_NAME=paciente
+      - DB_PASSWORD=paciente#123
+    ports:
+      - "8000:8000"
+    links:
+      - db-paciente
+      # - mongo-paciente
+    depends_on:
+      - db-paciente
+      # - mongo-paciente
+    working_dir: /code
+    networks:
+      - paciente_net
             
   db-paciente:
     image: mariadb
