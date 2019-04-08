@@ -1,75 +1,54 @@
-FROM php:7.2-fpm
+# Set master image
+FROM php:7.2-fpm-alpine
 
-# Install some packages in to our container.
-RUN apt-get -yqq update \
-    && apt-get install -y --no-install-recommends \
-        build-essential \
-        apt-utils \
-        libzip-dev \
-        libpng-dev \
-        libfreetype6-dev \
-        libjpeg-dev \
-        libjpeg62-turbo-dev \
-        libmcrypt-dev \
-        libpng-dev \
-        autoconf \
-        g++ \
-        make \
-        openssl \
-        libssl-dev \
-        libcurl4-openssl-dev \
-        pkg-config \
-        libsasl2-dev \
-        libpcre3-dev \
-        curl \
-        && apt-get clean \
-        && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-        ;
+# Copy composer.lock and composer.json
+COPY composer.lock composer.json /var/www/html/
 
-# RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer -O - -q | php -- --quiet
-# RUN mv composer.phar /usr/local/bin/composer
+# Set working directory
+WORKDIR /var/www/html
 
+# Install Additional dependencies
+RUN apk update && apk add --no-cache \
+    build-base shadow vim curl \
+    php7 \
+    php7-fpm \
+    php7-common \
+    php7-pdo \
+    php7-pdo_mysql \
+    php7-mysqli \
+    php7-mcrypt \
+    php7-mbstring \
+    php7-xml \
+    php7-openssl \
+    php7-json \
+    php7-phar \
+    php7-zip \
+    php7-gd \
+    php7-dom \
+    php7-session \
+    php7-zlib
+
+# Add and Enable PHP-PDO Extenstions
+RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-enable pdo_mysql
+
+# Install PHP Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install some php extensions.
-RUN pecl install mcrypt-1.0.1 \
-    && docker-php-ext-configure gd \
-      --with-freetype-dir=/usr/include/ \
-      --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install \
-    mysqli \
-    pdo_mysql \
-    gd \
-    && docker-php-ext-enable mcrypt \
-    ;
+# Remove Cache
+RUN rm -rf /var/cache/apk/*
 
-# Set the default directory of the container.
-WORKDIR /app
+# Add UID '1000' to www-data
+RUN usermod -u 1000 www-data
 
-# Copy all the files from the current directory into
-# the containers working directory (/app).
-# COPY --chown=www-data:www-data . .
-COPY . .
+# Copy existing application directory permissions
+COPY --chown=www-data:www-data . /var/www/html
 
-# RUN chown -R $USER:www-data storage
-# RUN chown -R $USER:www-data bootstrap/cache
+# Change current user to www
+USER www-data
 
-RUN chmod -R 777 storage
+# ENTRYPOINT ["./postconfig.sh"]
 
-COPY ./config.development.sh /tmp 
-# ENTRYPOINT ["/tmp/config.development.sh"]
-
-
-# RUN composer install
-# RUN composer dump-autoload
-
-# # http://rizqi.id/deploy-script-for-laravel-projects
-# # Step 2: Optimize Laravel. Pretty simple.
-# RUN php artisan optimize
-# RUN php artisan route:cache
-
-# # Step 3: Clean up old caches
-# RUN php artisan cache:clear
-
-# # Step 4: Migrate your migrations. You know this drill.
-# ENTRYPOINT ["php", "artisan", "migrate"]
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+CMD ["php-fpm"]

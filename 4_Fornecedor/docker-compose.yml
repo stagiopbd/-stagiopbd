@@ -1,58 +1,76 @@
-version: "3"
-
+version: '3'
 services:
-  nginx:
-    image: nginx:1.15
-    restart: always
+
+  #Laravel App
+  app:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: hakase-labs/laravel
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    # entrypoint: ./server/postconfig.sh
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html
     volumes:
-      - ./sites.conf:/etc/nginx/conf.d/sites.conf
+      - ./server/:/var/www/html
+    networks:
+      - mynet
+
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
     ports:
       - "80:80"
+    volumes:
+      - ./server/:/var/www/html
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
-      - ndb
+      - mynet
 
-  docker-laravel:
-    build: ./server
-    # links:
-    #   - db
-    networks:
-      - ndb
-    depends_on:
-      - db
-      - redis
-
+  #MySQL Service
   db:
     image: mysql:5.7
     command: --innodb-use-native-aio=0
-    restart: always
-    environment:
-      - MYSQL_DATABASE=homestead
-      - MYSQL_USER=homestead
-      - MYSQL_PASSWORD=secret
-      - MYSQL_ROOT_PASSWORD=secret
-    volumes:
-      - ./data/db:/var/lib/mysql
+    container_name: db
+    restart: unless-stopped
+    tty: true
     ports:
       - "3306:3306"
+    environment:
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - mysqldata:/var/lib/mysql/
     networks:
-      - ndb
-
-  redis:
-    image: redis
-    restart: always
+      - mynet
 
   phpmyadmin:
-    # image: corbinu/docker-phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
-    # links:
-    #   - db
+    container_name: pma
     networks:
-      - ndb
+      - mynet
     ports:
-      - 9000:80
+      - 8081:80
     environment:
       - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - PMA_USER=homestead
+      - PMA_PASSWORD=secret
 
+#Docker Networks
 networks:
-    ndb:
-        driver: bridge 
+  mynet:
+    driver: bridge
+#Volumes
+volumes:
+  mysqldata:
+    driver: local
