@@ -11,6 +11,7 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from copy import deepcopy
 import numpy as np
 from paciente.util import formatar_paciente_dict, formatar_paciente_model
+from pycpfcnpj import cpfcnpj
 
 
 def index(request):
@@ -44,6 +45,11 @@ class PacienteViewSet(ModelViewSet):
                 'errors': "Incorrect data format, should be DD/MM/YYYY"
             }, status=status.HTTP_400_BAD_REQUEST)
         if serializer.is_valid():
+            if not cpfcnpj.validate(data['cpf']):
+                return Response({
+                    'message': 'CPF Inválido!',
+                    'errors': ""
+                }, status=status.HTTP_400_BAD_REQUEST)
             serializer.validated_data['inativo'] = None
             serializer.validated_data['data_nascimento'] = serializer.initial_data['data_nascimento']
             serializer.save()

@@ -633,25 +633,31 @@
             setSelect(['select-tipo-sanguineo'], data.tipo_sanguineo)
         }
 
-        function mostrarSwal(title, type, text) {
-            swal({
+        function mostrarSwal(title, type, text, isHtml) {
+            config = {
                 title: title,
                 type: type,
-                text: text,
                 showCloseButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'OK'
-            })
+            }
+            if (isHtml) {
+                config.html = text
+            } else {
+                config.text = text
+            }
+            swal(config)
         }
 
         function mostrarErro(e) {
             var text = '';
-            if (e.responseJSON.message === undefined) {
-                text = JSON.stringify(e.responseJSON);
-            } else {
-                text = e.responseJSON.message;
+            if (e.responseJSON.message) {
+                text += e.responseJSON.message + '<br><br>Erro(s):'
             }
-            mostrarSwal('Atenção', 'error', text)
+            if (e.responseJSON.errors) {
+                text += JSON.stringify(e.responseJSON.errors)
+            }
+            mostrarSwal('Atenção', 'error', text, true)
         }
 
         $("#buscar").click(() => {

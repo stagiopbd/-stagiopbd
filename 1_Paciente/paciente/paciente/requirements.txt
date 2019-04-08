@@ -6,3 +6,4 @@ djangorestframework==3.9.2
 django-cors-headers
 mysqlclient
 gunicorn==19.7.1
+pycpfcnpj
