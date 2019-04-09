@@ -12,14 +12,17 @@ from copy import deepcopy
 import numpy as np
 from paciente.util import formatar_paciente_dict, formatar_paciente_model
 from pycpfcnpj import cpfcnpj
+import os
 
 
 def index(request):
-    return render(request, 'index.html')
+    url = os.getenv('URL', 'http://127.0.0.1:8000')
+    return render(request, 'index.html', {'url': url})
 
 
 def index_paciente(request):
-    return render(request, 'paciente.index.html')
+    url = os.getenv('URL', 'http://127.0.0.1:8000')
+    return render(request, 'paciente.index.html', {'url': url})
 
 
 class PacienteViewSet(ModelViewSet):

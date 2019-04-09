@@ -10,10 +10,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from copy import deepcopy
 import numpy as np
+import os
 
 
 def index_alergia(request):
-    return render(request, 'alergia.index.html')
+    url = os.getenv('URL', 'http://127.0.0.1:8000')
+    return render(request, 'alergia.index.html', {'url': url})
 
 
 class AlergiaViewSet(ModelViewSet):

@@ -330,11 +330,14 @@
             color: dodgerblue
         }
     </style>
+
+    <script type="text/javascript">
+        var URL = '{{ url }}'
+    </script>
 </head>
 
 <body>
-    <div style="padding: 16px">
-        <a href="http://127.0.0.1:8000/stagiop_bd" class="btn btn-outline-primary">Home</a>
+    <div style="padding: 16px" id="home">
     </div>
 
 
@@ -454,6 +457,14 @@
     </div>
 
     <script>
+        setarLinkHome()
+
+        function setarLinkHome() {
+            $("#home").empty()
+            aLink = `<a href="${URL}/stagiop_bd" class="btn btn-outline-primary">Home</a>`
+            $("#home").append(aLink)
+        }
+
         function hide_pages(divs) {
             divs.map((div) => {
                 $(`#${div}`).hide()
@@ -494,7 +505,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "http://127.0.0.1:8000/stagiop_bd/api/paciente",
+                url: `${URL}/stagiop_bd/api/paciente`,
                 success: function (resultado) {
                     tableHtml = ''
                     resultado.forEach(data => {
@@ -540,7 +551,7 @@
         }
 
         function cadastrarAtualizarPaciente(cpfPaciente) {
-            url = "http://127.0.0.1:8000/stagiop_bd/api/paciente"
+            url = `${URL}/stagiop_bd/api/paciente`
             type = 'POST'
             message = 'Paciente cadastrado com sucesso!'
             if (cpfPaciente) {
@@ -618,7 +629,7 @@
         function ativarInativarPaciente(data, ativar) {
             $.ajax({
                 type: 'PUT',
-                url: `http://127.0.0.1:8000/stagiop_bd/api/paciente/${data.cpf}`,
+                url: `${URL}/stagiop_bd/api/paciente/${data.cpf}`,
                 data: JSON.stringify({
                     "inativo": ativar
                 }),
@@ -647,7 +658,10 @@
             $("#cpf").val(data.cpf)
             $("#cpf").prop("disabled", true);
             $("#nome-completo").val(data.nome_completo)
-            $("#data-nascimento").val(data.data_nascimento)
+
+            dates = data.data_nascimento.split('/')
+            novaData = `${dates[2]}-${dates[1]}-${dates[0]}`
+            $("#data-nascimento").val(novaData)
 
             setSelect(['select-sexo'], data.sexo)
 
@@ -695,7 +709,7 @@
             } else {
                 $.ajax({
                     type: "GET",
-                    url: `http://127.0.0.1:8000/stagiop_bd/api/paciente/${cpfBusca}`,
+                    url: `${URL}/stagiop_bd/api/paciente/${cpfBusca}`,
                     success: function (data) {
                         if (data.message) {
                             mostrarSwal('Atenção', 'warning', `Paciente  ${cpfBusca} não encontrado`)
@@ -740,7 +754,7 @@
         function getAlergias(cpf) {
             $.ajax({
                 type: "GET",
-                url: `http://127.0.0.1:8000/stagiop_bd/api/paciente-alergia/${cpf}`,
+                url: `${URL}/stagiop_bd/api/paciente-alergia/${cpf}`,
                 success: function (data) {
                     mostrarAlergias(data)
                     $("#select-alergias").hide()
@@ -755,7 +769,7 @@
             $("#select-alergias").empty();
             $.ajax({
                 type: "GET",
-                url: `http://127.0.0.1:8000/stagiop_bd/api/alergia`,
+                url: `${URL}/stagiop_bd/api/alergia`,
                 success: function (data) {
                     montarSelectAlergias(data)
                 },
@@ -802,7 +816,7 @@
             return new Promise(function (resolve, reject) {
                 $.ajax({
                     type: 'POST',
-                    url: "http://localhost:8000/stagiop_bd/api/paciente-alergia",
+                    url: `${URL}/stagiop_bd/api/paciente-alergia`,
                     data: JSON.stringify({
                         "paciente": cpf,
                         "alergia": alergia,

@@ -43,3 +43,11 @@ python3 manage.py test paciente
 python3 manage.py test alergia
 python3 manage.py test quadro_clinico
 ```
+
+### ENVIRONMENTS
+* __DB_USER__ = database user
+* __DB_NAME__ = database name
+* __DB_PASSWORD__ = database password
+* __DB_HOST__ = database host
+* __DB_PORT__ = database port
+* __URL__ = url web interface

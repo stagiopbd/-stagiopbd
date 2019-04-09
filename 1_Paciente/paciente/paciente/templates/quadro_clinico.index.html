@@ -330,11 +330,14 @@
             color: dodgerblue
         }
     </style>
+
+    <script type="text/javascript">
+        var URL = '{{ url }}'
+    </script>
 </head>
 
 <body>
-    <div style="padding: 16px">
-        <a href="http://127.0.0.1:8000/stagiop_bd" class="btn btn-outline-primary">Home</a>
+    <div style="padding: 16px" id="home">
     </div>
 
 
@@ -445,6 +448,15 @@
     </div>
 
     <script>
+
+        setarLinkHome()
+
+        function setarLinkHome() {
+            $("#home").empty()
+            aLink = `<a href="${URL}/stagiop_bd" class="btn btn-outline-primary">Home</a>`
+            $("#home").append(aLink)
+        }
+
         function hide_pages(divs) {
             divs.map((div) => {
                 $(`#${div}`).hide()
@@ -480,7 +492,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico",
+                url: `${URL}/stagiop_bd/api/quadro_clinico`,
                 success: function (resultado) {
                     tableHtml = ''
                     resultado.forEach(data => {
@@ -525,7 +537,7 @@
             }
         }
         function cadastrarAtualizarPaciente(cpfPaciente) {
-            url = "http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico"
+            url = `${URL}/stagiop_bd/api/quadro_clinico`
             type = 'POST'
             message = 'Quadro clínico cadastrado com sucesso!'
             if (cpfPaciente) {
@@ -658,7 +670,7 @@
             } else {
                 $.ajax({
                     type: "GET",
-                    url: `http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico/${cpfBusca}`,
+                    url: `${URL}/stagiop_bd/api/quadro_clinico/${cpfBusca}`,
                     success: function (data) {
                         if (data.message) {
                             mostrarSwal('Atenção', 'warning', `Quadro clínico não encontrado para o paciente ${cpfBusca}`)

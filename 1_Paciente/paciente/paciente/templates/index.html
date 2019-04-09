@@ -326,27 +326,35 @@
             }
         }
     </style>
+    <script type="text/javascript">
+        var URL = '{{ url }}'
+    </script>
 </head>
 
 <body>
     <div style="padding: 16px">
 
-        <button class="btn btn-info" id="cadastrar-quadro-clinico">
-            <a href="http://127.0.0.1:8000/stagiop_bd/paciente" style="color: #FFFFFF"
-                class="btn btn-default">Paciente</a>
-        </button>
+        <button class="btn btn-info" id="cadastrar-paciente"></button>
 
-        <button class="btn btn-secondary" id="cadastrar-quadro-clinico">
-            <a href="http://127.0.0.1:8000/stagiop_bd/alergia" style="color: #FFFFFF"
-                class="btn btn-default">Alergia</a>
-        </button>
+        <button class="btn btn-secondary" id="cadastrar-quadro-clinico"></button>
 
-        <button class="btn btn-primary" id="cadastrar-quadro-clinico">
-            <a href="http://127.0.0.1:8000/stagiop_bd/quadro_clinico" style="color: #FFFFFF"
-                class="btn btn-default">Quadro Clínico</a>
-        </button>
+        <button class="btn btn-primary" id="cadastrar-alergia"></button>
 
     </div>
+
+    <script>
+
+        $("#cadastrar-paciente").empty()
+        $("#cadastrar-quadro-clinico").empty()
+        $("#cadastrar-alergia").empty()
+
+        function criarBotao(link, nome) {
+            return `<a href="${URL}/stagiop_bd/${link}" style="color: #FFFFFF" class="btn btn-default">${nome}</a>`
+        }
+        $("#cadastrar-paciente").append(criarBotao('paciente', 'Paciente'))
+        $("#cadastrar-quadro-clinico").append(criarBotao('paciente', 'Alergia'))
+        $("#cadastrar-alergia").append(criarBotao('alergia', 'Quadro Clínico'))
+    </script>
 
 </body>
 
