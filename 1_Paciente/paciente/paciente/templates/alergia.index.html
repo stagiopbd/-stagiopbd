@@ -326,16 +326,29 @@
             }
         }
     </style>
+
+    <script type="text/javascript">
+        var URL = '{{ url }}'
+    </script>
 </head>
 
 <body>
-    <div style="padding: 16px">
-        <a href="http://127.0.0.1:8000/stagiop_bd" class="btn btn-outline-primary">Home</a>
+    <div style="padding: 16px" id="home">
     </div>
 
     <div style="padding: 16px">
         <button class="btn btn-info">Cadastrar Alergia</button>
     </div>
+
+    <script>
+        setarLinkHome()
+
+        function setarLinkHome() {
+            $("#home").empty()
+            aLink = `<a href="${URL}/stagiop_bd" class="btn btn-outline-primary">Home</a>`
+            $("#home").append(aLink)
+        }
+    </script>
 
 </body>
 
