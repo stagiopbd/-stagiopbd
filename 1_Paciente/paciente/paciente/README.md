@@ -51,3 +51,11 @@ python3 manage.py test quadro_clinico
 * __DB_HOST__ = database host
 * __DB_PORT__ = database port
 * __URL__ = url web interface
+
+### DEPLOY HEROKU
+```sh
+    sudo heroku login
+    sudo heroku container:login
+    sudo heroku container:push web -a stagiopbd-paciente
+    sudo heroku container:release web -a stagiopbd-paciente
+```
