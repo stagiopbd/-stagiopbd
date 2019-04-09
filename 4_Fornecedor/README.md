@@ -7,7 +7,7 @@ There is a **start_dev.sh**
 ```shellscript
 # Running at 'ipbl2019' folder
 cd 4_Fornecedor
-./start_dev.sh
+. start_dev.sh
 ```
 
 After working with the containers, you can bring them down using the following command:
