@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Fornecedor;
 use App\Http\Resources\Fornecedor as FornecedorResource;
 use App\Http\Resources\FornecedorCollection;
+use Illuminate\Http\Response;
+use \Illuminate\Support\Facades\Validator;
 
 class FornecedorController extends Controller
 {
@@ -28,14 +30,26 @@ class FornecedorController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->json()->all(), [
             'razao_social'  => 'required',
             'data_abertura' => 'required|date',
-            'cnpj'          => 'required|numeric|unique:fornecedores|max:14',
+            'cnpj'          => 'required|unique:fornecedores|digits:14',
             'tipo'          => 'required',
         ]);
 
-        $fornecedor = Fornecedor::create($validatedData);
+        if ($validator->fails())
+        {
+            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
+        }
+        
+        $fornecedor = new Fornecedor([
+            'razao_social'        => $request->razao_social,
+            'data_abertura'       => $request->data_abertura,
+            'cnpj'                => $request->cnpj,
+            'tipofornecedores_id' => $request->tipo,
+        ]);
+        $fornecedor->save();
+
         return $this->show($fornecedor);
     }
 
@@ -59,7 +73,15 @@ class FornecedorController extends Controller
      */
     public function update(Request $request, Fornecedor $fornecedor)
     {
-        //
+        $fornecedor->update([
+            'razao_social'        => $request->razao_social,
+            'data_abertura'       => $request->data_abertura,
+            'cnpj'                => $request->cnpj,
+            'tipofornecedores_id' => $request->tipo,
+        ]);
+        $fornecedor->save();
+
+        return $this->show($fornecedor);
     }
 
     /**
@@ -70,6 +92,7 @@ class FornecedorController extends Controller
      */
     public function destroy(Fornecedor $fornecedor)
     {
-        //
+        $fornecedor->delete();
+        return response()->json($fornecedor, Response::HTTP_OK);
     }
 }
