@@ -3,16 +3,17 @@
 
 ## Setting up the docker environment
 ### Development environment
+There is a **start_dev.sh** 
 ```shellscript
 # Running at 'ipbl2019' folder
 cd 4_Fornecedor
-./start_dev.sh
+. start_dev.sh
+```
 
-# after all the containers being up, connect to the php container and run the script
-docker exec -it 4_fornecedor_docker-laravel_1 /bin/bash
-
-# already in the container terminal
-. /tmp/config.development.sh
+After working with the containers, you can bring them down using the following command:
+```shellscript
+# shutdown containers and exclude mounted volumes
+docker-compose down -v
 ```
 
 

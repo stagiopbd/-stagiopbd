@@ -1,10 +1,15 @@
-# stop containers before doing anything
-docker kill $(docker ps -q)
+printmsg() {
+    echo -e "\e[33m\e[7m:: $1\e[0m"
+}
 
-# remove previous information
-rm -rf data/
+printmsg "Stop containers before doing anything..."
+docker kill $(docker ps -q) > /dev/null 2>&1
 
-docker-compose build
+printmsg "Building dockerfiles..."
+docker-compose build > /dev/null 2>&1
 
-# start the containers
-docker-compose -f docker-compose.development.yml up
+printmsg "Starting the containers..."
+docker-compose up -d
+
+printmsg "Executing postinstall script..."
+docker-compose exec app ./postconfig.sh

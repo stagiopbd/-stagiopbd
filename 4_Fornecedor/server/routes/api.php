@@ -16,3 +16,16 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+// FORNECEDORES ---------------------------------------------------------------
+
+// Route::get('/fornecedor/{fornecedor}', function (Fornecedor $fornecedor) {
+//     return new FornecedorResource($fornecedor);
+// });
+
+// Route::get('/fornecedores', function () {
+//     return new FornecedorCollection(Fornecedor::all());
+// });
+
+Route::apiResource('fornecedor', 'API\FornecedorController');
