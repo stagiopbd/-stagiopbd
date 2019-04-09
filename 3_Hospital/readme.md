@@ -18,6 +18,10 @@
 
 https://stagiopbd-hospital.herokuapp.com/
 
+## Link Documentação
+
+https://stagiopbd-hospital.herokuapp.com/doc/
+
 ## Projeto -  Segmento "Hospital"
 
 
