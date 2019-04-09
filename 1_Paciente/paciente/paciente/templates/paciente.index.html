@@ -382,8 +382,28 @@
                     </select>
                 </div>
             </div>
+            <div class="form-group" id="alergias">
+                <label><b>Alergia(s)</b></label>
+                <table id="table-alergias">
+                    <tr>
+                        <th># Consulta</th>
+                        <th>Princípio Ativo</th>
+                        <th>Descrição</th>
+                        <th>Grau Risco</th>
+                    </tr>
+                </table>
+                <br>
+            </div>
 
         </form>
+        <div class="input-group mb-3" id="div-cadastrar-alergia">
+            <div class="input-group-prepend" id="div-button-cadastrar-alergia">
+            </div>
+            <select class="custom-select" id="select-alergias">
+            </select>
+        </div>
+
+
         <button class="btn btn-info" id="cadastrar">Cadastrar</button>
         <button class="btn btn-info" id="atualizar">Atualizar</button>
     </div>
@@ -445,12 +465,13 @@
             })
         }
         $('#form-cadastrar').trigger("reset");
-        hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-paciente', 'div-table-paciente', 'atualizar'])
+        hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-paciente', 'div-table-paciente',
+            'atualizar', 'alergias', 'div-cadastrar-alergia'])
         setSelect(['select-sexo'], "M")
         setSelect(['select-tipo-sanguineo'], "A+")
 
         $("#button-cadastrar-paciente").click(() => {
-            hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente'])
+            hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente', 'alergias', 'div-cadastrar-alergia'])
             setSelect(['select-sexo'], "M")
             setSelect(['select-tipo-sanguineo'], "A+")
             $('#form-cadastrar').trigger("reset");
@@ -467,7 +488,7 @@
         }
 
         function getPacientes() {
-            hide_pages(['div-cadastrar', 'visualizar-paciente', 'div-table-paciente'])
+            hide_pages(['div-cadastrar', 'visualizar-paciente', 'div-table-paciente', 'alergias', 'div-cadastrar-alergia'])
             $("#table-pacientes tr:gt(0)").remove();
             $("#table-paciente tr:gt(0)").remove();
 
@@ -504,7 +525,7 @@
         })
 
         $("#button-visualizar-paciente").click(() => {
-            hide_pages(['div-cadastrar', 'visualizar-todos'])
+            hide_pages(['div-cadastrar', 'visualizar-todos', 'alergias', 'div-cadastrar-alergia'])
             $("#table-pacientes tr:gt(0)").remove();
             $("#table-paciente tr:gt(0)").remove();
             $("#visualizar-paciente").show()
@@ -631,6 +652,11 @@
             setSelect(['select-sexo'], data.sexo)
 
             setSelect(['select-tipo-sanguineo'], data.tipo_sanguineo)
+
+            getAlergias(data.cpf)
+            getAllAlergias()
+            setarBotaoCadastrarAlergia(data.cpf)
+            $("#div-cadastrar-alergia").show()
         }
 
         function mostrarSwal(title, type, text, isHtml) {
@@ -675,6 +701,10 @@
                             mostrarSwal('Atenção', 'warning', `Paciente  ${cpfBusca} não encontrado`)
                         } else {
                             mostrarInfoPaciente(data)
+                            getAlergias(cpfBusca)
+                            getAllAlergias()
+                            setarBotaoCadastrarAlergia(cpfBusca)
+                            $("#div-cadastrar-alergia").show()
                         }
                     },
                     error: function (e) {
@@ -685,6 +715,110 @@
             }
 
         })
+
+        function setarBotaoCadastrarAlergia(cpf) {
+            $("#div-button-cadastrar-alergia").empty()
+            btnCadastrar = `<button class="btn btn-primary" style="float: right" onClick='cadastrarNovaAlergia(${cpf})'>Cadastrar nova alergia</button>`
+            $("#div-button-cadastrar-alergia").append(btnCadastrar)
+        }
+
+        function mostrarAlergias(resultado) {
+            $("#table-alergias tr:gt(0)").remove();
+            tableHtml = ''
+            resultado.forEach(data => {
+                tableHtml += `<tr>
+                                <td>` + data.consulta_id + `</td>
+                                <td>` + data.alergia_principio_ativo + `</td>
+                                <td>` + data.alergia_descricao + `</td>
+                                <td>` + data.alergia_grau_risco + `</td>
+                            </tr>`
+            })
+            $('#table-alergias > tbody:last-child').append(tableHtml);
+            $("#alergias").show()
+        }
+
+        function getAlergias(cpf) {
+            $.ajax({
+                type: "GET",
+                url: `http://127.0.0.1:8000/stagiop_bd/api/paciente-alergia/${cpf}`,
+                success: function (data) {
+                    mostrarAlergias(data)
+                    $("#select-alergias").hide()
+                },
+                error: function (e) {
+                    $("#table-paciente tr:gt(0)").remove();
+                }
+            });
+        }
+
+        function getAllAlergias() {
+            $("#select-alergias").empty();
+            $.ajax({
+                type: "GET",
+                url: `http://127.0.0.1:8000/stagiop_bd/api/alergia`,
+                success: function (data) {
+                    montarSelectAlergias(data)
+                },
+                error: function (e) {
+                }
+            });
+        }
+
+        function montarSelectAlergias(resultado) {
+            var $dropdown = $("#select-alergias");
+            $.each(resultado, function () {
+                $dropdown.append($("<option />").val(this.id).text(this.descricao));
+            });
+            $("#select-alergias").show()
+        }
+
+        async function cadastrarNovaAlergia(cpf) {
+            alergia = Number($(`#select-alergias  option:selected`).val())
+            swal({
+                title: 'Nova consulta',
+                text: 'Digite o ID da consulta:',
+                input: 'text',
+                button: {
+                    text: "Cadastrar",
+                    closeModal: false,
+                },
+            })
+                .then(consultaId => {
+                    if (!consultaId) throw null;
+
+                    return inserirAlergiaPaciente(cpf, alergia, consultaId)
+                })
+                .then(json => {
+                    getAlergias(cpf)
+                    mostrarSwal('OK', 'success', 'Consultada cadastrada com sucesso!')
+                    getAllAlergias()
+                })
+                .catch(err => {
+                    mostrarErro(err)
+                });
+        }
+
+        function inserirAlergiaPaciente(cpf, alergia, consultaId) {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    type: 'POST',
+                    url: "http://localhost:8000/stagiop_bd/api/paciente-alergia",
+                    data: JSON.stringify({
+                        "paciente": cpf,
+                        "alergia": alergia,
+                        "consulta_id": consultaId
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (resultado) {
+                        resolve(cpf)
+                    },
+                    error: function (e) {
+                        reject(e)
+                    }
+                });
+            });
+        }
     </script>
 </body>
 
