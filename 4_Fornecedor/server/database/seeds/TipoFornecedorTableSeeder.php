@@ -23,7 +23,7 @@ class TipoFornecedorTableSeeder extends Seeder
 
         foreach ($tipos as $tipo) {
             App\TipoFornecedor::create([
-                'nome' => $tipo
+                'tfo_nome' => $tipo
             ]);
         }
     }
