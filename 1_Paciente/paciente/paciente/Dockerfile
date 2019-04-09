@@ -8,4 +8,4 @@ RUN apt-get update && \
 
 EXPOSE 8000
 
-CMD gunicorn --workers 4 --reload --timeout 1000 --access-logfile=- --bind 0.0.0.0:8000 api.wsgi
+CMD gunicorn --workers 4 --reload --timeout 1000 --access-logfile=- --bind 0.0.0.0:$PORT api.wsgi
