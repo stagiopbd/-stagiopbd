@@ -80,3 +80,6 @@ A aplicação estará disponível em:
 ```
 http://127.0.0.1:8000/
 ```
+![Página principal](https://docs.google.com/uc?id=1gYAEUoM1NlzGgTEYPMnxDpE0GVupN_1d)
+![Cadastro de fornecedor](https://docs.google.com/uc?id=193TEJOeIzXoxcds2a7x0R4u4R7r6A6k5)
+![Listagem de fornecedores](https://docs.google.com/uc?id=1m4QEhJTPjvp-EJ_U5YDVBtwFdq7iaxHS)
