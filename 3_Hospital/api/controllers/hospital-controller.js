@@ -14,16 +14,21 @@ var hospital = require('../models/hospital-model')
  * @apiParam {String} inputPhone  Telefone do Hospital
  */
 exports.post = (req, res, next) => {
-    var me = req.body
+    var me = req.body;
     hospital.create({
         nome: me.inputNome,
         cnpj: me.inputCnpj,
         endereco: me.inputAddress,
         telefone: me.inputPhone
-    })
+    }).then(function(hsp) {
+		res.redirect('/Hospital')
+	}).catch(function(err) {
+		err.message = 'Hospital nao pode ser cadastrado!';
+		next(err)
+	})
     //console.log(req.body)
     //res.send('seja bem vindo. ' + req.body.inputPhone)
-    res.redirect('/Hospital')
+
 };
 
 /**
@@ -82,10 +87,12 @@ exports.update =  (req, res, next) => {
             telefone: me.inputPhone
         },
         {returning: true, where: {HSP_ID: req.params.id} }
-      )
-      .then(function() {
-        res.redirect('/Hospital');
-      })
+    ).then(function(hsp) {
+  		res.redirect('/Hospital')
+  	}).catch(function(err) {
+		err.message = 'Hospital nao pode ser alterado!';
+  		next(err)
+  	})
 }
 
 /**
@@ -96,9 +103,11 @@ exports.update =  (req, res, next) => {
  * Em caso de sucesso, redirecionao o usu&aacute;rio &agrave; lista de hospitais.
  */
 exports.delete = (req, res, next) => {
-    hospital.destroy({ where: { HSP_ID: req.params.id } }
-        , { truncate: true }).then(() => {
-            res.redirect('/Hospital');
-
-        })
+    hospital.destroy({ where: { HSP_ID: req.params.id } }, { truncate: true }
+	).then(function() {
+  		res.redirect('/Hospital')
+  	}).catch(function(err) {
+		err.message = 'Hospital nao pode ser removido!';
+  		next(err)
+  	})
 }

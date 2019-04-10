@@ -1,4 +1,3 @@
-3_Hospital/node_modules
+3_Hospital/api/node_modules
 3_Hospital/test
-3_Hospital/package-lock.json
-/3_Hospital/api/node_modules
+package-lock.json
