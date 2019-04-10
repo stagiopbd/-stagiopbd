@@ -3,9 +3,16 @@ from paciente.models import Paciente
 
 
 class Alergia(models.Model):
+    COD_MANCHESTER = (
+        (0, 0),
+        (10, 10),
+        (50, 50),
+        (120, 120),
+        (240, 240)
+    )
     principio_ativo = models.CharField(max_length=120)
     descricao = models.CharField(max_length=120)
-    grau_risco = models.IntegerField()
+    grau_risco = models.IntegerField(choices=COD_MANCHESTER)
 
     class Meta:
         db_table = "alergia"

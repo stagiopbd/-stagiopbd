@@ -673,6 +673,17 @@
             $("#div-cadastrar-alergia").show()
         }
 
+        function deParaGrauRisco(grau_risco) {
+            codManchester = {
+                0: "Emergência",
+                10: "Muito urgente",
+                50: "Urgente",
+                120: "Pouco urgente",
+                240: "Não urgente"
+            }
+            return codManchester[grau_risco]
+        }
+
         function mostrarSwal(title, type, text, isHtml) {
             config = {
                 title: title,
@@ -744,7 +755,7 @@
                                 <td>` + data.consulta_id + `</td>
                                 <td>` + data.alergia_principio_ativo + `</td>
                                 <td>` + data.alergia_descricao + `</td>
-                                <td>` + data.alergia_grau_risco + `</td>
+                                <td>` + deParaGrauRisco(data.alergia_grau_risco) + `</td>
                             </tr>`
             })
             $('#table-alergias > tbody:last-child').append(tableHtml);

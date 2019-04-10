@@ -325,6 +325,10 @@
                 width: 1.25em
             }
         }
+
+        option {
+            color: dodgerblue
+        }
     </style>
 
     <script type="text/javascript">
@@ -336,11 +340,83 @@
     <div style="padding: 16px" id="home">
     </div>
 
+
     <div style="padding: 16px">
-        <button class="btn btn-info">Cadastrar Alergia</button>
+
+        <button class="btn btn-info" id="btn-cadastrar-alergia">Cadastrar Alergia</button>
+        <button class="btn btn-secondary" id="btn-visualizar-alergias">Visualizar Alergias</button>
+        <button class="btn btn-primary" id="btn-visualizar-alergia">Buscar por ID</button>
+    </div>
+
+    <!-- CADASTRAR -->
+    <div style="padding: 16px" id="div-cadastrar">
+        <form id="form-cadastrar">
+            <input type="hidden" id="id-alergia">
+            <div class="form-group">
+                <label for="principio-ativo">Princípio Ativo</label>
+                <input type="text" class="form-control" id="principio-ativo" maxlength="11">
+            </div>
+            <div class="form-group">
+                <label for="descricao">Descrição</label>
+                <input type="text" class="form-control" id="descricao" maxlength="120">
+            </div>
+            <div class="form-group">
+                <label for="inputCity">Grau Risco</label>
+                <select multiple class="form-control" id="select-grau-risco">
+                    <option value="0" selected>Emergência</option>
+                    <option value="10">Muito urgente</option>
+                    <option value="50">Urgente</option>
+                    <option value="120">Pouco urgente</option>
+                    <option value="240">Não urgente</option>
+                </select>
+            </div>
+
+        </form>
+        <button class="btn btn-info" id="cadastrar">Cadastrar</button>
+        <button class="btn btn-info" id="atualizar">Atualizar</button>
+    </div>
+
+    <!-- VISUALIZAR TODOS -->
+    <div style="padding: 16px" id="visualizar-todos">
+        <h4 style="text-align: center">Alergias</h4>
+        <table id="table-todos-alergias">
+            <tr>
+                <th>#</th>
+                <th>Princípio Ativo</th>
+                <th>Descrição</th>
+                <th>Grau Risco</th>
+                <th>-</th>
+            </tr>
+        </table>
+    </div>
+
+    <!-- VISUALIZAR ALERGIA -->
+    <div style="padding: 16px" id="visualizar-alergia">
+        <div id="div-buscar">
+            <form>
+                <div class="form-group">
+                    <label for="id-busca">ID Alergia</label>
+                    <input type="text" class="form-control" id="id-busca" maxlength="11">
+                </div>
+            </form>
+            <button class="btn btn-info" id="buscar">Buscar</button>
+        </div>
+        <div style="padding: 16px" id="div-table-alergia">
+            <table id="table-quadro-paciente">
+                <tr>
+                    <th>#</th>
+                    <th>Princípio Ativo</th>
+                    <th>Descrição</th>
+                    <th>Grau Risco</th>
+                    <th>-</th>
+                </tr>
+            </table>
+        </div>
+
     </div>
 
     <script>
+
         setarLinkHome()
 
         function setarLinkHome() {
@@ -348,8 +424,217 @@
             aLink = `<a href="${URL}/stagiop_bd" class="btn btn-outline-primary">Home</a>`
             $("#home").append(aLink)
         }
-    </script>
 
+        function hide_pages(divs) {
+            divs.map((div) => {
+                $(`#${div}`).hide()
+            })
+        }
+        function setSelect(selects, field) {
+            selects.map((select) => {
+                $(`#${select}`).val(field).change();
+            })
+        }
+        $('#form-cadastrar').trigger("reset");
+        hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-alergia', 'div-table-alergia', 'atualizar'])
+        setSelect(['select-grau-risco'], "0")
+
+        $("#btn-cadastrar-alergia").click(() => {
+            hide_pages(['visualizar-todos', 'visualizar-alergia', 'div-table-alergia'])
+            setSelect(['select-grau-risco'], "0")
+            $('#form-cadastrar').trigger("reset");
+            $("#cadastrar").show()
+            $("#atualizar").hide()
+            $("#div-cadastrar").show()
+        })
+
+        function criarBotaoAtualizar(cpf, data) {
+            return `<button class="btn btn-info" id="atualizar-${cpf}" onClick='atualizarPaciente(${data})'>Atualizar</button>`
+        }
+
+        function deParaGrauRisco(grau_risco) {
+            codManchester = {
+                0: "Emergência",
+                10: "Muito urgente",
+                50: "Urgente",
+                120: "Pouco urgente",
+                240: "Não urgente"
+            }
+            return codManchester[grau_risco]
+        }
+
+        $("#btn-visualizar-alergias").click(() => {
+            hide_pages(['div-cadastrar', 'visualizar-alergia', 'div-table-alergia'])
+            $("#table-todos-alergias tr:gt(0)").remove();
+            $("#table-quadro-paciente tr:gt(0)").remove();
+
+            $.ajax({
+                type: "GET",
+                url: `${URL}/stagiop_bd/api/alergia`,
+                success: function (resultado) {
+                    tableHtml = ''
+                    resultado.forEach(data => {
+                        tableHtml += `<tr>
+                                <td>` + data.id + `</td>
+                                <td>` + data.principio_ativo + `</td>
+                                <td>` + data.descricao + `</td>
+                                <td>` + deParaGrauRisco(data.grau_risco) + `</td>
+                                <td>` + criarBotaoAtualizar(data.paciente, JSON.stringify(data)) + `</td>
+                            </tr>`
+                    })
+                    $('#table-todos-alergias > tbody:last-child').append(tableHtml);
+                    $("#visualizar-todos").show()
+                },
+                error: function (e) {
+                    mostrarErro(e)
+                }
+            });
+
+        })
+
+        $("#btn-visualizar-alergia").click(() => {
+            hide_pages(['div-cadastrar', 'visualizar-todos'])
+            $("#table-todos-alergias tr:gt(0)").remove();
+            $("#table-quadro-paciente tr:gt(0)").remove();
+            $("#visualizar-alergia").show()
+            $("#div-buscar").show()
+            $("#div-table-alergia").hide()
+
+        })
+
+
+        function cadastrarAtualizarAlergia(idAlergia) {
+            url = `${URL}/stagiop_bd/api/alergia`
+            type = 'POST'
+            message = 'Alergia cadastrada com sucesso!'
+            if (idAlergia) {
+                url += `/${idAlergia}`
+                type = 'PUT'
+                message = 'Alergia atualizada com sucesso!'
+            }
+
+            $.ajax({
+                type: type,
+                url: url,
+                data: JSON.stringify({
+                    "principio_ativo": $("#principio-ativo").val(),
+                    "descricao": $("#descricao").val(),
+                    "grau_risco": Number($(`#select-grau-risco  option:selected`).val())
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (resultado) {
+                    $("#div-cadastrar").hide()
+                    $("#visualizar-alergia").show()
+                    $("#div-buscar").hide()
+                    mostrarInfoPaciente(resultado)
+                    mostrarSwal('OK', 'success', message)
+                },
+                error: function (e) {
+                    mostrarErro(e)
+                }
+            });
+        }
+
+        $("#cadastrar").click(() => {
+            cadastrarAtualizarAlergia()
+        });
+
+        $("#atualizar").click(() => {
+            cadastrarAtualizarAlergia($("#id-alergia").val())
+        });
+
+        function mostrarInfoPaciente(data) {
+            $("#table-quadro-paciente tr:gt(0)").remove();
+            tableHtml = `<tr>
+                <td>` + data.id + `</td>
+                <td>` + data.principio_ativo + `</td>
+                <td>` + data.descricao + `</td>
+                <td>` + deParaGrauRisco(data.grau_risco) + `</td>
+                <td>` + criarBotaoAtualizar(data.id, JSON.stringify(data)) + `</td>
+            </tr>`
+            $('#table-quadro-paciente > tbody:last-child').append(tableHtml);
+            $("#div-table-alergia").show()
+        }
+
+        function atualizarPaciente(data) {
+            $("#table-todos-alergias tr:gt(0)").remove();
+            $("#table-quadro-paciente tr:gt(0)").remove();
+            $("#div-table-alergia").hide();
+            $("#visualizar-alergia").hide();
+            $("#visualizar-todos").hide();
+
+            $('#form-cadastrar').trigger("reset");
+            $("#div-fuma-frequencia").hide()
+            $("#div-bebe-frequencia").hide()
+            $("#div-atividade-frequencia").hide()
+
+            $("#cadastrar").hide()
+            $("#atualizar").show()
+            setarForm(data)
+            $("#div-cadastrar").show()
+        }
+
+        function setarForm(data) {
+            $("#id-alergia").val(data.id)
+            $("#principio-ativo").val(data.principio_ativo);
+            $("#descricao").val(data.descricao);
+            setSelect(['select-grau-risco'], data.grau_risco)
+        }
+
+        function mostrarSwal(title, type, text, isHtml) {
+            config = {
+                title: title,
+                type: type,
+                showCloseButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'OK'
+            }
+            if (isHtml) {
+                config.html = text
+            } else {
+                config.text = text
+            }
+            swal(config)
+        }
+
+        function mostrarErro(e) {
+            var text = '';
+            if (e.responseJSON.message) {
+                text += e.responseJSON.message + '<br><br>Erro(s):'
+            }
+            if (e.responseJSON.errors) {
+                text += JSON.stringify(e.responseJSON.errors)
+            }
+            mostrarSwal('Atenção', 'error', text, true)
+        }
+
+        $("#buscar").click(() => {
+            $("#table-quadro-paciente tr:gt(0)").remove();
+
+            const idBusca = $("#id-busca").val();
+            if (!idBusca) {
+                mostrarSwal('Atenção', 'warning', "Favor informar o ID da alergia!")
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: `${URL}/stagiop_bd/api/alergia/${idBusca}`,
+                    success: function (data) {
+                        if (data.message) {
+                            mostrarSwal('Atenção', 'warning', `Alergia ${idBusca} não encontrada!`)
+                        } else {
+                            mostrarInfoPaciente(data)
+                        }
+                    },
+                    error: function (e) {
+                        $("#table-quadro-paciente tr:gt(0)").remove();
+                        mostrarErro(e)
+                    }
+                });
+            }
+
+        })
+    </script>
 </body>
 
 </html>
