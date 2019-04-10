@@ -8,10 +8,10 @@ var hospital = require('../models/hospital-model')
  * @apiGroup Hospital
  * @apiDescription Insere informa&ccedil;&otilde;es de um hospital no banco de dados.
  * Em caso de sucesso, redirecionao o usu&aacute;rio &agrave; lista de hospitais.
- * @apiParam {String} Nome  Nome do Hospital
- * @apiParam {String} CNPJ  CNPJ do Hospital
- * @apiParam {String} Endereco  Endere&ccedil;o completo do Hospital
- * @apiParam {String} Telefone  Telefone do Hospital
+ * @apiParam {String} inputNome  Nome do Hospital
+ * @apiParam {String} inputCnpj  CNPJ do Hospital
+ * @apiParam {String} inputAddress  Endere&ccedil;o completo do Hospital
+ * @apiParam {String} inputPhone  Telefone do Hospital
  */
 exports.post = (req, res, next) => {
     var me = req.body
@@ -62,15 +62,15 @@ exports.cadastro = (req, res, next) => {
 };
 
 /**
- * @api {post} /hospital/update/:id 04-Atualizacao
+ * @api {post} /hospital/update/edit/:id 04-Atualizacao
  * @apiName exports.update
  * @apiGroup Hospital
  * @apiDescription Atualiza informa&ccedil;&otilde;es de um hospital no banco de dados.
  * Em caso de sucesso, redirecionao o usu&aacute;rio &agrave; lista de hospitais.
- * @apiParam {String} Nome  Nome do Hospital
- * @apiParam {String} CNPJ  CNPJ do Hospital
- * @apiParam {String} Endereco  Endere&ccedil;o completo do Hospital
- * @apiParam {String} Telefone  Telefone do Hospital
+ * @apiParam {String} inputNome  Nome do Hospital
+ * @apiParam {String} inputCnpj  CNPJ do Hospital
+ * @apiParam {String} inputAddress  Endere&ccedil;o completo do Hospital
+ * @apiParam {String} inputPhone  Telefone do Hospital
  */
 exports.update =  (req, res, next) => {
     var me = req.body;

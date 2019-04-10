@@ -121,28 +121,28 @@
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "Nome",
+            "field": "inputNome",
             "description": "<p>Nome do Hospital</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "CNPJ",
+            "field": "inputCnpj",
             "description": "<p>CNPJ do Hospital</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "Endereco",
+            "field": "inputAddress",
             "description": "<p>Endereço completo do Hospital</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "Telefone",
+            "field": "inputPhone",
             "description": "<p>Telefone do Hospital</p>"
           }
         ]
@@ -154,7 +154,7 @@
   },
   {
     "type": "post",
-    "url": "/hospital/update/:id",
+    "url": "/hospital/update/edit/:id",
     "title": "04-Atualizacao",
     "name": "exports_update",
     "group": "Hospital",
@@ -166,28 +166,28 @@
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "Nome",
+            "field": "inputNome",
             "description": "<p>Nome do Hospital</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "CNPJ",
+            "field": "inputCnpj",
             "description": "<p>CNPJ do Hospital</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "Endereco",
+            "field": "inputAddress",
             "description": "<p>Endereço completo do Hospital</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "Telefone",
+            "field": "inputPhone",
             "description": "<p>Telefone do Hospital</p>"
           }
         ]
