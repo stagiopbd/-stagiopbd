@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="WB Datadict">
+  <meta name="description" content="kiizj5q0n6quilvc Data Dictionary.">
+  <title>kiizj5q0n6quilvc Data Dictionary</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script>
+    // Highlight table corresponding to the current fragment in the URL.
+    $(document).ready(function(){
+      $("a").click(function() {
+        var elem = $(this);
+        // Remove all classes from tables.
+        $("table").removeClass( "focused" )
+        // Get a.href value and extract its fragment id.
+        var id = elem.attr("href");
+        // Highlight table using fragment id.
+        $(id).addClass( "focused" );
+      });
+    });
+  </script>
+  <style type="text/css">
+    a {
+        text-decoration: none;
+    }
+    abbr {
+        cursor: help;
+    }
+    header {
+        color: #6A6A6A;
+        text-align: right;
+    }
+    table {
+        border-collapse: collapse;
+        margin-bottom: 30px;
+        width: 100%;
+    }
+    table caption {
+        font-size: 120%;
+        font-weight: bold;
+    }
+    table, td, th {
+        border-color: silver;
+        border-style: solid;
+        border-width: 1px;
+    }
+    caption {
+        color: black;
+    }
+    td, th {
+        padding: 1em;
+    }
+    tr:hover {
+        color: #333;
+        background-color: #F2F2F2;
+    }
+    th {
+        background-color: #F5F5F5;
+    }
+    td {
+        color: #6A6A6A;
+    }
+    ul {
+        font-style: italic;
+    }
+    .centered {
+        text-align: center;
+    }
+    .field {
+        color: #4C4C4C;
+        font-weight: bold;
+    }
+    .focused {
+        outline-color: aqua;
+        outline-style: solid;
+        outline-width: thin;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>kiizj5q0n6quilvc<br> Data Dictionary</h1>
+    <p>
+      <em>2019-04-10</em>
+    </p>
+    <p>
+      <em></em>
+    </p>
+  </header>
+
+  <nav><h2>Index</h2><ul><li><a href='#ALA'>ALA</a></li><li><a href='#ESPECIALIDADE'>ESPECIALIDADE</a></li><li><a href='#HOSPITAL'>HOSPITAL</a></li><li><a href='#LEITO'>LEITO</a></li><li><a href='#PACIENTE'>PACIENTE</a></li><li><a href='#SITUACAO'>SITUACAO</a></li></ul></nav>
+
+  <div><table id='ALA'><caption>ALA</caption><tr><td colspan='12'></td></tr><tr><th>Column name</th><th>DataType</th><th><abbr title='Primary Key'>PK</abbr></th><th><abbr title='Foreign Key'>FK</abbr></th><th><abbr title='Not Null'>NN</abbr></th><th><abbr title='Unique'>UQ</abbr></th><th><abbr title='Binary'>BIN</abbr></th><th><abbr title='Unsigned'>UN</abbr></th><th><abbr title='Zero Fill'>ZF</abbr></th><th><abbr title='Auto Increment'>AI</abbr></th><th>Default</th><th>Comment</th></tr><tr><td class='field'>ALA_ID</td><td>INT</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td></td><td></td></tr><tr><td class='field'>HSP_ID</td><td>INT</td><td class='centered'>&nbsp;</td><td class='centered'><a href='#HSP_ID'>&#10004;</a></td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td></td></tr><tr><td class='field'>SIT_ID</td><td>INT</td><td class='centered'>&nbsp;</td><td class='centered'><a href='#SIT_ID'>&#10004;</a></td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td></td></tr><tr><td class='field'>ESP_ID</td><td>INT</td><td class='centered'>&nbsp;</td><td class='centered'><a href='#ESP_ID'>&#10004;</a></td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td></td></tr><tr><td class='field'>ALA_Tipo</td><td>VARCHAR(45)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td># Tipo de Ala:
+
+Ambulatório
+Enfermaria
+Especial</td></tr></table><table id='ESPECIALIDADE'><caption>ESPECIALIDADE</caption><tr><td colspan='12'></td></tr><tr><th>Column name</th><th>DataType</th><th><abbr title='Primary Key'>PK</abbr></th><th><abbr title='Foreign Key'>FK</abbr></th><th><abbr title='Not Null'>NN</abbr></th><th><abbr title='Unique'>UQ</abbr></th><th><abbr title='Binary'>BIN</abbr></th><th><abbr title='Unsigned'>UN</abbr></th><th><abbr title='Zero Fill'>ZF</abbr></th><th><abbr title='Auto Increment'>AI</abbr></th><th>Default</th><th>Comment</th></tr><tr><td class='field'>ESP_ID</td><td>INT</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td></td><td></td></tr><tr><td class='field'>ESP_DESC</td><td>VARCHAR(45)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Descricao da Especialidade</td></tr></table><table id='HOSPITAL'><caption>HOSPITAL</caption><tr><td colspan='12'></td></tr><tr><th>Column name</th><th>DataType</th><th><abbr title='Primary Key'>PK</abbr></th><th><abbr title='Foreign Key'>FK</abbr></th><th><abbr title='Not Null'>NN</abbr></th><th><abbr title='Unique'>UQ</abbr></th><th><abbr title='Binary'>BIN</abbr></th><th><abbr title='Unsigned'>UN</abbr></th><th><abbr title='Zero Fill'>ZF</abbr></th><th><abbr title='Auto Increment'>AI</abbr></th><th>Default</th><th>Comment</th></tr><tr><td class='field'>HSP_ID</td><td>INT</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td></td><td>ID</td></tr><tr><td class='field'>CNPJ</td><td>VARCHAR(20)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Campo de CNPJ</td></tr><tr><td class='field'>NOME</td><td>VARCHAR(100)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Nome do Hospital</td></tr><tr><td class='field'>ENDERECO</td><td>VARCHAR(200)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Endereço do Hospital</td></tr><tr><td class='field'>TELEFONE</td><td>VARCHAR(30)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Telefone do Hospital</td></tr><tr><td class='field'>CREATEDAT</td><td>DATETIME</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Data da criacao do registo</td></tr><tr><td class='field'>UPDATEDAT</td><td>DATETIME</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Data de atualização do Registro</td></tr><tr><td class='field'>SIT_ID</td><td>INT</td><td class='centered'>&nbsp;</td><td class='centered'><a href='#SIT_ID'>&#10004;</a></td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td></td></tr></table><table id='LEITO'><caption>LEITO</caption><tr><td colspan='12'></td></tr><tr><th>Column name</th><th>DataType</th><th><abbr title='Primary Key'>PK</abbr></th><th><abbr title='Foreign Key'>FK</abbr></th><th><abbr title='Not Null'>NN</abbr></th><th><abbr title='Unique'>UQ</abbr></th><th><abbr title='Binary'>BIN</abbr></th><th><abbr title='Unsigned'>UN</abbr></th><th><abbr title='Zero Fill'>ZF</abbr></th><th><abbr title='Auto Increment'>AI</abbr></th><th>Default</th><th>Comment</th></tr><tr><td class='field'>LEI_ID</td><td>INT</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td></td><td></td></tr><tr><td class='field'>ALA_ID</td><td>INT</td><td class='centered'>&nbsp;</td><td class='centered'><a href='#ALA_ID'>&#10004;</a></td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td></td></tr><tr><td class='field'>PAC_ID</td><td>INT</td><td class='centered'>&nbsp;</td><td class='centered'><a href='#PAC_ID'>&#10004;</a></td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td></td></tr></table><table id='PACIENTE'><caption>PACIENTE</caption><tr><td colspan='12'></td></tr><tr><th>Column name</th><th>DataType</th><th><abbr title='Primary Key'>PK</abbr></th><th><abbr title='Foreign Key'>FK</abbr></th><th><abbr title='Not Null'>NN</abbr></th><th><abbr title='Unique'>UQ</abbr></th><th><abbr title='Binary'>BIN</abbr></th><th><abbr title='Unsigned'>UN</abbr></th><th><abbr title='Zero Fill'>ZF</abbr></th><th><abbr title='Auto Increment'>AI</abbr></th><th>Default</th><th>Comment</th></tr><tr><td class='field'>PAC_ID</td><td>INT</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td></td><td></td></tr><tr><td class='field'>PAC_NOME</td><td>VARCHAR(45)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Nome do Paciente</td></tr><tr><td class='field'>PAC_DATA_NASC</td><td>INT</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Data de Nascimento</td></tr><tr><td class='field'>PAC_GENERO</td><td>VARCHAR(45)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Genero/Sexo do Paciente</td></tr></table><table id='SITUACAO'><caption>SITUACAO</caption><tr><td colspan='12'></td></tr><tr><th>Column name</th><th>DataType</th><th><abbr title='Primary Key'>PK</abbr></th><th><abbr title='Foreign Key'>FK</abbr></th><th><abbr title='Not Null'>NN</abbr></th><th><abbr title='Unique'>UQ</abbr></th><th><abbr title='Binary'>BIN</abbr></th><th><abbr title='Unsigned'>UN</abbr></th><th><abbr title='Zero Fill'>ZF</abbr></th><th><abbr title='Auto Increment'>AI</abbr></th><th>Default</th><th>Comment</th></tr><tr><td class='field'>SIT_ID</td><td>INT</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&#10004;</td><td></td><td></td></tr><tr><td class='field'>SIT_DESC</td><td>VARCHAR(45)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td></td></tr><tr><td class='field'>SIT_Vagas</td><td>VARCHAR(45)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td></td></tr><tr><td class='field'>SIT_Medicos</td><td>VARCHAR(45)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td></td></tr><tr><td class='field'>SIT_Disp</td><td>VARCHAR(45)</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td class='centered'>&nbsp;</td><td></td><td>Este atributo tem como objetivo saber a disponibilidade do Hospital ou Ala</td></tr></table></div>
+</body>
+</html>
