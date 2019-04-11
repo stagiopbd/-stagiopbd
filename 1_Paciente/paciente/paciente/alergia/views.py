@@ -76,6 +76,13 @@ class PacienteTemAlergiaViewSet(ModelViewSet):
         data = deepcopy(request.data)
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
+            element = self.queryset.filter(
+                paciente_id=serializer.validated_data['paciente'], alergia_id=serializer.validated_data['alergia']).first()
+            if element:
+                return Response({
+                    'errors': '',
+                    'message': 'Alergia {} já cadastrada para o paciente {}!'.format(serializer.validated_data['alergia'].id, serializer.validated_data['paciente'].cpf)
+                }, status=status.HTTP_400_BAD_REQUEST)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response({
