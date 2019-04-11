@@ -400,6 +400,7 @@
 
         </form>
         <div class="input-group mb-3" id="div-cadastrar-alergia">
+            <input type="hidden" id="cpf-alergia">
             <div class="input-group-prepend" id="div-button-cadastrar-alergia">
             </div>
             <select class="custom-select" id="select-alergias">
@@ -480,6 +481,7 @@
             'atualizar', 'alergias', 'div-cadastrar-alergia'])
         setSelect(['select-sexo'], "M")
         setSelect(['select-tipo-sanguineo'], "A+")
+        $("#cpf-alergia").val('')
 
         $("#button-cadastrar-paciente").click(() => {
             hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente', 'alergias', 'div-cadastrar-alergia'])
@@ -487,6 +489,7 @@
             setSelect(['select-tipo-sanguineo'], "A+")
             $('#form-cadastrar').trigger("reset");
             $("#cpf").prop("disabled", false);
+            $("#cpf-alergia").val('')
             $("#cadastrar").show()
             $("#atualizar").hide()
             $("#inativar").hide()
@@ -532,10 +535,12 @@
         }
 
         $("#button-visualizar-pacientes").click(() => {
+            $("#cpf-alergia").val('')
             getPacientes()
         })
 
         $("#button-visualizar-paciente").click(() => {
+            $("#cpf-alergia").val('')
             hide_pages(['div-cadastrar', 'visualizar-todos', 'alergias', 'div-cadastrar-alergia'])
             $("#table-pacientes tr:gt(0)").remove();
             $("#table-paciente tr:gt(0)").remove();
@@ -586,10 +591,12 @@
         }
 
         $("#cadastrar").click(() => {
+            $("#cpf-alergia").val('')
             cadastrarAtualizarPaciente()
         });
 
         $("#atualizar").click(() => {
+            $("#cpf-alergia").val('')
             cadastrarAtualizarPaciente($("#cpf").val())
         });
 
@@ -743,7 +750,8 @@
 
         function setarBotaoCadastrarAlergia(cpf) {
             $("#div-button-cadastrar-alergia").empty()
-            btnCadastrar = `<button class="btn btn-primary" style="float: right" onClick='cadastrarNovaAlergia(${cpf})'>Cadastrar nova alergia</button>`
+            $("#cpf-alergia").val(cpf)
+            btnCadastrar = `<button class="btn btn-primary" style="float: right" onClick='cadastrarNovaAlergia()'>Cadastrar nova alergia</button>`
             $("#div-button-cadastrar-alergia").append(btnCadastrar)
         }
 
@@ -797,7 +805,8 @@
             $("#select-alergias").show()
         }
 
-        async function cadastrarNovaAlergia(cpf) {
+        async function cadastrarNovaAlergia() {
+            cpf = $("#cpf-alergia").val()
             alergia = Number($(`#select-alergias  option:selected`).val())
             swal({
                 title: 'Nova consulta',
@@ -809,9 +818,14 @@
                 },
             })
                 .then(consultaId => {
-                    if (!consultaId) throw null;
+                    if (!consultaId) {
+                        mostrarSwal('Atenção', 'warning', "Favor informar o ID da consulta!")
+                        throw null
+                    } else {
+                        return inserirAlergiaPaciente(cpf, alergia, consultaId)
+                    }
 
-                    return inserirAlergiaPaciente(cpf, alergia, consultaId)
+
                 })
                 .then(json => {
                     getAlergias(cpf)
@@ -819,7 +833,10 @@
                     getAllAlergias()
                 })
                 .catch(err => {
-                    mostrarErro(err)
+                    if (err) {
+                        mostrarErro(err)
+                    }
+
                 });
         }
 
