@@ -800,7 +800,7 @@
         function montarSelectAlergias(resultado) {
             var $dropdown = $("#select-alergias");
             $.each(resultado, function () {
-                $dropdown.append($("<option />").val(this.id).text(this.descricao));
+                $dropdown.append($("<option />").val(this.id).text(this.principio_ativo));
             });
             $("#select-alergias").show()
         }
