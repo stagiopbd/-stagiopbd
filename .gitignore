@@ -1,3 +1,5 @@
 3_Hospital/api/node_modules
 3_Hospital/test
 package-lock.json
+
+.DS_Store
