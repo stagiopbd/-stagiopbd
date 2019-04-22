@@ -14,9 +14,9 @@ class CreateTipoFornecedoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipofornecedores', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nome')->unique();
+        Schema::create('tfo_tipofornecedores', function (Blueprint $table) {
+            $table->increments('tfo_id');
+            $table->string('tfo_nome')->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTipoFornecedoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipofornecedores');
+        Schema::dropIfExists('tfo_tipofornecedores');
     }
 }

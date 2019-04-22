@@ -13,15 +13,12 @@ class CreateFornecedoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('fornecedores', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('razao_social');
-            $table->dateTime('data_abertura');
-            $table->string('cnpj', 14)->unique();
-            $table->integer('tipofornecedores_id')->unsigned();
-            // $table->foreign('tipofornecedores_id')
-            //       ->references('id')
-            //       ->on('tipofornecedores');
+        Schema::create('for_fornecedores', function (Blueprint $table) {
+            $table->increments('for_id');
+            $table->string('for_razao_social');
+            $table->dateTime('for_data_abertura');
+            $table->string('for_cnpj', 14)->unique();
+            $table->integer('tfo_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -34,6 +31,6 @@ class CreateFornecedoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fornecedores');
+        Schema::dropIfExists('for_fornecedores');
     }
 }
