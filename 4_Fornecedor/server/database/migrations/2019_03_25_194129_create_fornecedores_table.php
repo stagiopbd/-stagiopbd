@@ -7,18 +7,18 @@ use Illuminate\Database\Migrations\Migration;
 class CreateFornecedoresTable extends Migration
 {
     /**
-     * Tabela "fornecedores" que armazena os dados do fornecedor cadastrado.
+     * Tabela "suppliers" que armazena os dados do fornecedor cadastrado.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('for_fornecedores', function (Blueprint $table) {
-            $table->increments('for_id');
-            $table->string('for_razao_social');
-            $table->dateTime('for_data_abertura');
-            $table->string('for_cnpj', 14)->unique();
-            $table->integer('tfo_id')->unsigned();
+        Schema::create('spl_suppliers', function (Blueprint $table) {
+            $table->increments('spl_id');
+            $table->string('spl_social_name');
+            $table->dateTime('spl_open_date');
+            $table->string('spl_cnpj', 14)->unique();
+            $table->integer('tsp_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateFornecedoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('for_fornecedores');
+        Schema::dropIfExists('spl_suppliers');
     }
 }

@@ -7,16 +7,16 @@ use Illuminate\Database\Migrations\Migration;
 class CreateTipoFornecedoresTable extends Migration
 {
     /**
-     * Tabela "tipofornecedores" que armazena o segmento na qual determinado
+     * Tabela "suppliertypes" que armazena o segmento na qual determinado
      * fornecedor atua. Tabela de referência, para otimizar o uso do espaço.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('tfo_tipofornecedores', function (Blueprint $table) {
-            $table->increments('tfo_id');
-            $table->string('tfo_nome')->unique();
+        Schema::create('tsp_suppliertypes', function (Blueprint $table) {
+            $table->increments('tsp_id');
+            $table->string('tsp_name')->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTipoFornecedoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tfo_tipofornecedores');
+        Schema::dropIfExists('tsp_suppliertypes');
     }
 }
