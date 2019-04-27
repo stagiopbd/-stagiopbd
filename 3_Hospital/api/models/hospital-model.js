@@ -1,4 +1,4 @@
-const db = require("./dbConnection")
+const db = require("./dbConnection");
 
 const hospital = db.sequelize.define("HOSPITAL", {
     hsp_id: { type: db.Sequelize.INTEGER, primaryKey: true },
@@ -56,6 +56,6 @@ const hospital = db.sequelize.define("HOSPITAL", {
 			}
 		}
 	}
-})
+});
 
-module.exports = hospital
+module.exports = hospital;
