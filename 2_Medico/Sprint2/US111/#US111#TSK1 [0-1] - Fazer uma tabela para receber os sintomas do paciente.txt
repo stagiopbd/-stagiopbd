@@ -1,0 +1,3 @@
+#Nesta tabela é necessário ter um relacionamento entre paciente e os sintomas que apresentar. 
+#Um paciente pode ter um ou muito sintomas.
+#IDENTIFICADOR PACIENTE 	SINTOMAS
