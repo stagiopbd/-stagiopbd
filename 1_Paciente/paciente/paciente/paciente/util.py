@@ -8,7 +8,8 @@ def formatar_paciente_model(item):
             '%d/%m/%Y'),
         'sexo': item.sexo,
         'tipo_sanguineo': item.tipo_sanguineo,
-        'inativo': item.inativo
+        'inativo': item.inativo,
+        'email': item.email
     }
 
 
@@ -20,5 +21,6 @@ def formatar_paciente_dict(item):
             '%d/%m/%Y'),
         'sexo': item['sexo'],
         'tipo_sanguineo': item['tipo_sanguineo'],
-        'inativo': item['inativo']
+        'inativo': item['inativo'],
+        'email': item['email']
     }
