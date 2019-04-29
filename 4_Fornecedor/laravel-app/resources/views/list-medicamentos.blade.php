@@ -111,48 +111,53 @@
                             <li class="active">Medicamentos</li>
                         </ol>
                         <br>
-                        <!--<a href="{{route('fornec.create')}}" 
-                           class="btn btn-default btn-sm pull-right">
-                            <span class="glyphicon glyphicon-plus"></span> Adicionar</a>-->
-                        <!--<a href="" 
-                           class="btn btn-default btn-sm pull-right">
-                            <i class="fa fa-book"></i> Relatório</a>-->
-                         <!--<div id="pesquisa" class="pull-right">
-                            <form class="form-group" method="post" 
-                                  action="#">                                   
-                                <input type="text" name="pesquisar" 
-                                       class="form-control input-sm pull-left" 
-                                       placeholder="Pesquisar por nome..." required> 
-                                <button class="btn btn-default btn-sm pull-right" 
-                                        id="color"> 
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </form>
-                        </div>-->
                     </div>           
                 </div>
+
+                <div id="pesquisa" class="pull-right">
+                    <form class="form-group" method="get" 
+                            action="/medicamento/search">                                
+                        <input type="text" name="descricao" 
+                                class="form-control input-sm pull-left" 
+                                placeholder="Pesquisar por descrição..." required> 
+                        <button type=submit class="btn btn-default btn-sm pull-right" 
+                                id="color"> 
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </form>
+                </div>
+
                 <div class="row">
                     <div class="col-md-12">   
                         <br />
                         <h4 id="center"><b>MEDICAMENTOS CADASTRADOS ({{$total}})</b></h4>
                         <br>
+                        Filtros de Tarja:
+                        <a href="/medicamento?tarja=1">Tarja Preta</a> |
+                        <a href="/medicamento?tarja=2">Tarja Vermelha</a> |
+                        <a href="/medicamento?tarja=3">Venda Livre</a> |
+                        <a href="/medicamento">Limpar filtro</a>
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
 										<th id="center">ID</th>
-                                        <th id="center">Princípio Ativo</th>
-                                        <th id="center">Apresentação</th>
-                                        <th id="center">Ano</th>
+                                        <th id="center">Descrição</th>
+                                        <th id="center">Fabricante</th>
+                                        <th id="center">Classe</th>
+                                        <th id="center">Tipo</th>
+                                        <th id="center">Tarja</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($medicamentos as $medicamento)
                                     <tr>
 									    <td tile="ID" id="center">{{$medicamento->med_id}}</td>
-                                        <td title="Princípio Ativo" id="center">{{$medicamento->med_active_principle}}</td>
-                                        <td title="Apresentação" id="center">{{$medicamento->med_presentation}}</td>
-                                        <td title="Ano" id="center">{{$medicamento->med_marketing_year}}</td>
+                                        <td title="Descrição" id="center">{{$medicamento->med_product_description}}</td>
+                                        <td title="Fabricante" id="center">{{$medicamento->fornecedor->sup_fantasy_name}}</td>
+                                        <td title="Classe" id="center">{{$medicamento->classe_terapeutica->thc_code}}</td>
+                                        <td title="Tipo" id="center">{{$medicamento->tipo_produto->pdt_description}}</td>
+                                        <td title="Tarja" id="center">{{$medicamento->tarja->stp_description}}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

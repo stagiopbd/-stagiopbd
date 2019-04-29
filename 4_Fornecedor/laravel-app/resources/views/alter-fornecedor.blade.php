@@ -51,7 +51,7 @@
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">                           
                             <li><a href="#">Usuários</a></li>                                               
-                            <li><a href="{{route('fornec.index')}}">Fornecedores</a></li>                                               
+                            <li><a href="{{route('fornecedor.index')}}">Fornecedores</a></li>                                               
                             <li><a href="#">Médicos</a></li>
                             <li><a href="#">Pacientes</a></li>
                         </ul>
@@ -106,7 +106,7 @@
                     <div class="col-md-12">
                         <ol class="breadcrumb">
                             <li><a href="">Home</a></li>                  
-                            <li><a href="{{route('fornec.index')}}">Fornecedores</a></li>                  
+                            <li><a href="{{route('fornecedor.index')}}">Fornecedores</a></li>                  
                             <li class="active">Alteração</li>
                         </ol>              
                     </div>          
@@ -116,7 +116,7 @@
                     <h4 id="center"><b>ALTERAÇÃO DOS DADOS DO FORNECEDOR</b></h4>
                     <br> 
                     <form method="post" 
-                          action="{{route('fornec.update', $fornec->sup_id)}}" 
+                          action="{{route('fornecedor.update', $fornecedor->sup_id)}}" 
                           enctype="multipart/form-data">
                         {!! method_field('put') !!}
                         {{ csrf_field() }}
@@ -134,7 +134,7 @@
                                 <label for="razao_social">Razão social</label>
                                 <input type="text" name="razao_social" 
                                        class="form-control" 
-                                       value="{{$fornec->sup_fantasy_name}}"
+                                       value="{{$fornecedor->sup_fantasy_name}}"
                                        required>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                                 <label for="data_abertura">Data de abertura</label>
                                 <input type="date" name="data_abertura" 
                                        class="form-control" 
-                                       value="{{$fornec->sup_open_date}}"
+                                       value="{{$fornecedor->sup_open_date}}"
                                        required>
                             </div>    
                         </div>                 

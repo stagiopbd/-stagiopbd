@@ -15,9 +15,9 @@ class Fornecedor extends Model
     protected $guarded = ['sup_id', 'sup_created_at', 'sup_updated_at'];
     protected $table = 'supplier';
 
-    // relaciona o campo "tipofornecedor_id" com a entidade TipoFornecedor
-    //public function tipofornecedor()
-    //{
-    //    return $this->hasOne(TipoFornecedor::class, 'id', 'tipofornecedores_id');
-    //}
+    public function tipo_fornecedor()
+    {
+       return $this->hasOne('App\TipoFornecedor', 'spt_id', 'sup_spt_id');
+    }
+
 }

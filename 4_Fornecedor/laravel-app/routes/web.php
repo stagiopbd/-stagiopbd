@@ -14,5 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('fornec','FornecedorController');
+Route::resource('fornecedor','FornecedorController');
+Route::get('medicamento/search','MedicamentoController@search');
 Route::resource('medicamento','MedicamentoController');

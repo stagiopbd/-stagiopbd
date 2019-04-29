@@ -53,7 +53,7 @@
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">                           
                             <li><a href="#">Usuários</a></li>                                               
-                            <li><a href="{{route('fornec.index')}}">Fornecedores</a></li>                                               
+                            <li><a href="{{route('fornecedor.index')}}">Fornecedores</a></li>                                               
                             <li><a href="#">Médicos</a></li>
                             <li><a href="#">Pacientes</a></li>
                         </ul>
@@ -111,7 +111,7 @@
                             <li class="active">Fornecedores</li>
                         </ol>
                         <br>
-                        <a href="{{route('fornec.create')}}" 
+                        <a href="{{route('fornecedor.create')}}" 
                            class="btn btn-default btn-sm pull-right">
                             <span class="glyphicon glyphicon-plus"></span> Adicionar</a>
                         <a href="" 
@@ -153,14 +153,14 @@
 									    <td tile="ID" id="center">{{$fornecedor->sup_id}}</td>
                                         <td title="Razão social" id="center">{{$fornecedor->sup_fantasy_name}}</td>
                                         <td title="Data de abertura" id="center">{{$fornecedor->sup_open_date}}</td>
-                                        <td title="Tipo" id="center">{{$fornecedor->sup_spt_id}}</td>
+                                        <td title="Tipo" id="center">{{$fornecedor->tipo_fornecedor->spt_name}}</td>
                                         <td id="center">
-                                            <a href="{{route('fornec.edit', $fornecedor->sup_id)}}" 
+                                            <a href="{{route('fornecedor.edit', $fornecedor->sup_id)}}" 
                                                data-toggle="tooltip" 
                                                data-placement="top"
                                                title="Alterar"><i class="fa fa-pencil"></i></a>
                                             &nbsp;<form style="display: inline-block;" method="POST" 
-                                                        action="{{route('fornec.destroy', $fornecedor->sup_id)}}"                                                        
+                                                        action="{{route('fornecedor.destroy', $fornecedor->sup_id)}}"                                                        
                                                         data-toggle="tooltip" data-placement="top"
                                                         title="Excluir" 
                                                         onsubmit="return confirm('Confirma exclusão?')">

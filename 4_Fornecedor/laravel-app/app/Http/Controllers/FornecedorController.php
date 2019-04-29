@@ -17,7 +17,7 @@ class FornecedorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $fornecedores = Fornecedor::whereNull('sup_deleted_at')->paginate(15);
+        $fornecedores = Fornecedor::whereNull('sup_deleted_at')->with(array('tipo_fornecedor'))->paginate(15);
         $total = Fornecedor::whereNull('sup_deleted_at')->get()->count();
         return view('list-fornecedores', compact('fornecedores', 'total'));
     }
@@ -66,13 +66,13 @@ class FornecedorController extends Controller
 
         $person_fornec = Pessoa::where('psn_cnpjcpf',$request->cnpj)->get()->first();
 
-        $fornec = new Fornecedor;
-        $fornec->sup_fantasy_name = $request->razao_social;
-        $fornec->sup_open_date = $request->data_abertura;
-        $fornec->sup_spt_id = $request->tipo_fornecedores_id;
-        $fornec->sup_psn_id = $person_fornec->psn_id;
-        $fornec->save();
-        return redirect()->route('fornec.index')->with('message', 'Fornecedor cadastrado com sucesso!');
+        $fornecedor = new Fornecedor;
+        $fornecedor->sup_fantasy_name = $request->razao_social;
+        $fornecedor->sup_open_date = $request->data_abertura;
+        $fornecedor->sup_spt_id = $request->tipo_fornecedores_id;
+        $fornecedor->sup_psn_id = $person_fornec->psn_id;
+        $fornecedor->save();
+        return redirect()->route('fornecedor.index')->with('message', 'Fornecedor cadastrado com sucesso!');
     }
 
     /**
@@ -94,10 +94,10 @@ class FornecedorController extends Controller
     */
     public function edit($id)
     {
-       $fornec = Fornecedor::findOrFail($id);
-       $person = Pessoa::findOrFail($fornec->sup_psn_id);
+       $fornecedor = Fornecedor::findOrFail($id);
+       $person = Pessoa::findOrFail($fornecedor->sup_psn_id);
 	   $tiposdefornecedor = TipoFornecedor::all();
-       return view('alter-fornecedor', compact('fornec','tiposdefornecedor','person'));
+       return view('alter-fornecedor', compact('fornecedor','tiposdefornecedor','person'));
     }
    
      /**
@@ -128,8 +128,8 @@ class FornecedorController extends Controller
             return redirect()->back()->withInput();
         }
 
-        $fornec = Fornecedor::findOrFail($id);
-        $person = Pessoa::findOrFail($fornec->sup_psn_id);
+        $fornecedor = Fornecedor::findOrFail($id);
+        $person = Pessoa::findOrFail($fornecedor->sup_psn_id);
 
         $person->psn_name = $request->razao_social;
         $person->psn_cnpjcpf = $request->cnpj;
@@ -137,12 +137,12 @@ class FornecedorController extends Controller
 
         $person_fornec = Pessoa::where('psn_cnpjcpf',$request->cnpj)->get()->first();
 
-        $fornec->sup_fantasy_name = $request->razao_social;
-        $fornec->sup_open_date = $request->data_abertura;
-        $fornec->sup_spt_id = $request->tipo_fornecedores_id;
-        $fornec->sup_psn_id = $person_fornec->psn_id;
-        $fornec->save();
-        return redirect()->route('fornec.index')->with('message', 'Fornecedor alterado com sucesso!');
+        $fornecedor->sup_fantasy_name = $request->razao_social;
+        $fornecedor->sup_open_date = $request->data_abertura;
+        $fornecedor->sup_spt_id = $request->tipo_fornecedores_id;
+        $fornecedor->sup_psn_id = $person_fornec->psn_id;
+        $fornecedor->save();
+        return redirect()->route('fornecedor.index')->with('message', 'Fornecedor alterado com sucesso!');
     }
 	
      /**
@@ -153,9 +153,9 @@ class FornecedorController extends Controller
      */
     public function destroy($id)
     {
-        $fornec = Fornecedor::findOrFail($id);
-        $fornec->sup_deleted_at = now();
-        $fornec->save();
-        return redirect()->route('fornec.index')->with('message', 'Fornecedor deletado com sucesso!');
+        $fornecedor = Fornecedor::findOrFail($id);
+        $fornecedor->sup_deleted_at = now();
+        $fornecedor->save();
+        return redirect()->route('fornecedor.index')->with('message', 'Fornecedor deletado com sucesso!');
     }
 }
