@@ -363,6 +363,10 @@
                 <label for="data-nascimento">Data Nascimento</label>
                 <input type="date" class="form-control" id="data-nascimento" maxlength="120">
             </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" id="email" maxlength="120">
+            </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputCity">Sexo</label>
@@ -419,6 +423,7 @@
             <tr>
                 <th>CPF</th>
                 <th>Nome Completo</th>
+                <th>E-mail</th>
                 <th>Data Nascimento</th>
                 <th>Sexo</th>
                 <th>Tipo Sanguíneo</th>
@@ -445,6 +450,7 @@
                 <tr>
                     <th>CPF</th>
                     <th>Nome Completo</th>
+                    <th>E-mail</th>
                     <th>Data Nascimento</th>
                     <th>Sexo</th>
                     <th>Tipo Sanguíneo</th>
@@ -516,6 +522,7 @@
                         tableHtml += `<tr>
                                 <td>` + data.cpf + `</td>
                                 <td>` + data.nome_completo + `</td>
+                                <td>` + data.email + `</td>
                                 <td>` + data.data_nascimento + `</td>
                                 <td>` + data.sexo + `</td>
                                 <td>` + data.tipo_sanguineo + `</td>
@@ -571,6 +578,7 @@
                 data: JSON.stringify({
                     "cpf": $("#cpf").val(),
                     "nome_completo": $("#nome-completo").val(),
+                    "email": $("#email").val(),
                     "data_nascimento": formatarData($("#data-nascimento").val()),
                     "sexo": $(`#select-sexo  option:selected`).text().toLocaleUpperCase(),
                     "tipo_sanguineo": $(`#select-tipo-sanguineo  option:selected`).text().toLocaleUpperCase()
@@ -606,6 +614,7 @@
             tableHtml = `<tr>
                     <td>` + data.cpf + `</td>
                     <td>` + data.nome_completo + `</td>
+                    <td>` + data.email + `</td>
                     <td>` + data.data_nascimento + `</td>
                     <td>` + data.sexo + `</td>
                     <td>` + data.tipo_sanguineo + `</td>
@@ -665,6 +674,7 @@
             $("#cpf").val(data.cpf)
             $("#cpf").prop("disabled", true);
             $("#nome-completo").val(data.nome_completo)
+            $("#email").val(data.email)
 
             dates = data.data_nascimento.split('/')
             novaData = `${dates[2]}-${dates[1]}-${dates[0]}`
