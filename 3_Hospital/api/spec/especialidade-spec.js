@@ -3,7 +3,7 @@ describe("Speciality", function() {
 	const ESP_DESC = 'Teste: Pediatria';
 	const NEW_ESP_DESC = 'Teste: Oftalmologia';
 
-/**** TC001 *****************************************************************/
+// ** TC001 ******************************************************************
 	it("should create", function(done) {
 		especialidade.destroy({where: {esp_desc: ESP_DESC}}).then(function() {
 			especialidade.create({
@@ -15,7 +15,7 @@ describe("Speciality", function() {
 		});
 	});
 
-/**** TC002 *****************************************************************/
+// ** TC002 ******************************************************************
 	it("should NOT create when speciality already exists", function(done) {
 		especialidade.create({
 			esp_desc: ESP_DESC
@@ -27,8 +27,8 @@ describe("Speciality", function() {
 	  	});
 	});
 
-/**** TC003 *****************************************************************/
-	it("should NOT create when ESP_DESC has less than 10 characters", function(done) {
+// ** TC003 ******************************************************************
+	it("should NOT create when ESP_DESC has less than 5 characters", function(done) {
 		especialidade.create({
 			esp_desc: '123'
 		}).then(function(result) {
@@ -39,7 +39,7 @@ describe("Speciality", function() {
 	  	});
 	});
 
-/**** TC004 *****************************************************************/
+// ** TC004 ******************************************************************
 	it("should NOT create when ESP_DESC is longer than 45 characters", function(done) {
 		especialidade.create({
 			esp_desc: '123456789 123456789 123456789 123456789 123456789 '
@@ -51,7 +51,7 @@ describe("Speciality", function() {
 	  	});
 	});
 
-/**** TC005 *****************************************************************/
+// ** TC005 ******************************************************************
 	it("should update", function(done) {
 		especialidade.update({
 			esp_desc: NEW_ESP_DESC
@@ -63,7 +63,7 @@ describe("Speciality", function() {
 		});
 	});
 
-/**** TC006 *****************************************************************/
+// ** TC006 ******************************************************************
 	it("should NOT update when record does not exist", function(done) {
 		especialidade.update({
 			esp_desc: NEW_ESP_DESC
@@ -75,7 +75,7 @@ describe("Speciality", function() {
 		});
 	});
 
-/**** TC007 *****************************************************************/
+// ** TC007 ******************************************************************
 	it("should delete", function(done) {
 		especialidade.destroy({
 			where: {esp_desc: NEW_ESP_DESC}
@@ -85,7 +85,7 @@ describe("Speciality", function() {
 		});
 	});
 
-/**** TC008 *****************************************************************/
+// ** TC008 ******************************************************************
 	it("should NOT delete when record does not exist", function(done) {
 		especialidade.destroy({
 			where: {esp_id: -1}
