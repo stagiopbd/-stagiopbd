@@ -10,7 +10,7 @@ class Alergia(models.Model):
         (120, 120),
         (240, 240)
     )
-    principio_ativo = models.CharField(max_length=120, unique=True)
+    principio_ativo = models.CharField(max_length=255, unique=True)
     descricao = models.CharField(max_length=120)
     grau_risco = models.IntegerField(choices=COD_MANCHESTER)
 

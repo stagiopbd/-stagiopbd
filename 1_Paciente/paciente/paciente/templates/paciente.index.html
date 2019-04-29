@@ -522,7 +522,7 @@
                         tableHtml += `<tr>
                                 <td>` + data.cpf + `</td>
                                 <td>` + data.nome_completo + `</td>
-                                <td>` + data.email + `</td>
+                                <td>` + (data.email ? data.email : '-') + `</td>
                                 <td>` + data.data_nascimento + `</td>
                                 <td>` + data.sexo + `</td>
                                 <td>` + data.tipo_sanguineo + `</td>
@@ -614,7 +614,7 @@
             tableHtml = `<tr>
                     <td>` + data.cpf + `</td>
                     <td>` + data.nome_completo + `</td>
-                    <td>` + data.email + `</td>
+                    <td>` + (data.email ? data.email : '-') + `</td>
                     <td>` + data.data_nascimento + `</td>
                     <td>` + data.sexo + `</td>
                     <td>` + data.tipo_sanguineo + `</td>
