@@ -1,4 +1,5 @@
 const db = require("./dbConnection")
+const situacao = require("./situacao-model")
 
 const hospital = db.sequelize.define("HOSPITAL", {
     hsp_id: { type: db.Sequelize.INTEGER, primaryKey: true },
@@ -55,7 +56,26 @@ const hospital = db.sequelize.define("HOSPITAL", {
 				msg: 'Telefone deve ser no formato (12) 3456-7890'
 			}
 		}
+	},
+	sit_id:{
+		type: db.Sequelize.INTEGER ,
+		get : function(){
+			if (this.getDataValue('sit_id')== 1)
+				return "Ativo"
+			else
+				return "Inativo"
+			
+		}
+	},
+	hsp_status:{
+		type: db.Sequelize.STRING 
 	}
 })
 
+/*
+hospital.associate = function(situacao) {
+    hospital.hasMany(situacao.sit_id, {as: 'employes'})
+  };
+  */
+  
 module.exports = hospital

@@ -4,6 +4,9 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
 <br>
+<style>
+  .Inativo{color: red}
+</style>
 <table id="listaHospital" class="display" style="width:100%">
   <thead>
     <tr>
@@ -12,18 +15,20 @@
       <th>CNPJ</th>
       <th>Endereco</th>
       <th>Telefone</th>
+      <th>Situação</th>
       <th></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     {{#each hsp}}
-    <tr>
+    <tr class='{{sit_id}}'>
       <td>{{hsp_id}}</td>
       <td>{{nome}}</td>
       <td>{{cnpj}}</td>
       <td>{{endereco}}</td>
       <td>{{telefone}}</td>
+      <td>{{sit_id}}</td>
       <td>
         <button id={{hsp_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
           data-target="#mdUpdate{{hsp_id}}">
@@ -31,10 +36,13 @@
         </button>
       </td>
       <td>
+        {{#ifEquals sit_id "Ativo" }}   
         <button id={{hsp_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
           data-target="#mdDelete{{hsp_id}}">
           <i class="fas fa-trash"></i>
         </button>
+        {{else }}             
+        {{/ifEquals }} 
       </td>
     </tr>
     {{/each}}
@@ -74,6 +82,17 @@
             <label for="inputPhone">Telefone</label>
             <input type="phone" class="form-control phone" name="inputPhone" placeholder="(11) 0000-0000" value="{{telefone}}">
           </div>
+          <div class="form-group">
+            <label for="inputSituacao">Situação</label>
+            <select class="form-control" name="inputSituacao">
+              {{#select sit_id}}
+              
+              <option value="Ativo">Ativo</option>
+              <option value="Inativo">Inativo</option>
+      
+              {{/select}}
+            </select>
+          </div>
           <!--  FIM FORM ATUALIZAÇÃO  --->
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -84,25 +103,27 @@
     </div>
   </div>
 </div>
+
+
 <!-- Modal Delete-->
 <div class="modal fade bd-example-modal-lg" id="mdDelete{{hsp_id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Excluir</h5>
+        <h5 class="modal-title" id="deleteModalLabel">Desativar</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Deseja excluir esse registro?
+        Deseja desativar esse registro?
         Hospital: <span id="info"> {{nome}} </span>
       </div>
       <div class="modal-footer">
-        <form action="/Hospital/Delete/{{hsp_id}}" method="get">
+        <form action="/Hospital/Desativa/{{hsp_id}}" method="get">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="subimit" class="btn btn-danger">Excluir</button>
+          <button type="subimit" class="btn btn-danger">Desativar</button>
         </form>
 
       </div>

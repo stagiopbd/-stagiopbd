@@ -2,7 +2,7 @@ const db = require("./dbConnection");
 
 const situacao = db.sequelize.define("SITUACAO", {
 	sit_id: { type: db.Sequelize.INTEGER, primaryKey: true },
-    sit_desc: {
+  sit_desc: {
 		type: db.Sequelize.STRING,
 		validate: {
 			is: {

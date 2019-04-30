@@ -1,5 +1,6 @@
  'use strict';
 var hospital = require('../models/hospital-model')
+var situacao = require('../models/situacao-model')
 //http://docs.sequelizejs.com/manual/models-usage.html
 
 /**
@@ -19,7 +20,8 @@ exports.post = (req, res, next) => {
         nome: me.inputNome,
         cnpj: me.inputCnpj,
         endereco: me.inputAddress,
-        telefone: me.inputPhone
+        telefone: me.inputPhone,
+        sit_id: 1 //Ativo
     }).then(function(hsp) {
 		res.redirect('/Hospital')
 	}).catch(function(err) {
@@ -45,10 +47,19 @@ exports.post = (req, res, next) => {
  * @apiSuccess {String} Telefone  Telefone do Hospital
  */
 exports.get = (req, res, next) => {
+  
     hospital.findAll({ order: [['Nome', 'ASC']] }).then(function (hsp) {
-        //console.log(hsp)
-        res.render('hospital-lista', { title: 'Lista de Hospitais', hsp: hsp })
+
+        situacao.findAll({ order: [['SIT_DESC', 'ASC']] }).then(function (sit) {
+            //console.log(hsp)
+            //console.log(sit)
+            res.render('hospital-lista', { title: 'Lista de Hospitais', hsp: hsp, sit: sit })
+        })
+
+        
     })
+
+
     //res.render('hospital', { title: 'Cadastro de Hospital' })
 };
 
@@ -84,7 +95,8 @@ exports.update =  (req, res, next) => {
             nome: me.inputNome,
             cnpj: me.inputCnpj,
             endereco: me.inputAddress,
-            telefone: me.inputPhone
+            telefone: me.inputPhone,
+            sit_id: me.inputSituacao == "Ativo" ? 1 : 2
         },
         {returning: true, where: {HSP_ID: req.params.id} }
     ).then(function(hsp) {
@@ -108,6 +120,28 @@ exports.delete = (req, res, next) => {
   		res.redirect('/Hospital')
   	}).catch(function(err) {
 		err.message = 'Hospital nao pode ser removido!';
+  		next(err)
+  	})
+}
+
+
+/**
+ * @api {post} /hospital/desativa/:id 06-Desativacao
+ * @apiName exports.update
+ * @apiGroup Hospital
+ * @apiDescription Desativa um hospital do banco de dados.
+ * Em caso de sucesso, redirecionao o usu&aacute;rio &agrave; lista de hospitais.
+ */
+exports.desativa =  (req, res, next) => {   
+    hospital.update(
+        {
+            sit_id: 2
+        },
+        {returning: true, where: {HSP_ID: req.params.id} }
+    ).then(function(hsp) {
+  		res.redirect('/Hospital')
+  	}).catch(function(err) {
+		err.message = 'Hospital nao pode ser alterado!';
   		next(err)
   	})
 }

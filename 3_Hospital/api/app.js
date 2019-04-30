@@ -1,7 +1,27 @@
 //bibliotecas principais
 const express = require('express');
 const app = express(); //cria e configura a aplicacao
-const handlebars = require("express-handlebars")
+var handlebars = require("express-handlebars")
+
+var hbs = handlebars.create({
+  defaultLayout: "main",
+  // Specify helpers which are only registered on this instance.
+  helpers: {
+      select: function(value, options) {
+        return options.fn(this)
+          .split('\n')
+          .map(function(v) {
+            var t = 'value="' + value + '"'
+            return ! RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"')
+          })
+          .join('\n')
+      },
+      ifEquals: function(arg1, arg2, options){
+        return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+      }
+  }
+});
+
 const bodyParser = require('body-parser')
 
 //Outras bibliotecas
@@ -12,7 +32,7 @@ var logger = require('morgan');
 
 //configuracoes gerais
   // view engine setup
-  app.engine("handlebars", handlebars({defaultLayout: "main"}))
+  app.engine("handlebars", hbs.engine)
   app.set('view engine', 'handlebars');
 
   // body Parser
