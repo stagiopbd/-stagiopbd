@@ -1,0 +1,11 @@
+#Nesta tabela é necessário ter um relacionamento entre paciente e os sintomas que apresentar. 
+#Um paciente pode ter um ou muito sintomas.
+#IDENTIFICADOR PACIENTE 	SINTOMAS
+
+
+CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_has_symptoms` (
+  `symptoms_id` INT NOT NULL AUTO_INCREMENT,
+  `symptoms` VARCHAR(45) NULL,
+  `symptoms_description` VARCHAR(45) NULL,
+  PRIMARY KEY (`symptoms_id`))
+ENGINE = InnoDB

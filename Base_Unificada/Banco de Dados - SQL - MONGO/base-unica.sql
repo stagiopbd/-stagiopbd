@@ -10,10 +10,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema logic685_stagiopbd
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema logic685_stagiopbd
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `logic685_stagiopbd` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 USE `logic685_stagiopbd` ;
 
@@ -419,3 +415,14 @@ DEFAULT CHARACTER SET = utf8mb4;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- -----------------------------------------------------
+-- Table `logic685_stagiopbd`.`patient_has_symptoms`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_has_symptoms` (
+  `symptoms_id` INT NOT NULL AUTO_INCREMENT,
+  `symptoms` VARCHAR(45) NULL,
+  `symptoms_description` VARCHAR(45) NULL,
+  PRIMARY KEY (`symptoms_id`))
+ENGINE = InnoDB
