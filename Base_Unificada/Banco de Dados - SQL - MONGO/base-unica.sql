@@ -421,8 +421,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- Table `logic685_stagiopbd`.`patient_has_symptoms`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_has_symptoms` (
-  `symptoms_id` INT NOT NULL AUTO_INCREMENT,
+  `symptoms_id` INT NOT NULL,
   `symptoms` VARCHAR(45) NULL,
-  `symptoms_description` VARCHAR(45) NULL,
   PRIMARY KEY (`symptoms_id`))
 ENGINE = InnoDB
