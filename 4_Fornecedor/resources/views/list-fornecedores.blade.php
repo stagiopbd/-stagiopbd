@@ -53,7 +53,7 @@
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">                           
                             <li><a href="#">Usuários</a></li>                                               
-                            <li><a href="{{route('fornec.index')}}">Fornecedores</a></li>                                               
+                            <li><a href="{{route('fornecedor.index')}}">Fornecedores</a></li>                                               
                             <li><a href="#">Médicos</a></li>
                             <li><a href="#">Pacientes</a></li>
                         </ul>
@@ -111,7 +111,7 @@
                             <li class="active">Fornecedores</li>
                         </ol>
                         <br>
-                        <a href="{{route('fornec.create')}}" 
+                        <a href="{{route('fornecedor.create')}}" 
                            class="btn btn-default btn-sm pull-right">
                             <span class="glyphicon glyphicon-plus"></span> Adicionar</a>
                         <a href="" 
@@ -137,11 +137,10 @@
                         <h4 id="center"><b>FORNECEDORES CADASTRADOS ({{$total}})</b></h4>
                         <br>
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
 										<th id="center">ID</th>
-                                        <th id="center">CNPJ</th>
                                         <th id="center">Razão social</th>
                                         <th id="center">Data de abertura</th>
                                         <th id="center">Tipo</th>
@@ -151,18 +150,17 @@
                                 <tbody>
                                     @foreach($fornecedores as $fornecedor)
                                     <tr>
-									    <td tile="ID" id="center">{{$fornecedor->id}}</td>
-                                        <td title="CNPJ" id="center">{{$fornecedor->cnpj}}</td>
-                                        <td title="Razão social" id="center">{{$fornecedor->razao_social}}</td>
-                                        <td title="Data de abertura" id="center">{{$fornecedor->data_abertura}}</td>
-                                        <td title="Tipo" id="center">{{$fornecedor->tipofornecedores_id}}</td>
+									    <td tile="ID" id="center">{{$fornecedor->sup_id}}</td>
+                                        <td title="Razão social" id="center">{{$fornecedor->sup_fantasy_name}}</td>
+                                        <td title="Data de abertura" id="center">{{$fornecedor->sup_open_date}}</td>
+                                        <td title="Tipo" id="center">{{$fornecedor->tipo_fornecedor->spt_name}}</td>
                                         <td id="center">
-                                            <a href="{{route('fornec.edit', $fornecedor->id)}}" 
+                                            <a href="{{route('fornecedor.edit', $fornecedor->sup_id)}}" 
                                                data-toggle="tooltip" 
                                                data-placement="top"
                                                title="Alterar"><i class="fa fa-pencil"></i></a>
                                             &nbsp;<form style="display: inline-block;" method="POST" 
-                                                        action="{{route('fornec.destroy', $fornecedor->id)}}"                                                        
+                                                        action="{{route('fornecedor.destroy', $fornecedor->sup_id)}}"                                                        
                                                         data-toggle="tooltip" data-placement="top"
                                                         title="Excluir" 
                                                         onsubmit="return confirm('Confirma exclusão?')">
@@ -174,6 +172,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {{ $fornecedores->links() }}
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\TipoFornecedor;
 use App\Fornecedor;
+use App\Pessoa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
@@ -16,10 +17,8 @@ class FornecedorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-		$fornecedores = Fornecedor::whereNull('deleted_at')->get();
-		$total = Fornecedor::whereNull('deleted_at')->get()->count();
-        //$fornecedores = Fornecedor::all();
-        //$total = Fornecedor::all()->count();
+        $fornecedores = Fornecedor::whereNull('sup_deleted_at')->with(array('tipo_fornecedor'))->paginate(15);
+        $total = Fornecedor::whereNull('sup_deleted_at')->get()->count();
         return view('list-fornecedores', compact('fornecedores', 'total'));
     }
 	
@@ -30,7 +29,7 @@ class FornecedorController extends Controller
      */
     public function create()
     {
-		$tiposdefornecedor = TipoFornecedor::all();
+        $tiposdefornecedor = TipoFornecedor::all();
         return view('include-fornecedor', compact('tiposdefornecedor'));
     }
 
@@ -40,19 +39,19 @@ class FornecedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	public function store(Request $request)
+    public function store(Request $request)
     {
-		/* Remove a máscara e converte o CNPJ para apenas números */
-		$cpnj_num = preg_replace("/[^0-9]/", "", $request->cnpj );
-		$request->merge([
-			'cnpj' => $cpnj_num,
-		]);
+	   /* Remove a máscara e converte o CNPJ para apenas números */
+	   $cpnj_num = preg_replace("/[^0-9]/", "", $request->cnpj );
+	   $request->merge([
+            'cnpj' => $cpnj_num,
+	   ]);
 		
-		$validator = Validator::make($request->all(), [
-           'cnpj' => 'required|string|digits:14|unique:fornecedores,cnpj',
-           'razao_social' => 'required|string|max:191',
-		   'data_abertura' => 'required',	
-           'tipofornecedores_id' => 'required'
+	   $validator = Validator::make($request->all(), [
+            'cnpj' => 'required|string|digits:14|unique:person,psn_cnpjcpf',
+            'razao_social' => 'required|string|max:100',
+            'data_abertura' => 'required',	
+            'tipo_fornecedores_id' => 'required'
         ]);
         
         if ($validator->fails()) {
@@ -60,13 +59,20 @@ class FornecedorController extends Controller
             return redirect()->back()->withInput();
         }
 		
-        $fornec = new Fornecedor;
-        $fornec->razao_social = $request->razao_social;
-        $fornec->data_abertura = $request->data_abertura;
-        $fornec->cnpj = $request->cnpj;
-        $fornec->tipofornecedores_id = $request->tipofornecedores_id;
-        $fornec->save();
-        return redirect()->route('fornec.index')->with('message', 'Fornecedor cadastrado com sucesso!');
+        $person = new Pessoa;
+        $person->psn_name = $request->razao_social;
+        $person->psn_cnpjcpf = $request->cnpj;
+        $person->save();
+
+        $person_fornec = Pessoa::where('psn_cnpjcpf',$request->cnpj)->get()->first();
+
+        $fornecedor = new Fornecedor;
+        $fornecedor->sup_fantasy_name = $request->razao_social;
+        $fornecedor->sup_open_date = $request->data_abertura;
+        $fornecedor->sup_spt_id = $request->tipo_fornecedores_id;
+        $fornecedor->sup_psn_id = $person_fornec->psn_id;
+        $fornecedor->save();
+        return redirect()->route('fornecedor.index')->with('message', 'Fornecedor cadastrado com sucesso!');
     }
 
     /**
@@ -86,12 +92,13 @@ class FornecedorController extends Controller
     * @param  \App\Fornecedor  $fornecedor
     * @return \Illuminate\Http\Response
     */
-   public function edit($id)
-   {
-       $fornec = Fornecedor::findOrFail($id);
+    public function edit($id)
+    {
+       $fornecedor = Fornecedor::findOrFail($id);
+       $person = Pessoa::findOrFail($fornecedor->sup_psn_id);
 	   $tiposdefornecedor = TipoFornecedor::all();
-       return view('alter-fornecedor', compact('fornec','tiposdefornecedor'));
-   }
+       return view('alter-fornecedor', compact('fornecedor','tiposdefornecedor','person'));
+    }
    
      /**
      * Update the specified resource in storage.
@@ -103,35 +110,42 @@ class FornecedorController extends Controller
     public function update(Request $request, $id)
     {
 		
-		/* Remove a máscara e converte o CNPJ para apenas números */
-		$cpnj_num = preg_replace("/[^0-9]/", "", $request->cnpj );
-		$request->merge([
-			'cnpj' => $cpnj_num,
-		]);
-		
-		$validator = Validator::make($request->all(), [
-           'cnpj' => 'required|string|digits:14|unique:fornecedores,cnpj',
-           'razao_social' => 'required|string|max:191',
-		   'data_abertura' => 'required',	
-           'tipofornecedores_id' => 'required'
+       /* Remove a máscara e converte o CNPJ para apenas números */
+       $cpnj_num = preg_replace("/[^0-9]/", "", $request->cnpj );
+       $request->merge([
+            'cnpj' => $cpnj_num,
+       ]);
+        
+       $validator = Validator::make($request->all(), [
+            'cnpj' => 'required|string|digits:14|unique:person,psn_cnpjcpf',
+            'razao_social' => 'required|string|max:100',
+            'data_abertura' => 'required',  
+            'tipo_fornecedores_id' => 'required'
         ]);
         
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());
             return redirect()->back()->withInput();
         }
-		
-		
-        $fornec = Fornecedor::findOrFail($id);
-        $fornec->razao_social = $request->razao_social;
-        $fornec->data_abertura = $request->data_abertura;
-        $fornec->cnpj = $request->cnpj;
-        $fornec->tipofornecedores_id = $request->tipofornecedores_id;
-        $fornec->save();
-        return redirect()->route('fornec.index')->with('message', 'Fornecedor alterado com sucesso!');
+
+        $fornecedor = Fornecedor::findOrFail($id);
+        $person = Pessoa::findOrFail($fornecedor->sup_psn_id);
+
+        $person->psn_name = $request->razao_social;
+        $person->psn_cnpjcpf = $request->cnpj;
+        $person->save();
+
+        $person_fornec = Pessoa::where('psn_cnpjcpf',$request->cnpj)->get()->first();
+
+        $fornecedor->sup_fantasy_name = $request->razao_social;
+        $fornecedor->sup_open_date = $request->data_abertura;
+        $fornecedor->sup_spt_id = $request->tipo_fornecedores_id;
+        $fornecedor->sup_psn_id = $person_fornec->psn_id;
+        $fornecedor->save();
+        return redirect()->route('fornecedor.index')->with('message', 'Fornecedor alterado com sucesso!');
     }
 	
-	 /**
+     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Fornecedor  $fornecedor
@@ -139,9 +153,9 @@ class FornecedorController extends Controller
      */
     public function destroy($id)
     {
-        $fornec = Fornecedor::findOrFail($id);
-        $fornec->deleted_at = now();
-		$fornec->save();
-        return redirect()->route('fornec.index')->with('message', 'Fornecedor deletado com sucesso!');
+        $fornecedor = Fornecedor::findOrFail($id);
+        $fornecedor->sup_deleted_at = now();
+        $fornecedor->save();
+        return redirect()->route('fornecedor.index')->with('message', 'Fornecedor deletado com sucesso!');
     }
 }

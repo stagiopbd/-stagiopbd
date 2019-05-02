@@ -52,7 +52,7 @@
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">                           
                             <li><a href="#">Usuários</a></li>                                               
-                            <li><a href="{{route('fornec.index')}}">Fornecedores</a></li>                                               
+                            <li><a href="{{route('fornecedor.index')}}">Fornecedores</a></li>                                               
                             <li><a href="#">Médicos</a></li>
                             <li><a href="#">Pacientes</a></li>
                         </ul>
@@ -107,7 +107,7 @@
                     <div class="col-md-12">
                         <ol class="breadcrumb">
                             <li><a href="">Home</a></li>                  
-                            <li><a href="{{route('fornec.index')}}">Fornecedores</a></li>                  
+                            <li><a href="{{route('fornecedor.index')}}">Fornecedores</a></li>                  
                             <li class="active">Cadastro</li>
                         </ol>              
                     </div>          
@@ -117,7 +117,7 @@
                     <h4 id="center"><b>CADASTRO DOS DADOS DO FORNECEDOR</b></h4>
                     <br> 
                     <form method="post" 
-                          action="{{route('fornec.store')}}" 
+                          action="{{route('fornecedor.store')}}" 
                           enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="col-md-6">              
@@ -146,12 +146,10 @@
                         </div>                 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="tipofornecedores_id"> Tipo </label>
-                               <!-- <input type="number" name="tipofornecedores_id"                               
-                                       class="form-control min="0" oninput="validity.valid||(value='');"> -->
-								<select name="tipofornecedores_id" class="form-control">
+                                <label for="tipo_fornecedores_id"> Tipo </label>
+								<select name="tipo_fornecedores_id" class="form-control">
 								@foreach($tiposdefornecedor as $tipo)
-								<option value="{{$tipo->id}}">{{$tipo->nome}}</option>
+								<option value="{{$tipo->spt_id}}">{{$tipo->spt_name}}</option>
 								@endforeach
 								</select>
                             </div>
