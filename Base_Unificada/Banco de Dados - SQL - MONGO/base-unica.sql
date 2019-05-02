@@ -7,15 +7,12 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
--- Schema logic685_stagiopbd
--- -----------------------------------------------------
+
+--################## Schema logic685_stagiopbd ##################
 CREATE SCHEMA IF NOT EXISTS `logic685_stagiopbd` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 USE `logic685_stagiopbd` ;
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`allergy`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`allergy` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`allergy` (
   `alg_id` INT NOT NULL,
   `med_active_principle` MEDIUMTEXT NULL,
@@ -25,9 +22,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`allergy` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`bedroom`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`bedroom` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`bedroom` (
   `bed_id` INT NOT NULL,
   `wng_id` INT NOT NULL,
@@ -48,9 +43,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`bedroom` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`hospital`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`hospital` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`hospital` (
   `hsp_id` INT NOT NULL,
   `hsp_cnpj` VARCHAR(20) NOT NULL,
@@ -75,9 +68,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`hospital` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`hospital_sittuation`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`hospital_sittuation` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`hospital_sittuation` (
   `sit_id` INT NOT NULL,
   `sit_description` VARCHAR(45) NULL,
@@ -88,9 +79,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`hospital_sittuation` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`hospital_wing`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`hospital_wing` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`hospital_wing` (
   `wng_id` INT NOT NULL,
   `wng_type` VARCHAR(45) NULL,
@@ -119,9 +108,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`hospital_wing` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`medical_speciality`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`medical_speciality` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`medical_speciality` (
   `msp_code` INT NOT NULL,
   `msp_name` VARCHAR(127) NOT NULL,
@@ -129,9 +116,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`medical_speciality` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`medicine`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`medicine` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`medicine` (
   `med_id` INT NOT NULL AUTO_INCREMENT,
   `med_active_principle` MEDIUMTEXT NULL,
@@ -178,9 +163,8 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`medicine` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`password_resets`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`password_resets` ##################
+
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`password_resets` (
   `email` VARCHAR(255) NOT NULL,
   `token` VARCHAR(255) NOT NULL,
@@ -190,9 +174,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`patient`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`patient` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient` (
   `pat_cpf` VARCHAR(11) NOT NULL,
   `pat_name` VARCHAR(200) NOT NULL,
@@ -210,9 +192,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`patient_has_allergy`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`patient_has_allergy` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_has_allergy` (
   `pat_cpf` VARCHAR(11) NOT NULL,
   `alg_id` INT NOT NULL,
@@ -234,9 +214,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_has_allergy` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`patient_health`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`patient_health` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_health` (
   `pat_cpf` VARCHAR(11) NOT NULL,
   `phl_weight` FLOAT NOT NULL,
@@ -255,9 +233,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_health` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`person`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`person` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`person` (
   `per_id` INT NOT NULL AUTO_INCREMENT,
   `per_name` VARCHAR(100) NOT NULL,
@@ -279,9 +255,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`person` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`physician`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`physician` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`physician` (
   `phy_cpf` VARCHAR(11) NOT NULL,
   `phy_name` VARCHAR(200) NOT NULL,
@@ -299,9 +273,8 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`physician` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`physician_speciality`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`physician_speciality` ##################
+
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`physician_speciality` (
   `msp_code` INT NOT NULL,
   `phy_cpf` VARCHAR(11) NOT NULL,
@@ -320,9 +293,8 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`physician_speciality` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`product_type`
--- -----------------------------------------------------
+
+--################## Table `logic685_stagiopbd`.`product_type` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`product_type` (
   `pdt_id` INT NOT NULL AUTO_INCREMENT,
   `pdt_description` VARCHAR(30) NULL,
@@ -330,9 +302,8 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`product_type` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`stripe`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`stripe` ##################
+
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`stripe` (
   `stp_id` INT NOT NULL AUTO_INCREMENT,
   `stp_description` VARCHAR(15) NULL,
@@ -340,9 +311,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`stripe` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`supplier`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`supplier` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`supplier` (
   `sup_id` INT NOT NULL AUTO_INCREMENT,
   `sup_fantasy_name` VARCHAR(100) NOT NULL,
@@ -368,9 +337,7 @@ AUTO_INCREMENT = 14
 DEFAULT CHARACTER SET = utf8mb4;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`supplier_type`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`supplier_type` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`supplier_type` (
   `spt_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `spt_name` VARCHAR(128) NOT NULL,
@@ -383,9 +350,7 @@ AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8mb4;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`therapeutic_class`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`therapeutic_class` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`therapeutic_class` (
   `thc_id` INT NOT NULL AUTO_INCREMENT,
   `thc_descripition` VARCHAR(120) NULL,
@@ -394,9 +359,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`therapeutic_class` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`users`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`users` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`users` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
@@ -412,16 +375,20 @@ AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8mb4;
 
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`patient_has_symptoms`
--- -----------------------------------------------------
+--################## Table `logic685_stagiopbd`.`patient_has_symptoms` ##################
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_has_symptoms` (
   `symptoms_id` INT NOT NULL,
   `symptoms` VARCHAR(45) NULL,
   PRIMARY KEY (`symptoms_id`))
 ENGINE = InnoDB
+
+
+
+
+
+
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
