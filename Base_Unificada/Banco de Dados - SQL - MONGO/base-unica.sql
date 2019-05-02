@@ -216,27 +216,12 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`medicalconsultation`
+-- Table `logic685_stagiopbd`.`patient_has_symptoms`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`medicalconsultation` (
-  `cns_id` INT(11) NOT NULL,
-  `cns_objectives` VARCHAR(255) NULL DEFAULT NULL,
-  `cns_comments` VARCHAR(255) NULL DEFAULT NULL,
-  `cns_consultationDate` DATE NULL DEFAULT NULL,
-  `cns_createdAt` DATETIME NOT NULL,
-  `cns_updatedAt` DATETIME NOT NULL,
-  `cns_cid10_id` INT(10) NOT NULL,
-  `patient_pat_cpf` VARCHAR(11) NOT NULL,
-  `physician_phy_cpf` VARCHAR(11) NOT NULL,
-  PRIMARY KEY (`cns_id`),
-  INDEX `fk_medicalconsultation_patient1_idx` (`patient_pat_cpf` ASC) VISIBLE,
-  INDEX `fk_medicalconsultation_physician1_idx` (`physician_phy_cpf` ASC) VISIBLE,
-  CONSTRAINT `fk_medicalconsultation_patient1`
-    FOREIGN KEY (`patient_pat_cpf`)
-    REFERENCES `logic685_stagiopbd`.`patient` (`pat_cpf`),
-  CONSTRAINT `fk_medicalconsultation_physician1`
-    FOREIGN KEY (`physician_phy_cpf`)
-    REFERENCES `logic685_stagiopbd`.`physician` (`phy_cpf`))
+CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_has_symptoms` (
+  `symptoms_id` INT(11) NOT NULL,
+  `symptoms` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`symptoms_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -259,17 +244,53 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`medicalconsultationdiagnosis` (
   `mcd_id` INT(11) NOT NULL,
-  `medicalconsultation_cns_id` INT(11) NOT NULL,
   `medicaldiagnosis_cid_id` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`mcd_id`),
-  INDEX `fk_medicalconsultationdiagnosis_medicalconsultation1_idx` (`medicalconsultation_cns_id` ASC) VISIBLE,
   INDEX `fk_medicalconsultationdiagnosis_medicaldiagnosis1_idx` (`medicaldiagnosis_cid_id` ASC) VISIBLE,
-  CONSTRAINT `fk_medicalconsultationdiagnosis_medicalconsultation1`
-    FOREIGN KEY (`medicalconsultation_cns_id`)
-    REFERENCES `logic685_stagiopbd`.`medicalconsultation` (`cns_id`),
   CONSTRAINT `fk_medicalconsultationdiagnosis_medicaldiagnosis1`
     FOREIGN KEY (`medicaldiagnosis_cid_id`)
     REFERENCES `logic685_stagiopbd`.`medicaldiagnosis` (`cid_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `logic685_stagiopbd`.`medicalconsultation`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`medicalconsultation` (
+  `cns_id` INT(11) NOT NULL,
+  `cns_objectives` VARCHAR(255) NULL DEFAULT NULL,
+  `cns_comments` VARCHAR(255) NULL DEFAULT NULL,
+  `cns_consultationDate` DATE NULL DEFAULT NULL,
+  `cns_createdAt` DATETIME NOT NULL,
+  `cns_updatedAt` DATETIME NOT NULL,
+  `cns_cid10_id` INT(10) NOT NULL,
+  `patient_pat_cpf` VARCHAR(11) NOT NULL,
+  `physician_phy_cpf` VARCHAR(11) NOT NULL,
+  `patient_has_symptoms_symptoms_id` INT(11) NOT NULL,
+  `medicalconsultationdiagnosis_mcd_id` INT(11) NOT NULL,
+  PRIMARY KEY (`cns_id`),
+  INDEX `fk_medicalconsultation_patient1_idx` (`patient_pat_cpf` ASC) VISIBLE,
+  INDEX `fk_medicalconsultation_physician1_idx` (`physician_phy_cpf` ASC) VISIBLE,
+  INDEX `fk_medicalconsultation_patient_has_symptoms1_idx` (`patient_has_symptoms_symptoms_id` ASC) VISIBLE,
+  INDEX `fk_medicalconsultation_medicalconsultationdiagnosis1_idx` (`medicalconsultationdiagnosis_mcd_id` ASC) VISIBLE,
+  CONSTRAINT `fk_medicalconsultation_patient1`
+    FOREIGN KEY (`patient_pat_cpf`)
+    REFERENCES `logic685_stagiopbd`.`patient` (`pat_cpf`),
+  CONSTRAINT `fk_medicalconsultation_physician1`
+    FOREIGN KEY (`physician_phy_cpf`)
+    REFERENCES `logic685_stagiopbd`.`physician` (`phy_cpf`),
+  CONSTRAINT `fk_medicalconsultation_patient_has_symptoms1`
+    FOREIGN KEY (`patient_has_symptoms_symptoms_id`)
+    REFERENCES `logic685_stagiopbd`.`patient_has_symptoms` (`symptoms_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_medicalconsultation_medicalconsultationdiagnosis1`
+    FOREIGN KEY (`medicalconsultationdiagnosis_mcd_id`)
+    REFERENCES `logic685_stagiopbd`.`medicalconsultationdiagnosis` (`mcd_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -445,23 +466,6 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_has_allergy` (
   CONSTRAINT `fk_patient_has_allergy_patient1`
     FOREIGN KEY (`pat_cpf`)
     REFERENCES `logic685_stagiopbd`.`patient` (`pat_cpf`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `logic685_stagiopbd`.`patient_has_symptoms`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_has_symptoms` (
-  `symptoms_id` INT(11) NOT NULL,
-  `symptoms` VARCHAR(45) NULL DEFAULT NULL,
-  `medicalconsultation_cns_id` INT(11) NOT NULL,
-  PRIMARY KEY (`symptoms_id`),
-  INDEX `fk_patient_has_symptoms_medicalconsultation1_idx` (`medicalconsultation_cns_id` ASC) VISIBLE,
-  CONSTRAINT `fk_patient_has_symptoms_medicalconsultation1`
-    FOREIGN KEY (`medicalconsultation_cns_id`)
-    REFERENCES `logic685_stagiopbd`.`medicalconsultation` (`cns_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
