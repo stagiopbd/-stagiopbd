@@ -440,10 +440,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `logic685_stagiopbd`.`password_resets`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`password_resets` (
-  `email` VARCHAR(255) NOT NULL,
-  `token` VARCHAR(255) NOT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT NULL,
-  INDEX `password_resets_idx` (`email`(191) ASC) VISIBLE)
+  `psw_email` VARCHAR(255) NOT NULL,
+  `psw_token` VARCHAR(255) NOT NULL,
+  `psw_created_at` TIMESTAMP NULL DEFAULT NULL,
+  INDEX `password_resets_idx` (`psw_email`(191) ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -456,7 +456,7 @@ CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`patient_has_allergy` (
   `pat_cpf` VARCHAR(11) NOT NULL,
   `alg_id` INT(11) NOT NULL,
   `dgn_id` INT(11) NULL DEFAULT NULL,
-  `date` DATE NOT NULL,
+  `alg_date` DATE NOT NULL,
   PRIMARY KEY (`pat_cpf`, `alg_id`),
   INDEX `fk_patient_has_allergy_allergy1_idx` (`alg_id` ASC) VISIBLE,
   INDEX `fk_patient_has_allergy_patient1_idx` (`pat_cpf` ASC) VISIBLE,
@@ -494,15 +494,15 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `logic685_stagiopbd`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `logic685_stagiopbd`.`users` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(128) NOT NULL,
-  `password` VARCHAR(255) NOT NULL,
-  `remember_token` VARCHAR(100) NOT NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `email` (`email` ASC) VISIBLE)
+  `usr_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `usr_name` VARCHAR(255) NOT NULL,
+  `usr_email` VARCHAR(128) NOT NULL,
+  `usr_password` VARCHAR(255) NOT NULL,
+  `usr_remember_token` VARCHAR(100) NOT NULL,
+  `usr_created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usr_updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`usr_id`),
+  UNIQUE INDEX `usr_email` (`usr_email` ASC) VISIBLE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8mb4
