@@ -9,7 +9,6 @@ use App\ClasseTerapeutica;
 use App\Tarja;
 use App\TipoFornecedor;
 use App\TipoProduto;
-
 use Illuminate\Console\Command;
 
 class Producer extends Command
@@ -26,7 +25,7 @@ class Producer extends Command
      *
      * @var string
      */
-    protected $description = 'Produces data for Kafka Server';
+    protected $description = 'Produz dados para um servidor Kafka';
 
     /**
      * Create a new command instance.
@@ -49,90 +48,68 @@ class Producer extends Command
         $producer->setLogLevel(LOG_DEBUG);
         $producer->addBrokers("kafka:9093");
         $topic = $producer->newTopic("det-fornecedor");
-
-        //Time start
+        //Contagem do tempo de início da produção
         $start = \microtime(true);
         $count = 0;
 
+        //Dados do tipo de fornecedor
         foreach(TipoFornecedor::all() as $key => $obj):
             $obj['type'] = 'supplier_type';
-            $message =  $key . ' ' . $obj;
-            echo $obj;
-
+            $message = $obj;
             $count++;
-            echo "\n----------\n";
-
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
         endforeach;
 
+        //Dados das pessoas (jurídicas)
         foreach(Pessoa::all() as $key => $obj):
             $obj['type'] = 'person';
-            $message =  $key . ' ' . $obj;
-            echo $obj;
-
+            $message = $obj;
             $count++;
-            echo "\n----------\n";
-
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
         endforeach;
 
+        //Dados dos fornecedores
         foreach(Fornecedor::all() as $key => $obj):
             $obj['type'] = 'supplier';
-            $message =  $key . ' ' . $obj;
-            echo $obj;
-
+            $message = $obj;
             $count++;
-            echo "\n----------\n";
-
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
         endforeach;
 
+        //Dados das classes terapêuticas
         foreach(ClasseTerapeutica::all() as $key => $obj):
             $obj['type'] = 'therapeutic_class';
-            $message =  $key . ' ' . $obj;
-            echo $obj;
-
+            $message = $obj;
             $count++;
-            echo "\n----------\n";
-
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
         endforeach;
 
+        //Dados dos tipos de produto
         foreach(TipoProduto::all() as $key => $obj):
             $obj['type'] = 'product_type';
-            $message =  $key . ' ' . $obj;
-            echo $obj;
-
+            $message = $obj;
             $count++;
-            echo "\n----------\n";
-
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
         endforeach;
 
+        //Dados das tarjas de medicamento
         foreach(Tarja::all() as $key => $obj): 
             $obj['type'] = 'stripe';
-            $message =  $key . ' ' . $obj;  
-            echo $obj;
-
+            $message = $obj;  
             $count++;
-            echo "\n----------\n";
-
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
         endforeach;
 
+        //Dados dos medicamentos
         foreach(Medicamento::all() as $key => $obj):
             $obj['type'] = 'medicine';
-            $message =  $key . ' ' . $obj;
-            echo $obj;
-
+            $message = $obj;
             $count++;
-            echo "\n----------\n";
-
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
         endforeach;
 
+        //Contagem do tempo de fim da produção
         $duration = \microtime(true) - $start;
-
-        echo "Produced {$count} messages in {$duration} seconds" . PHP_EOL;
+        echo "{$count} mensagens produzidas em {$duration} segundos" . PHP_EOL;
     }
 }
