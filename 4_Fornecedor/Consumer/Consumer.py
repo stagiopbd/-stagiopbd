@@ -6,9 +6,17 @@ import mysql.connector
 import json
 import re
 
-cnx = mysql.connector.connect(user='stagiopbduser', password='stagiopbdmysql**', host='localhost', database='stagiopbd_dev')
+# Confirmar se a base existe e se os dados de acesso estão corretos
+cnx = mysql.connector.connect(user='root', password='stagiopbdmysql**', host='localhost', database='stagiopbd_dev2')
 
-consumer = KafkaConsumer('det-fornecedor')
+# Se cadastra no tópico "det-fornecedor" do servidor Kafka apontado em bootstrap_servers.
+# Demais parâmetros garantem que quando executar novamente irá ler somente mensagens recentes.
+consumer = KafkaConsumer('det-fornecedor', bootstrap_servers=['localhost:9092'],
+                         auto_offset_reset='earliest', enable_auto_commit=True,
+                         auto_commit_interval_ms=1000, group_id='fornecedor',
+                         value_deserializer=lambda m: json.loads(m.decode('utf-8')))
+
+# Conexão com o banco MySQL
 cursor = cnx.cursor()
 
 add_stripe = ("INSERT INTO stripe "
@@ -47,22 +55,22 @@ add_therapeutic_class = ("INSERT INTO therapeutic_class "
 "ON DUPLICATE KEY UPDATE thc_id = %(thc_id)s")
 
 for msg in consumer:
-    data = json.loads(msg.value)
+    data = msg.value
 
-    if data["type"] == "stripe":
-        cursor.execute(add_stripe, data)
-    elif data["type"] == "medicine":
-        cursor.execute(add_medicine, data)
-    elif data["type"] == "person":
-        cursor.execute(add_person, data)
-    elif data["type"] == "product_type":
+    if data["type"] == "product_type":
         cursor.execute(add_product_type, data)
-    elif data["type"] == "supplier":
-       cursor.execute(add_supplier, data)
     elif data["type"] == "supplier_type":
         cursor.execute(add_supplier_type, data)
+    elif data["type"] == "stripe":
+        cursor.execute(add_stripe, data)
     elif data["type"] == "therapeutic_class":
         cursor.execute(add_therapeutic_class, data)
+    elif data["type"] == "person":
+        cursor.execute(add_person, data)
+    elif data["type"] == "supplier":
+       cursor.execute(add_supplier, data)
+    elif data["type"] == "medicine":
+        cursor.execute(add_medicine, data)
 
     cnx.commit()
 
