@@ -62,7 +62,7 @@ class Producer extends Command
             $count++;
             echo "\n----------\n";
 
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
         endforeach;
 
         foreach(Pessoa::all() as $key => $obj):
@@ -73,7 +73,7 @@ class Producer extends Command
             $count++;
             echo "\n----------\n";
 
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
         endforeach;
 
         foreach(Fornecedor::all() as $key => $obj):
@@ -84,7 +84,7 @@ class Producer extends Command
             $count++;
             echo "\n----------\n";
 
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
         endforeach;
 
         foreach(ClasseTerapeutica::all() as $key => $obj):
@@ -95,7 +95,7 @@ class Producer extends Command
             $count++;
             echo "\n----------\n";
 
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
         endforeach;
 
         foreach(TipoProduto::all() as $key => $obj):
@@ -106,7 +106,7 @@ class Producer extends Command
             $count++;
             echo "\n----------\n";
 
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
         endforeach;
 
         foreach(Tarja::all() as $key => $obj): 
@@ -117,7 +117,7 @@ class Producer extends Command
             $count++;
             echo "\n----------\n";
 
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
         endforeach;
 
         foreach(Medicamento::all() as $key => $obj):
@@ -128,7 +128,7 @@ class Producer extends Command
             $count++;
             echo "\n----------\n";
 
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $obj);
         endforeach;
 
         $duration = \microtime(true) - $start;
