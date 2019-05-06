@@ -1,11 +1,12 @@
 describe("Wing", function() {
+	var leito = require('../models/leito-model');
 	var ala = require('../models/ala-model');
 	var hospital = require('../models/hospital-model');
 	var especialidade = require('../models/especialidade-model');
 	var situacao = require('../models/situacao-model');
 
-	const ALA_TIPO = 'Teste: Ala 01';
-	const NEW_ALA_TIPO = 'Teste: Ala 02';
+	const LEI = 'Teste: Leito 01';
+	const NEW_LEI = 'Teste: Leito 02';
 
 	beforeAll(function(done) {
 		Promise.all([
@@ -18,15 +19,27 @@ describe("Wing", function() {
 			}),
 			especialidade.create({
 				esp_id: -100,
-				esp_desc: 'TDD: ALA'
+				esp_desc: 'TDD: LEITO'
 			}),
 			situacao.create({
 				sit_id: -100,
-				sit_desc: 'TDD: ALA'
+				sit_desc: 'TDD: LEITO'
 			})
 		]).then(function() {
-			console.log('Setup complete!');
-			done();
+			ala.create({
+				ala_id: -100,
+				hsp_id: -100,
+				sit_id: -100,
+				esp_id: -100,
+				ala_tipo: 'TDD: LEITO'
+			}).then(function() {
+				console.log('Setup complete!');
+				done();
+			}).catch(function(err) {
+				console.log('Setup failed!');
+				console.log(err);
+				done();
+			})
 		}).catch(function(err) {
 			console.log('Setup failed!');
 			console.log(err);
@@ -35,14 +48,20 @@ describe("Wing", function() {
 	});
 
 	afterAll(function(done) {
-		ala.destroy({ where: { HSP_ID: -100 } }, { truncate: true }).then(function() {
-			Promise.all([
-				hospital.destroy({ where: { HSP_ID: -100 } }, { truncate: true }),
-				especialidade.destroy({ where: { ESP_ID: -100 } }, { truncate: true }),
-				situacao.destroy({ where: { SIT_ID: -100 } }, { truncate: true })
-			]).then(function() {
-				console.log('Reset complete!');
-				done();
+		leito.destroy({ where: { ALA_ID: -100 } }, { truncate: true }).then(function() {
+			ala.destroy({ where: { HSP_ID: -100 } }, { truncate: true }).then(function() {
+				Promise.all([
+					hospital.destroy({ where: { HSP_ID: -100 } }, { truncate: true }),
+					especialidade.destroy({ where: { ESP_ID: -100 } }, { truncate: true }),
+					situacao.destroy({ where: { SIT_ID: -100 } }, { truncate: true })
+				]).then(function() {
+					console.log('Reset complete!');
+					done();
+				}).catch(function(err) {
+					console.log('Reset failed!');
+					console.log(err);
+					done();
+				});
 			}).catch(function(err) {
 				console.log('Reset failed!');
 				console.log(err);
@@ -57,26 +76,22 @@ describe("Wing", function() {
 
 // ** TC001 ******************************************************************
 	it("should create", function(done) {
-		ala.destroy({where: {hsp_id: -100, ala_tipo: ALA_TIPO}}).then(function() {
-			ala.create({
-				hsp_id: -100,
-				sit_id: -100,
-				esp_id: -100,
-				ala_tipo: ALA_TIPO
+		leito.destroy({where: {ala_id: -100, lei: LEI}}).then(function() {
+			leito.create({
+				ala_id: -100,
+				lei: LEI
 			}).then(function(result) {
-				expect(result.ala_tipo).toBe(ALA_TIPO);
+				expect(result.lei).toBe(LEI);
 				done();
 			});
 		});
 	});
 
 // ** TC002 *****************************************************************
-	it("should NOT create when wing already exists in the same hospital", function(done) {
-		ala.create({
-			hsp_id: -100,
-			sit_id: -100,
-			esp_id: -100,
-			ala_tipo: ALA_TIPO
+	it("should NOT create when bed already exists in the same wing", function(done) {
+		leito.create({
+			ala_id: -100,
+			lei: LEI
 		}).then(function(result) {
 			fail('Registro equivocadamente inserido');
 			done();
@@ -86,12 +101,10 @@ describe("Wing", function() {
 	});
 
 // ** TC003 *****************************************************************
-	it("should NOT create when ALA_TIPO has less than 5 characters", function(done) {
-		ala.create({
-			hsp_id: -100,
-			sit_id: -100,
-			esp_id: -100,
-			ala_tipo: '123'
+	it("should NOT create when LEI has less than 5 characters", function(done) {
+		leito.create({
+	        ala_id: -100,
+	        lei: '123'
 		}).then(function(result) {
 			fail('Registro equivocadamente inserido');
 			done();
@@ -101,12 +114,10 @@ describe("Wing", function() {
 	});
 
 // ** TC004 ******************************************************************
-	it("should NOT create when ALA_TIPO is longer than 45 characters", function(done) {
-		ala.create({
-			hsp_id: -100,
-			sit_id: -100,
-			esp_id: -100,
-			ala_tipo: '123456789 123456789 123456789 123456789 123456789 '
+	it("should NOT create when LEI is longer than 45 characters", function(done) {
+		leito.create({
+			ala_id: -100,
+			lei: '123456789 123456789 123456789 123456789 123456789 '
 		}).then(function(result) {
 			fail('Registro equivocadamente inserido');
 			done();
@@ -117,10 +128,10 @@ describe("Wing", function() {
 
 // ** TC005 ******************************************************************
 	it("should update", function(done) {
-		ala.update({
-			ala_tipo: NEW_ALA_TIPO
+		leito.update({
+        	lei: NEW_LEI
 		}, {
-			where: {hsp_id: -100, ala_tipo: ALA_TIPO}
+			where: {ala_id: -100, lei: 'Teste: Leito 01'}
 		}).then(function(result) {
 			expect(result[0]).toBe(1); // Numero de registros alterados
 			done();
@@ -129,8 +140,8 @@ describe("Wing", function() {
 
 // ** TC006 ******************************************************************
 	it("should NOT update when record does not exist", function(done) {
-		ala.update({
-			ala_tipo: NEW_ALA_TIPO
+		leito.update({
+			lei: NEW_LEI
 		}, {
 			where: {ala_id: -1}
 		}).then(function(result) {
@@ -141,8 +152,8 @@ describe("Wing", function() {
 
 // ** TC007 ******************************************************************
 	it("should delete", function(done) {
-		ala.destroy({
-			where: {hsp_id: -100, ala_tipo: NEW_ALA_TIPO}
+		leito.destroy({
+			where: {ala_id: -100, lei: NEW_LEI}
 		}).then(function(result) {
 			expect(result).toBe(1); // Numero de registros removidos
 			done();
@@ -151,7 +162,7 @@ describe("Wing", function() {
 
 // ** TC008 ******************************************************************
 	it("should NOT delete when record does not exist", function(done) {
-		ala.destroy({
+		leito.destroy({
 			where: {ala_id: -1}
 		}).then(function(result) {
 			expect(result).toBe(0); // Numero de registros removidos
