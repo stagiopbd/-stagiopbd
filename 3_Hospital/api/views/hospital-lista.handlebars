@@ -7,6 +7,9 @@
 <style>
   .Inativo{color: red}
 </style>
+<p>
+	<a href="/Hospital/Cadastro" class="btn btn-primary">Cadastrar novo Hospital</a>
+</p>
 <table id="listaHospital" class="display" style="width:100%">
   <thead>
     <tr>
@@ -15,7 +18,7 @@
       <th>CNPJ</th>
       <th>Endereco</th>
       <th>Telefone</th>
-      <th>Situação</th>
+      <th>Situa&ccedil;&atilde;o</th>
       <th></th>
       <th></th>
     </tr>
@@ -36,13 +39,13 @@
         </button>
       </td>
       <td>
-        {{#ifEquals sit_id "Ativo" }}   
+        {{#ifEquals sit_id "Ativo" }}
         <button id={{hsp_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
           data-target="#mdDelete{{hsp_id}}">
           <i class="fas fa-trash"></i>
         </button>
-        {{else }}             
-        {{/ifEquals }} 
+        {{else }}
+        {{/ifEquals }}
       </td>
     </tr>
     {{/each}}
@@ -62,12 +65,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <!-- FORM ATUALIZAÇÃO  -->
+        <!-- FORM ATUALIZA&Atilde;�&Atilde;�O  -->
         <form action="/Hospital/Update/edit/{{hsp_id}}" method="post">
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="inputNome">Nome</label>
-              <input type="text" class="form-control" name="inputNome" placeholder="Razão Social" value="{{nome}}">
+              <input type="text" class="form-control" name="inputNome" placeholder="Raz&Atilde;o Social" value="{{nome}}">
             </div>
             <div class="form-group col-md-12">
               <label for="inputCnpj">CNPJ</label>
@@ -75,7 +78,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="inputAddress">Endereço</label>
+            <label for="inputAddress">Endere&Atilde;�o</label>
             <input type="text" class="form-control" name="inputAddress" placeholder="1234 Main St" value="{{endereco}}">
           </div>
           <div class="form-group">
@@ -83,17 +86,17 @@
             <input type="phone" class="form-control phone" name="inputPhone" placeholder="(11) 0000-0000" value="{{telefone}}">
           </div>
           <div class="form-group">
-            <label for="inputSituacao">Situação</label>
+            <label for="inputSituacao">Situa&ccedil;&atilde;o</label>
             <select class="form-control" name="inputSituacao">
               {{#select sit_id}}
-              
+
               <option value="Ativo">Ativo</option>
               <option value="Inativo">Inativo</option>
-      
+
               {{/select}}
             </select>
           </div>
-          <!--  FIM FORM ATUALIZAÇÃO  --->
+          <!--  FIM FORM ATUALIZA&Atilde;�&Atilde;�O  --->
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             <button type="submit" class="btn btn-success">Atualizar</button>
@@ -123,7 +126,7 @@
       <div class="modal-footer">
         <form action="/Hospital/Desativa/{{hsp_id}}" method="get">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="subimit" class="btn btn-danger">Desativar</button>
+          <button type="submit" class="btn btn-danger">Desativar</button>
         </form>
 
       </div>
@@ -139,7 +142,7 @@
 /*
   $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
-  }) */ 
+  }) */
   $('.cnpj').mask('99.999.999/9999-99', { reverse: true });
   $('.phone').mask('(99) 9999-9999', { reverse: false });
 
