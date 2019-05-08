@@ -4,6 +4,9 @@
 echo "Installing dependencies"
 composer install > /dev/null 2>&1
 
+echo "Generating encryption key"
+php artisan key:generate > /dev/null 2>&1
+
 echo -e '############'
 php artisan dbconnection
 echo -e '############'
@@ -13,6 +16,7 @@ while true; do
     cmd=`php artisan dbconnection`
     echo Output: $cmd
     if [[ $cmd == "success" ]]; then
+        echo exiting
         break
     fi
     sleep .5
