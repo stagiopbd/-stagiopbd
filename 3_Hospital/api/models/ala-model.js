@@ -1,11 +1,8 @@
 const db = require("./dbConnection");
 
-const ala = db.sequelize.define("ALA", {
-    ala_id: { type: db.Sequelize.INTEGER, primaryKey: true },
-    hsp_id: { type: db.Sequelize.INTEGER },
-    sit_id: { type: db.Sequelize.INTEGER },
-    esp_id: { type: db.Sequelize.INTEGER },
-    ala_tipo: {
+const ala = db.sequelize.define("wing", {
+    wng_id: { type: db.Sequelize.INTEGER, primaryKey: true },
+    wng_desc: {
 		type: db.Sequelize.STRING,
 		validate: {
 			is: {
@@ -13,7 +10,10 @@ const ala = db.sequelize.define("ALA", {
 				msg: 'Ala deve conter entre 5 e 45 caracteres alfanumericos'
 			}
 		}
-	}
+	},
+	wng_hsp_id: { type: db.Sequelize.INTEGER },
+	wng_sit_id: { type: db.Sequelize.INTEGER },
+	wng_spc_id: { type: db.Sequelize.INTEGER }
 });
 
 module.exports = ala;

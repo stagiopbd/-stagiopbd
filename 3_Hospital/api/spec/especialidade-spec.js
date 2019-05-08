@@ -16,7 +16,7 @@ describe("Speciality", function() {
 	});
 
 // ** TC002 ******************************************************************
-	it("should NOT create when speciality already exists", function(done) {
+	it("should NOT create when SPC_DESC already exists", function(done) {
 		especialidade.create({
 			spc_desc: SPC_DESC
 		}).then(function(result) {

@@ -5,33 +5,34 @@ describe("Wing", function() {
 	var especialidade = require('../models/especialidade-model');
 	var situacao = require('../models/situacao-model');
 
-	const LEI = 'Teste: Leito 01';
-	const NEW_LEI = 'Teste: Leito 02';
+	const BED_DESC = 'Teste: Leito 01';
+	const NEW_BED_DESC = 'Teste: Leito 02';
 
 	beforeAll(function(done) {
 		Promise.all([
 			hospital.create({
 				hsp_id: -100,
-				nome: 'Hospital 1',
-				cnpj: '41.419.836/0001-02',
-				endereco: 'Atalaia Leste do Mar, Muralha',
-				telefone: '(12) 3456-7890'
+				hsp_name: 'Hospital 1',
+				hsp_cnpj: '41.419.836/0001-02',
+				hsp_address: 'Atalaia Leste do Mar, Muralha',
+				hsp_telephone: '(12) 3456-7890',
+				hsp_sit_id: 1
 			}),
 			especialidade.create({
-				esp_id: -100,
-				esp_desc: 'TDD: LEITO'
+				spc_id: -100,
+				spc_desc: 'TDD: BED_DESCTO'
 			}),
 			situacao.create({
 				sit_id: -100,
-				sit_desc: 'TDD: LEITO'
+				sit_desc: 'TDD: ALA'
 			})
 		]).then(function() {
 			ala.create({
-				ala_id: -100,
-				hsp_id: -100,
-				sit_id: -100,
-				esp_id: -100,
-				ala_tipo: 'TDD: LEITO'
+				wng_id: -100,
+				wng_hsp_id: -100,
+				wng_sit_id: -100,
+				wng_spc_id: -100,
+				wng_desc: 'TDD: BED_DESCTO'
 			}).then(function() {
 				console.log('Setup complete!');
 				done();
@@ -48,12 +49,12 @@ describe("Wing", function() {
 	});
 
 	afterAll(function(done) {
-		leito.destroy({ where: { ALA_ID: -100 } }, { truncate: true }).then(function() {
-			ala.destroy({ where: { HSP_ID: -100 } }, { truncate: true }).then(function() {
+		leito.destroy({ where: { bed_wng_id: -100 } }, { truncate: true }).then(function() {
+			ala.destroy({ where: { wng_hsp_id: -100 } }, { truncate: true }).then(function() {
 				Promise.all([
-					hospital.destroy({ where: { HSP_ID: -100 } }, { truncate: true }),
-					especialidade.destroy({ where: { ESP_ID: -100 } }, { truncate: true }),
-					situacao.destroy({ where: { SIT_ID: -100 } }, { truncate: true })
+					hospital.destroy({ where: { hsp_id: -100 } }, { truncate: true }),
+					especialidade.destroy({ where: { spc_id: -100 } }, { truncate: true }),
+					situacao.destroy({ where: { sit_id: -100 } }, { truncate: true })
 				]).then(function() {
 					console.log('Reset complete!');
 					done();
@@ -76,12 +77,12 @@ describe("Wing", function() {
 
 // ** TC001 ******************************************************************
 	it("should create", function(done) {
-		leito.destroy({where: {ala_id: -100, lei: LEI}}).then(function() {
+		leito.destroy({where: {bed_wng_id: -100, bed_desc: BED_DESC}}).then(function() {
 			leito.create({
-				ala_id: -100,
-				lei: LEI
+				bed_wng_id: -100,
+				bed_desc: BED_DESC
 			}).then(function(result) {
-				expect(result.lei).toBe(LEI);
+				expect(result.bed_desc).toBe(BED_DESC);
 				done();
 			});
 		});
@@ -90,8 +91,8 @@ describe("Wing", function() {
 // ** TC002 *****************************************************************
 	it("should NOT create when bed already exists in the same wing", function(done) {
 		leito.create({
-			ala_id: -100,
-			lei: LEI
+			bed_wng_id: -100,
+			bed_desc: BED_DESC
 		}).then(function(result) {
 			fail('Registro equivocadamente inserido');
 			done();
@@ -101,10 +102,10 @@ describe("Wing", function() {
 	});
 
 // ** TC003 *****************************************************************
-	it("should NOT create when LEI has less than 5 characters", function(done) {
+	it("should NOT create when BED_DESC has less than 5 characters", function(done) {
 		leito.create({
-	        ala_id: -100,
-	        lei: '123'
+	        bed_wng_id: -100,
+	        bed_desc: '123'
 		}).then(function(result) {
 			fail('Registro equivocadamente inserido');
 			done();
@@ -114,10 +115,10 @@ describe("Wing", function() {
 	});
 
 // ** TC004 ******************************************************************
-	it("should NOT create when LEI is longer than 45 characters", function(done) {
+	it("should NOT create when BED_DESC is longer than 45 characters", function(done) {
 		leito.create({
-			ala_id: -100,
-			lei: '123456789 123456789 123456789 123456789 123456789 '
+			bed_wng_id: -100,
+			bed_desc: '123456789 123456789 123456789 123456789 123456789 '
 		}).then(function(result) {
 			fail('Registro equivocadamente inserido');
 			done();
@@ -129,9 +130,9 @@ describe("Wing", function() {
 // ** TC005 ******************************************************************
 	it("should update", function(done) {
 		leito.update({
-        	lei: NEW_LEI
+        	bed_desc: NEW_BED_DESC
 		}, {
-			where: {ala_id: -100, lei: 'Teste: Leito 01'}
+			where: {bed_wng_id: -100, bed_desc: 'Teste: Leito 01'}
 		}).then(function(result) {
 			expect(result[0]).toBe(1); // Numero de registros alterados
 			done();
@@ -141,9 +142,9 @@ describe("Wing", function() {
 // ** TC006 ******************************************************************
 	it("should NOT update when record does not exist", function(done) {
 		leito.update({
-			lei: NEW_LEI
+			bed_desc: NEW_BED_DESC
 		}, {
-			where: {ala_id: -1}
+			where: {bed_wng_id: -1}
 		}).then(function(result) {
 			expect(result[0]).toBe(0); // Numero de registros alterados
 			done();
@@ -153,7 +154,7 @@ describe("Wing", function() {
 // ** TC007 ******************************************************************
 	it("should delete", function(done) {
 		leito.destroy({
-			where: {ala_id: -100, lei: NEW_LEI}
+			where: {bed_wng_id: -100, bed_desc: NEW_BED_DESC}
 		}).then(function(result) {
 			expect(result).toBe(1); // Numero de registros removidos
 			done();
@@ -163,7 +164,7 @@ describe("Wing", function() {
 // ** TC008 ******************************************************************
 	it("should NOT delete when record does not exist", function(done) {
 		leito.destroy({
-			where: {ala_id: -1}
+			where: {bed_wng_id: -1}
 		}).then(function(result) {
 			expect(result).toBe(0); // Numero de registros removidos
 			done();
