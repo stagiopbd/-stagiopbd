@@ -20,33 +20,33 @@ USE `kiizj5q0n6quilvc` ;
 -- -----------------------------------------------------
 -- Table `kiizj5q0n6quilvc`.`SITUATION`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`SITUATION` (
-  `SIT_ID` INT NOT NULL AUTO_INCREMENT,
-  `SIT_DESC` VARCHAR(45) NULL,
-  `SIT_Vagas` VARCHAR(45) NULL,
-  `SIT_Medicos` VARCHAR(45) NULL,
-  `SIT_Disp` VARCHAR(45) NULL COMMENT 'Este atributo tem como objetivo saber a disponibilidade do Hospital ou Ala',
-  PRIMARY KEY (`SIT_ID`))
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`situation` (
+  `sit_id` INT NOT NULL AUTO_INCREMENT,
+  `sit_desc` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`sit_id`),
+  UNIQUE INDEX `sit_desc_unique` (`sit_desc` ASC))
 ENGINE = InnoDB;
 
+INSERT INTO `kiizj5q0n6quilvc`.`situation` VALUES (1, 'Ativo');
+INSERT INTO `kiizj5q0n6quilvc`.`situation` VALUES (0, 'Inativo');
+COMMIT;
 
 -- -----------------------------------------------------
 -- Table `kiizj5q0n6quilvc`.`HOSPITAL`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`HOSPITAL` (
-  `HSP_ID` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `HSP_CNPJ` VARCHAR(20) NOT NULL COMMENT 'Campo de CNPJ',
-  `HSP_NAME` VARCHAR(100) NOT NULL COMMENT 'Nome do Hospital',
-  `HSP_ADDRESS` VARCHAR(200) NOT NULL COMMENT 'Endereço do Hospital',
-  `HSP_TELEPHONE` VARCHAR(30) NOT NULL COMMENT 'Telefone do Hospital',
-  `SIT_ID` INT NULL,
-  `HSP_STATUS` VARCHAR(45) NULL COMMENT 'Status do Hospital',
-  PRIMARY KEY (`HSP_ID`),
-  INDEX `fk_HOSPITAL_SITUATION_idx` (`SIT_ID` ASC),
-  UNIQUE INDEX `CNPJ_UNIQUE` (`HSP_CNPJ` ASC),
-  CONSTRAINT `fk_HOSPITAL_SITUACAO`
-    FOREIGN KEY (`SIT_ID`)
-    REFERENCES `kiizj5q0n6quilvc`.`SITUATION` (`SIT_ID`)
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`hospital` (
+  `hsp_id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `hsp_cnpj` VARCHAR(20) NOT NULL COMMENT 'Campo de CNPJ',
+  `hsp_name` VARCHAR(100) NOT NULL COMMENT 'Nome do Hospital',
+  `hsp_address` VARCHAR(200) NOT NULL COMMENT 'Endereco do Hospital',
+  `hsp_telephone` VARCHAR(30) NOT NULL COMMENT 'Telefone do Hospital',
+  `hsp_sit_id` INT NOT NULL,
+  PRIMARY KEY (`hsp_id`),
+  INDEX `fk_hospital_situation_idx` (`hsp_sit_id` ASC),
+  UNIQUE INDEX `hsp_cnpj_unique` (`hsp_cnpj` ASC),
+  CONSTRAINT `fk_hospital_situation`
+    FOREIGN KEY (`hsp_sit_id`)
+    REFERENCES `kiizj5q0n6quilvc`.`situation` (`sit_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -55,39 +55,41 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `kiizj5q0n6quilvc`.`SPECIALITY`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`SPECIALITY` (
-  `SPC_ID` INT NOT NULL AUTO_INCREMENT,
-  `SPC_DESC` VARCHAR(45) NULL COMMENT 'Descricao da Especialidade',
-  PRIMARY KEY (`SPC_ID`))
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`speciality` (
+  `spc_id` INT NOT NULL AUTO_INCREMENT,
+  `spc_desc` VARCHAR(45) NOT NULL COMMENT 'Descricao da Especialidade',
+  PRIMARY KEY (`spc_id`),
+  UNIQUE INDEX `spc_desc_unique` (`spc_desc` ASC))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `kiizj5q0n6quilvc`.`WING`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`WING` (
-  `WNG_ID` INT NOT NULL AUTO_INCREMENT,
-  `HSP_ID` INT NOT NULL,
-  `SIT_ID` INT NOT NULL,
-  `SPC_ID` INT NOT NULL,
-  `WNG_Tipo` VARCHAR(45) NULL COMMENT '# Tipo de Ala:\n\nAmbulatório\nEnfermaria\nEspecial',
-  PRIMARY KEY (`WNG_ID`),
-  INDEX `fk_WING_HOSPITAL1_idx` (`HSP_ID` ASC),
-  INDEX `fk_WING_SITUATION1_idx` (`SIT_ID` ASC),
-  INDEX `fk_WING_SPECIALITY1_idx` (`SPC_ID` ASC),
-  CONSTRAINT `fk_ALA_HOSPITAL1`
-    FOREIGN KEY (`HSP_ID`)
-    REFERENCES `kiizj5q0n6quilvc`.`HOSPITAL` (`HSP_ID`)
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`wing` (
+  `wng_id` INT NOT NULL AUTO_INCREMENT,
+  `wng_desc` VARCHAR(45) NOT NULL COMMENT 'Descricao da Ala',
+  `wng_hsp_id` INT NOT NULL,
+  `wng_sit_id` INT NOT NULL,
+  `wng_spc_id` INT NOT NULL,
+  PRIMARY KEY (`wng_id`),
+  UNIQUE INDEX `wng_desc_unique` (`wng_hsp_id` ASC, `wng_desc` ASC),
+  INDEX `fk_wing_hospital1_idx` (`wng_hsp_id` ASC),
+  INDEX `fk_wing_situation1_idx` (`wng_sit_id` ASC),
+  INDEX `fk_wing_speciality1_idx` (`wng_spc_id` ASC),
+  CONSTRAINT `fk_wing_hospital1`
+    FOREIGN KEY (`wng_hsp_id`)
+    REFERENCES `kiizj5q0n6quilvc`.`hospital` (`hsp_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ALA_SITUACAO1`
-    FOREIGN KEY (`SIT_ID`)
-    REFERENCES `kiizj5q0n6quilvc`.`SITUATION` (`SIT_ID`)
+  CONSTRAINT `fk_wing_situation1`
+    FOREIGN KEY (`wng_sit_id`)
+    REFERENCES `kiizj5q0n6quilvc`.`situation` (`sit_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ALA_ESPECIALIDADE1`
-    FOREIGN KEY (`SPC_ID`)
-    REFERENCES `kiizj5q0n6quilvc`.`SPECIALITY` (`SPC_ID`)
+  CONSTRAINT `fk_wing_speciality1`
+    FOREIGN KEY (`wng_spc_id`)
+    REFERENCES `kiizj5q0n6quilvc`.`speciality` (`spc_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -96,34 +98,36 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `kiizj5q0n6quilvc`.`PATIENT`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`PATIENT` (
-  `PAT_CPF` VARCHAR(11) NOT NULL,
-  `PAT_NAME` VARCHAR(200) NULL COMMENT 'Nome do Paciente',
-  `PAT_GENDER` VARCHAR(1) NULL COMMENT 'Data de Nascimento',
-  `PAT_BLOOD_TYPE` VARCHAR(1) NULL COMMENT 'Genero/Sexo do Paciente',
-  `PAT_BIRTHDATE` DATE NULL COMMENT 'Cidade do Paciente',
-  PRIMARY KEY (`PAT_CPF`))
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`patient` (
+  `pat_cpf` VARCHAR(11) NOT NULL,
+  `pat_name` VARCHAR(200) NOT NULL COMMENT 'Nome do Paciente',
+  `pat_gender` VARCHAR(1) NULL COMMENT 'Genero do Paciente',
+  `pat_blood_type` VARCHAR(2) NULL COMMENT 'Tipo sanguineo e fator RH do Paciente',
+  `pat_birthdate` DATE NULL COMMENT 'Data de Nascimento',
+  PRIMARY KEY (`pat_cpf`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `kiizj5q0n6quilvc`.`BED`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`BED` (
-  `BED_ID` INT NOT NULL AUTO_INCREMENT,
-  `WNG_ID` INT NOT NULL,
-  `PAT_CPF` INT NULL,
-  PRIMARY KEY (`BED_ID`),
-  INDEX `fk_BED_WING1_idx` (`WNG_ID` ASC),
-  INDEX `fk_BED_PATIENT1_idx` (`PAT_CPF` ASC),
-  CONSTRAINT `fk_LEITO_ALA1`
-    FOREIGN KEY (`WNG_ID`)
-    REFERENCES `kiizj5q0n6quilvc`.`WING` (`WNG_ID`)
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`bed` (
+  `bed_id` INT NOT NULL AUTO_INCREMENT,
+  `bed_desc` VARCHAR(45) NOT NULL COMMENT 'Descricao do Leito',
+  `bed_wng_id` INT NOT NULL,
+  `bed_pat_cpf` VARCHAR(11) NULL,
+  PRIMARY KEY (`bed_id`),
+  UNIQUE INDEX `bed_desc_unique` (`bed_wng_id` ASC, `bed_desc` ASC),
+  INDEX `fk_bed_wing1_idx` (`bed_wng_id` ASC),
+  INDEX `fk_bed_patient1_idx` (`bed_pat_cpf` ASC),
+  CONSTRAINT `fk_bed_wing1`
+    FOREIGN KEY (`bed_wng_id`)
+    REFERENCES `kiizj5q0n6quilvc`.`wing` (`wng_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_LEITO_PACIENTE1`
-    FOREIGN KEY (`PAT_CPF`)
-    REFERENCES `kiizj5q0n6quilvc`.`PATIENT` (`PAT_CPF`)
+  CONSTRAINT `fk_bed_patient1`
+    FOREIGN KEY (`bed_pat_cpf`)
+    REFERENCES `kiizj5q0n6quilvc`.`patient` (`pat_cpf`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

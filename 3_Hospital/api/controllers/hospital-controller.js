@@ -17,20 +17,17 @@ var situacao = require('../models/situacao-model')
 exports.post = (req, res, next) => {
     var me = req.body;
     hospital.create({
-        nome: me.inputNome,
-        cnpj: me.inputCnpj,
-        endereco: me.inputAddress,
-        telefone: me.inputPhone,
-        sit_id: 1 //Ativo
+        hsp_name: me.inputNome,
+        hsp_cnpj: me.inputCnpj,
+        hsp_address: me.inputAddress,
+        hsp_telephone: me.inputPhone,
+        hsp_sit_id: 1 //Ativo
     }).then(function(hsp) {
 		res.redirect('/Hospital')
 	}).catch(function(err) {
 		err.message = 'Hospital nao pode ser cadastrado!';
 		next(err)
 	})
-    //console.log(req.body)
-    //res.send('seja bem vindo. ' + req.body.inputPhone)
-
 };
 
 /**
@@ -47,16 +44,9 @@ exports.post = (req, res, next) => {
  * @apiSuccess {String} Telefone  Telefone do Hospital
  */
 exports.get = (req, res, next) => {
-  
-    hospital.findAll({ order: [['Nome', 'ASC']] }).then(function (hsp) {
 
-        situacao.findAll({ order: [['SIT_DESC', 'ASC']] }).then(function (sit) {
-            //console.log(hsp)
-            //console.log(sit)
-            res.render('hospital-lista', { title: 'Lista de Hospitais', hsp: hsp, sit: sit })
-        })
-
-        
+    hospital.findAll({ order: [['hsp_name', 'ASC']] }).then(function (hsp) {
+        res.render('hospital-lista', { title: 'Lista de Hospitais', hsp: hsp })
     })
 
 
@@ -64,7 +54,7 @@ exports.get = (req, res, next) => {
 };
 
 /**
- * @api {get} /hospital/cadastro 02-Cadastro
+ * @api {get} /hospital/new 02-Cadastro
  * @apiName exports.cadastro
  * @apiGroup Hospital
  * @apiDescription Disponibiliza um formul&aacute;rio HTML para o cadastro das seguintes informa&ccedil;&otilde;es de um hospital.
@@ -73,7 +63,7 @@ exports.get = (req, res, next) => {
  * @apiSuccess {String} Endereco  Endere&ccedil;o completo do Hospital
  * @apiSuccess {String} Telefone  Telefone do Hospital
  */
-exports.cadastro = (req, res, next) => {
+exports.new = (req, res, next) => {
     res.render('hospital-cadastro', { title: 'Cadastro de Hospital' })
 };
 
@@ -92,11 +82,11 @@ exports.update =  (req, res, next) => {
     var me = req.body;
     hospital.update(
         {
-            nome: me.inputNome,
-            cnpj: me.inputCnpj,
-            endereco: me.inputAddress,
-            telefone: me.inputPhone,
-            sit_id: me.inputSituacao == "Ativo" ? 1 : 2
+            hsp_name: me.inputNome,
+            hsp_cnpj: me.inputCnpj,
+            hsp_address: me.inputAddress,
+            hsp_telephone: me.inputPhone,
+            hsp_sit_id: me.inputSituacao
         },
         {returning: true, where: {HSP_ID: req.params.id} }
     ).then(function(hsp) {
@@ -115,29 +105,11 @@ exports.update =  (req, res, next) => {
  * Em caso de sucesso, redirecionao o usu&aacute;rio &agrave; lista de hospitais.
  */
 exports.delete = (req, res, next) => {
-    hospital.destroy({ where: { HSP_ID: req.params.id } }, { truncate: true }
-	).then(function() {
-  		res.redirect('/Hospital')
-  	}).catch(function(err) {
-		err.message = 'Hospital nao pode ser removido!';
-  		next(err)
-  	})
-}
-
-
-/**
- * @api {post} /hospital/desativa/:id 06-Desativacao
- * @apiName exports.update
- * @apiGroup Hospital
- * @apiDescription Desativa um hospital do banco de dados.
- * Em caso de sucesso, redirecionao o usu&aacute;rio &agrave; lista de hospitais.
- */
-exports.desativa =  (req, res, next) => {   
-    hospital.update(
+	hospital.update(
         {
-            sit_id: 2
+            hsp_sit_id: 2
         },
-        {returning: true, where: {HSP_ID: req.params.id} }
+        {returning: true, where: {hsp_id: req.params.id} }
     ).then(function(hsp) {
   		res.redirect('/Hospital')
   	}).catch(function(err) {

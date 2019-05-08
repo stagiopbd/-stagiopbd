@@ -3,7 +3,7 @@ const situacao = require("./situacao-model")
 
 const hospital = db.sequelize.define("HOSPITAL", {
     hsp_id: { type: db.Sequelize.INTEGER, primaryKey: true },
-    nome: {
+    hsp_name: {
 		type: db.Sequelize.STRING,
 		validate: {
 			is: {
@@ -12,7 +12,7 @@ const hospital = db.sequelize.define("HOSPITAL", {
 			}
 		}
 	},
-    cnpj: {
+    hsp_cnpj: {
 		type: db.Sequelize.STRING,
 		validate: {
 			is: {
@@ -39,7 +39,7 @@ const hospital = db.sequelize.define("HOSPITAL", {
 			}
 		}
 	},
-    endereco: {
+    hsp_address: {
 		type: db.Sequelize.STRING,
 		validate: {
 			is: {
@@ -48,7 +48,7 @@ const hospital = db.sequelize.define("HOSPITAL", {
 			}
 		}
 	},
-    telefone: {
+    hsp_telephone: {
 		type: db.Sequelize.STRING ,
 		validate: {
 			is: {
@@ -57,25 +57,9 @@ const hospital = db.sequelize.define("HOSPITAL", {
 			}
 		}
 	},
-	sit_id:{
-		type: db.Sequelize.INTEGER ,
-		get : function(){
-			if (this.getDataValue('sit_id')== 1)
-				return "Ativo"
-			else
-				return "Inativo"
-			
-		}
-	},
-	hsp_status:{
-		type: db.Sequelize.STRING 
+	hsp_sit_id:{
+		type: db.Sequelize.INTEGER
 	}
 })
 
-/*
-hospital.associate = function(situacao) {
-    hospital.hasMany(situacao.sit_id, {as: 'employes'})
-  };
-  */
-  
 module.exports = hospital
