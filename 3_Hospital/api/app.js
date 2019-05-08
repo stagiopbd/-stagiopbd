@@ -43,7 +43,7 @@ var logger = require('morgan');
 //configuracao de Rotas
   app.use('/', require('./routes/index-route')(app));
   app.use('/hospital', require('./routes/hospital-route')(app));
-  // app.use('/especialidade', require('./routes/especialidade-route')(app));
+  app.use('/especialidade', require('./routes/especialidade-route')(app));
 
 
 app.use(logger('dev'));

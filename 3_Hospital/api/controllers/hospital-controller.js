@@ -4,7 +4,7 @@ var situacao = require('../models/situacao-model')
 //http://docs.sequelizejs.com/manual/models-usage.html
 
 /**
- * @api {post} /hospital/ 03-Insercao
+ * @api {post} /hospital/ 03-Inserir
  * @apiName exports.post
  * @apiGroup Hospital
  * @apiDescription Insere informa&ccedil;&otilde;es de um hospital no banco de dados.
@@ -31,7 +31,7 @@ exports.post = (req, res, next) => {
 };
 
 /**
- * @api {get} /hospital 01-Lista
+ * @api {get} /hospital 01-Listar
  * @apiName exports.get
  * @apiGroup Hospital
  * @apiDescription Retorna uma tabela HTML contendo os campos
@@ -46,7 +46,9 @@ exports.post = (req, res, next) => {
 exports.get = (req, res, next) => {
 
     hospital.findAll({ order: [['hsp_name', 'ASC']] }).then(function (hsp) {
-        res.render('hospital-lista', { title: 'Lista de Hospitais', hsp: hsp })
+	    situacao.findAll({ order: [['sit_id', 'ASC']] }).then(function (sit) {
+        	res.render('hospital-lista', { title: 'Lista de Hospitais', hsp: hsp, sit: sit })
+		})
     })
 
 
@@ -54,7 +56,7 @@ exports.get = (req, res, next) => {
 };
 
 /**
- * @api {get} /hospital/new 02-Cadastro
+ * @api {get} /hospital/new 02-Cadastrar
  * @apiName exports.cadastro
  * @apiGroup Hospital
  * @apiDescription Disponibiliza um formul&aacute;rio HTML para o cadastro das seguintes informa&ccedil;&otilde;es de um hospital.
@@ -68,7 +70,7 @@ exports.new = (req, res, next) => {
 };
 
 /**
- * @api {post} /hospital/update/edit/:id 04-Atualizacao
+ * @api {post} /hospital/update/edit/:id 04-Atualizar
  * @apiName exports.update
  * @apiGroup Hospital
  * @apiDescription Atualiza informa&ccedil;&otilde;es de um hospital no banco de dados.
@@ -77,6 +79,7 @@ exports.new = (req, res, next) => {
  * @apiParam {String} inputCnpj  CNPJ do Hospital
  * @apiParam {String} inputAddress  Endere&ccedil;o completo do Hospital
  * @apiParam {String} inputPhone  Telefone do Hospital
+ * @apiParam {Number} inputSituation  Situacao do Hospital
  */
 exports.update =  (req, res, next) => {
     var me = req.body;
@@ -86,7 +89,7 @@ exports.update =  (req, res, next) => {
             hsp_cnpj: me.inputCnpj,
             hsp_address: me.inputAddress,
             hsp_telephone: me.inputPhone,
-            hsp_sit_id: me.inputSituacao
+            hsp_sit_id: me.inputSituation
         },
         {returning: true, where: {HSP_ID: req.params.id} }
     ).then(function(hsp) {
@@ -98,10 +101,10 @@ exports.update =  (req, res, next) => {
 }
 
 /**
- * @api {get} /hospital/delete/:id 05-Remocao
+ * @api {get} /hospital/delete/:id 05-Desabilitar
  * @apiName exports.delete
  * @apiGroup Hospital
- * @apiDescription Remove um hospital do banco de dados.
+ * @apiDescription Desabilita um hospital no banco de dados.
  * Em caso de sucesso, redirecionao o usu&aacute;rio &agrave; lista de hospitais.
  */
 exports.delete = (req, res, next) => {

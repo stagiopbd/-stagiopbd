@@ -3,7 +3,7 @@ var especialidade = require('../models/especialidade-model')
 //http://docs.sequelizejs.com/manual/models-usage.html
 
 /**
- * @api {post} /especialidade/ 03-Insercao
+ * @api {post} /especialidade/ 03-Inserir
  * @apiName exports.post
  * @apiGroup Especialidade
  * @apiDescription Insere informa&ccedil;&otilde;es de um especialidade no banco de dados.
@@ -13,7 +13,7 @@ var especialidade = require('../models/especialidade-model')
 exports.post = (req, res, next) => {
     var me = req.body;
     especialidade.create({
-        esp_desc: me.inputDesc
+        spc_desc: me.inputDesc
     }).then(function(esp) {
 		res.redirect('/Especialidade')
 	}).catch(function(err) {
@@ -23,7 +23,7 @@ exports.post = (req, res, next) => {
 };
 
 /**
- * @api {get} /especialidade 01-Lista
+ * @api {get} /especialidade 01-Listar
  * @apiName exports.get
  * @apiGroup Especialidade
  * @apiDescription Retorna uma tabela HTML contendo os campos
@@ -33,24 +33,24 @@ exports.post = (req, res, next) => {
  * @apiSuccess {String} Descricao  Descri&ccedil;&atilde;o da Especialidade
  */
 exports.get = (req, res, next) => {
-    especialidade.findAll({ order: [['esp_desc', 'ASC']] }).then(function (esp) {
+    especialidade.findAll({ order: [['spc_desc', 'ASC']] }).then(function (esp) {
 		res.render('especialidade-lista', { title: 'Lista de Especialidades', esp: esp })
     })
 };
 
 /**
- * @api {get} /especialidade/cadastro 02-Cadastro
+ * @api {get} /especialidade/new 02-Cadastrar
  * @apiName exports.cadastro
  * @apiGroup Especialidade
  * @apiDescription Disponibiliza um formul&aacute;rio HTML para o cadastro das seguintes informa&ccedil;&otilde;es de um especialidade.
  * @apiSuccess {String} Descricao  Descri&ccedil;&atilde;o da Especialidade
  */
-exports.cadastro = (req, res, next) => {
+exports.new = (req, res, next) => {
     res.render('especialidade-cadastro', { title: 'Cadastro de Especialidade' })
 };
 
 /**
- * @api {post} /especialidade/update/edit/:id 04-Atualizacao
+ * @api {post} /especialidade/update/edit/:id 04-Atualizar
  * @apiName exports.update
  * @apiGroup Especialidade
  * @apiDescription Atualiza informa&ccedil;&otilde;es de um especialidade no banco de dados.
@@ -61,9 +61,9 @@ exports.update =  (req, res, next) => {
     var me = req.body;
     especialidade.update(
         {
-            esp_desc: me.inputDesc
+            spc_desc: me.inputDesc
         },
-        {returning: true, where: {ESP_ID: req.params.id} }
+        {returning: true, where: {spc_id: req.params.id} }
     ).then(function(esp) {
   		res.redirect('/Especialidade')
   	}).catch(function(err) {
@@ -73,14 +73,14 @@ exports.update =  (req, res, next) => {
 }
 
 /**
- * @api {get} /especialidade/delete/:id 05-Remocao
+ * @api {get} /especialidade/delete/:id 05-Remover
  * @apiName exports.delete
  * @apiGroup Especialidade
  * @apiDescription Remove um especialidade do banco de dados.
  * Em caso de sucesso, redirecionao o usu&aacute;rio &agrave; lista de especialidades.
  */
 exports.delete = (req, res, next) => {
-    especialidade.destroy({ where: { ESP_ID: req.params.id } }, { truncate: true }
+    especialidade.destroy({ where: { spc_id: req.params.id } }, { truncate: true }
 	).then(function() {
   		res.redirect('/Especialidade')
   	}).catch(function(err) {

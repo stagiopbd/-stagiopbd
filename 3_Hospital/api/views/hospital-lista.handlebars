@@ -10,6 +10,7 @@
 <p>
 	<a href="/Hospital/New" class="btn btn-primary">Cadastrar novo Hospital</a>
 </p>
+
 <table id="listaHospital" class="display" style="width:100%">
   <thead>
     <tr>
@@ -38,7 +39,7 @@
       </td>
       <td>
         {{#ifEquals hsp_sit_id 1 }}
-        <button id={{hsp_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
+        <button id="{{hsp_id}}" type="button" class="btn btn-default btn-sm" data-toggle="modal"
           data-target="#mdDelete{{hsp_id}}">
           <i class="fas fa-trash"></i>
         </button>
@@ -67,7 +68,7 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="inputNome">Nome</label>
-              <input type="text" class="form-control" name="inputNome" placeholder="Raz&Atilde;o Social" value="{{hsp_name}}">
+              <input type="text" class="form-control" name="inputNome" placeholder="Raz&atilde;o Social" value="{{hsp_name}}">
             </div>
             <div class="form-group col-md-12">
               <label for="inputCnpj">CNPJ</label>
@@ -83,12 +84,13 @@
             <input type="phone" class="form-control phone" name="inputPhone" placeholder="(11) 0000-0000" value="{{hsp_telephone}}">
           </div>
 		  <div class="form-group">
-            <label for="inputSituacao">Situa&ccedil;&atilde;o</label>
-            <select class="form-control" name="inputSituacao">
+            <label for="inputSituation">Situa&ccedil;&atilde;o</label>
+            <select class="form-control" name="inputSituation">
               {{#select hsp_sit_id}}
 
-              <option value="1">Ativo</option>
-              <option value="2">Inativo</option>
+				  {{#each @root.sit}}
+	              <option value="{{sit_id}}">{{sit_desc}}</option>
+				  {{/each}}
 
               {{/select}}
             </select>

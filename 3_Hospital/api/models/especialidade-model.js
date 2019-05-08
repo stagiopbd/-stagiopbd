@@ -1,8 +1,8 @@
 const db = require("./dbConnection");
 
-const especialidade = db.sequelize.define("ESPECIALIDADE", {
-    esp_id: { type: db.Sequelize.INTEGER, primaryKey: true },
-    esp_desc: {
+const especialidade = db.sequelize.define("speciality", {
+    spc_id: { type: db.Sequelize.INTEGER, primaryKey: true },
+    spc_desc: {
 		type: db.Sequelize.STRING,
 		validate: {
 			is: {
