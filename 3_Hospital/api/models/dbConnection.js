@@ -5,6 +5,8 @@ const sequelize = new Sequelize('kiizj5q0n6quilvc', 'u8m691gex60b7dqt', 'cq4m4jg
     host: "fnx6frzmhxw45qcb.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     dialect: 'mysql' ,
     define: {
+		createdAt: false,
+		updatedAt: false,
         //prevent sequelize from pluralizing table names
         freezeTableName: true //http://docs.sequelizejs.com/manual/models-definition.html#configuration
     }
