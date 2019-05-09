@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+<br>
+<style>
+  .Inativo{color: red}
+</style>
+<table id="listaHospital" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>CNPJ</th>
+      <th>Endereco</th>
+      <th>Telefone</th>
+      <th>Situação</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each hsp}}
+    <tr class='{{sit_id}}'>
+      <td>{{hsp_id}}</td>
+      <td>{{nome}}</td>
+      <td>{{cnpj}}</td>
+      <td>{{endereco}}</td>
+      <td>{{telefone}}</td>
+      <td>{{sit_id}}</td>
+      <td>
+        <button id={{hsp_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
+          data-target="#mdUpdate{{hsp_id}}">
+          <i class="far fa-edit"></i>
+        </button>
+      </td>
+      <td>
+        {{#ifEquals sit_id "Ativo" }}   
+        <button id={{hsp_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
+          data-target="#mdDelete{{hsp_id}}">
+          <i class="fas fa-trash"></i>
+        </button>
+        {{else }}             
+        {{/ifEquals }} 
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+{{#each hsp}}
+<!-- Modal Update -->
+<div class="modal fade bd-example-modal-lg" id="mdUpdate{{hsp_id}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel{{hsp_id}}"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel{{hsp_id}}">Atualizar Registro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- FORM ATUALIZAÇÃO  -->
+        <form action="/Hospital/Update/edit/{{hsp_id}}" method="post">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="inputNome">Nome</label>
+              <input type="text" class="form-control" name="inputNome" placeholder="Razão Social" value="{{nome}}">
+            </div>
+            <div class="form-group col-md-12">
+              <label for="inputCnpj">CNPJ</label>
+              <input type="text" class="form-control cnpj" name="inputCnpj" placeholder="CNPJ" value="{{cnpj}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputAddress">Endereço</label>
+            <input type="text" class="form-control" name="inputAddress" placeholder="1234 Main St" value="{{endereco}}">
+          </div>
+          <div class="form-group">
+            <label for="inputPhone">Telefone</label>
+            <input type="phone" class="form-control phone" name="inputPhone" placeholder="(11) 0000-0000" value="{{telefone}}">
+          </div>
+          <div class="form-group">
+            <label for="inputSituacao">Situação</label>
+            <select class="form-control" name="inputSituacao">
+              {{#select sit_id}}
+              
+              <option value="Ativo">Ativo</option>
+              <option value="Inativo">Inativo</option>
+      
+              {{/select}}
+            </select>
+          </div>
+          <!--  FIM FORM ATUALIZAÇÃO  --->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Atualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Delete-->
+<div class="modal fade bd-example-modal-lg" id="mdDelete{{hsp_id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Desativar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Deseja desativar esse registro?
+        Hospital: <span id="info"> {{nome}} </span>
+      </div>
+      <div class="modal-footer">
+        <form action="/Hospital/Desativa/{{hsp_id}}" method="get">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="subimit" class="btn btn-danger">Desativar</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
+
+<script>
+  $(document).ready(function () {
+    $('#listaHospital').DataTable();
+  });
+/*
+  $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
+  }) */ 
+  $('.cnpj').mask('99.999.999/9999-99', { reverse: true });
+  $('.phone').mask('(99) 9999-9999', { reverse: false });
+
+</script>

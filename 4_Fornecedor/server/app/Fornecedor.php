@@ -18,14 +18,14 @@ class Fornecedor extends Model
     /**
      * Renomeando para exibir padrao trigrama timestamp
  	 */
-    const CREATED_AT = 'spl_created_at';
-    const UPDATED_AT = 'spl_updated_at';
+	const CREATED_AT = 'sup_created_at';
+	const UPDATED_AT = 'sup_updated_at'; 
     const DELETED_AT = 'spl_deleted_at';
+    protected $primaryKey = 'sup_id';
 
  	// relaciona o campo "tipofornecedor_id" com a entidade TipoFornecedor
     public function tipofornecedor()
     {
-        return $this->hasOne(TipoFornecedor::class, 'spl_id', 'tsp_id');
+        return $this->hasOne('App\TipoFornecedor', 'spt_id', 'sup_spt_id');
     }
-    
 }

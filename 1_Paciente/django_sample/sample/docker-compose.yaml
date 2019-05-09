@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+
+  sample:
+    build: ./
+    container_name: sample
+    restart: unless-stopped
+    environment:
+      - DB_HOST=db-sample
+      - DB_PORT=3306
+      - DB_USER=sample
+      - DB_NAME=sample
+      - DB_PASSWORD=sample#123
+    ports:
+      - "8000:8000"
+    links:
+      - db-sample
+      - mongo-sample
+    depends_on:
+      - db-sample
+      - mongo-sample
+    working_dir: /code
+    networks:
+      - sample_net
+            
+  db-sample:
+    image: mariadb
+    restart: unless-stopped
+    ports:
+      - "3317:3306"
+    volumes:
+      - db-sample:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=#sample123
+      - MYSQL_PASSWORD=sample#123
+      - MYSQL_DATABASE=sample
+      - MYSQL_USER=sample
+    networks:
+      - sample_net
+
+  mongo-sample:
+    image: mongo
+    container_name: mongo-sample
+    volumes:
+      - "mongo-sample:/data/configdb"
+      - "mongo-sample:/data/db"
+    ports:
+      - "27020:27017"
+    networks:
+      - sample_net 
+
+networks:
+  sample_net:
+    driver: bridge
+
+volumes:
+  db-sample:
+  mongo-sample:
