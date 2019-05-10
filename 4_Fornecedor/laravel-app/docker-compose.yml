@@ -1,0 +1,41 @@
+version: '3'
+services:
+
+  #PHP Service
+  app-t4:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: digitalocean.com/php
+    container_name: app-t4
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app-t4
+      SERVICE_TAGS: prod
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network-t4
+
+  #Nginx Service
+  www-t4:
+    image: nginx:alpine
+    container_name: www-t4
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8084:80"
+      #- "443:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+    networks:
+      - app-network-t4
+
+#Docker Networks
+networks:
+  app-network-t4:
+    driver: bridge
