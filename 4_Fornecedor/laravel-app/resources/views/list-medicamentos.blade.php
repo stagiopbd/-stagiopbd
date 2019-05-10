@@ -101,6 +101,11 @@
         <div id="line-one">   
             <div class="container">
                 <div class="row">
+                    <div class="col text-center">
+                    <img src="{{url('/img/medicamento.png')}}" width="100" height="100" alt="" class="img-fluid">
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-12" id="center"> 
                         <h1><b>Medicamentos</b></h1>
                         <br>
