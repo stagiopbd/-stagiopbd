@@ -1,0 +1,136 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+<br>
+<style>
+	.sit_2 {color: red}
+</style>
+<h3>{{hsp.hsp_name}} - Alas <a href="/hospital/{{hsp.hsp_id}}/ala/New" class="float-right btn btn-primary">Cadastrar nova Ala</a></h3>
+<hr>
+
+<table id="listaAla" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Ala</th>
+      <th>Especialidade</th>
+	  <th></th>
+	  <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each ala}}
+    <tr class='sit_{{wng_sit_id}}'>
+      <td>{{wng_id}}</td>
+      <td>{{wng_desc}}</td>
+      <td>{{speciality.spc_desc}}</td>
+      <td>
+        <button id={{wng_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
+          data-target="#mdUpdate{{wng_id}}">
+          <i class="far fa-edit"></i>
+        </button>
+      </td>
+      <td>
+		{{#ifEquals wng_sit_id 1 }}
+        <button id={{wng_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
+          data-target="#mdDelete{{wng_id}}">
+          <i class="fas fa-trash"></i>
+        </button>
+		{{/ifEquals }}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+
+{{#each ala}}
+<!-- Modal Update -->
+<div class="modal fade bd-example-modal-lg" id="mdUpdate{{wng_id}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel{{wng_id}}"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel{{wng_id}}">Atualizar Ala</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- FORM ATUALIZACAO  -->
+        <form action="/hospital/{{@root.hsp.hsp_id}}/ala/Update/{{wng_id}}" method="post">
+	      <div class="form-group">
+	        <label for="inputDesc">Descri&ccedil;&atilde;o</label>
+	        <input type="text" class="form-control" name="inputDesc" placeholder="Descri&ccedil;&atilde;o da Ala" value="{{wng_desc}}">
+	      </div>
+		  <div class="form-group">
+	          <label for="inputSpeciality">Especialidade atendida</label>
+	  		<select class="form-control" name="inputSpeciality">
+				{{#select wng_spc_id}}
+
+	  			  <option value=""></option>
+	  			  {{#each @root.spc}}
+	  			  <option value="{{spc_id}}">{{spc_desc}}</option>
+	  			  {{/each}}
+
+				{{/select}}
+	  		</select>
+	      </div>
+		  <div class="form-group">
+            <label for="inputSituation">Situa&ccedil;&atilde;o</label>
+            <select class="form-control" name="inputSituation">
+              {{#select wng_sit_id}}
+
+				  {{#each @root.sit}}
+	              <option value="{{sit_id}}">{{sit_desc}}</option>
+				  {{/each}}
+
+              {{/select}}
+            </select>
+          </div>
+          <!--  FIM FORM ATUALIZACAO  --->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Atualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Delete-->
+<div class="modal fade bd-example-modal-lg" id="mdDelete{{wng_id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Remove</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Deseja desativar esse registro?
+        Ala: <span id="info"> {{wng_desc}} </span>
+      </div>
+      <div class="modal-footer">
+        <form action="/hospital/{{@root.hsp.hsp_id}}/ala/delete/{{wng_id}}" method="get">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Desativar</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
+
+<script>
+  $(document).ready(function () {
+    $('#listaAla').DataTable();
+  });
+</script>

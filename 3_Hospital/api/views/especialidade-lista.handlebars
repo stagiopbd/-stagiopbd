@@ -7,9 +7,10 @@
 <style>
   .Inativo{color: red}
 </style>
-<p>
-	<a href="/Especialidade/New" class="btn btn-primary">Cadastrar nova Especialidade</a>
-</p>
+
+<h3>Especialidades <a href="/Especialidade/New" class="float-right btn btn-primary">Cadastrar nova Especialidade</a></h3>
+<hr>
+
 <table id="listaEspecialidade" class="display" style="width:100%">
   <thead>
     <tr>
@@ -55,7 +56,7 @@
       </div>
       <div class="modal-body">
         <!-- FORM ATUALIZA&Atilde;‡&Atilde;ƒO  -->
-        <form action="/Especialidade/Update/edit/{{spc_id}}" method="post">
+        <form action="/Especialidade/Update/{{spc_id}}" method="post">
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="inputDesc">Descri&ccedil;&atilde;o</label>

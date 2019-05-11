@@ -1,8 +1,8 @@
 'use strict'
 
 const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/especialidade-controller')
+const router = express.Router({mergeParams: true});
+const controller = require('../controllers/ala-controller')
 
 module.exports = function(app) {
     router.get('/', controller.get);

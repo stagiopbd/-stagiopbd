@@ -50,7 +50,7 @@ exports.new = (req, res, next) => {
 };
 
 /**
- * @api {post} /especialidade/update/edit/:id 04-Atualizar
+ * @api {post} /especialidade/update/:id 04-Atualizar
  * @apiName exports.update
  * @apiGroup Especialidade
  * @apiDescription Atualiza informa&ccedil;&otilde;es de um especialidade no banco de dados.

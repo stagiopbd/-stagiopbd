@@ -79,7 +79,7 @@ exports.new = (req, res, next) => {
  * @apiParam {String} inputCnpj  CNPJ do Hospital
  * @apiParam {String} inputAddress  Endere&ccedil;o completo do Hospital
  * @apiParam {String} inputPhone  Telefone do Hospital
- * @apiParam {Number} inputSituation  Situacao do Hospital
+ * @apiParam {Number} inputSituation  ID da Situacao do Hospital
  */
 exports.update =  (req, res, next) => {
     var me = req.body;
