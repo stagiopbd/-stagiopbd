@@ -9,6 +9,10 @@ use App\ClasseTerapeutica;
 use App\Tarja;
 use App\TipoFornecedor;
 use App\TipoProduto;
+use App\GrupoExame;
+use App\ItemExame;
+use App\SubitemExame;
+use App\TipoExame;
 use Illuminate\Console\Command;
 
 class Producer extends Command
@@ -103,6 +107,38 @@ class Producer extends Command
         //Dados dos medicamentos
         foreach(Medicamento::all() as $key => $obj):
             $obj['type'] = 'medicine';
+            $message = $obj;
+            $count++;
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+        endforeach;
+
+        //Dados dos grupos de exame
+        foreach(GrupoExame::all() as $key => $obj):
+            $obj['type'] = 'exam_group';
+            $message = $obj;
+            $count++;
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+        endforeach;
+
+        //Dados dos itens de exame
+        foreach(ItemExame::all() as $key => $obj):
+            $obj['type'] = 'exam_item';
+            $message = $obj;
+            $count++;
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+        endforeach;
+
+        //Dados dos subitens de exame
+        foreach(SubitemExame::all() as $key => $obj):
+            $obj['type'] = 'exam_subitem';
+            $message = $obj;
+            $count++;
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
+        endforeach;
+
+        //Dados dos tipos de exame
+        foreach(TipoExame::all() as $key => $obj):
+            $obj['type'] = 'exam_type';
             $message = $obj;
             $count++;
             $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
