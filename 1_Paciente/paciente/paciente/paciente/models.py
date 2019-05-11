@@ -23,7 +23,7 @@ class Paciente(models.Model):
     sexo = models.CharField(max_length=1, choices=SEXO)
     tipo_sanguineo = models.CharField(max_length=120, choices=SANGUE)
     inativo = models.NullBooleanField(default=False)
-    email = models.EmailField()
+    email = models.EmailField(default='')
 
     class Meta:
         db_table = "paciente"

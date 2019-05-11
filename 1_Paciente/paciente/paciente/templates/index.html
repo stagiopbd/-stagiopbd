@@ -340,6 +340,8 @@
 
         <button class="btn btn-primary" id="cadastrar-quadro-clinico"></button>
 
+        <button class="btn btn-success" id="cadastrar-carteira-vacina"></button>
+
     </div>
 
     <script>
@@ -347,6 +349,7 @@
         $("#cadastrar-paciente").empty()
         $("#cadastrar-quadro-clinico").empty()
         $("#cadastrar-alergia").empty()
+        $("#cadastrar-carteira-vacina").empty()
 
         function criarBotao(link, nome) {
             return `<a href="${URL}/stagiop_bd/${link}" style="color: #FFFFFF" class="btn btn-default">${nome}</a>`
@@ -354,6 +357,7 @@
         $("#cadastrar-paciente").append(criarBotao('paciente', 'Paciente'))
         $("#cadastrar-alergia").append(criarBotao('alergia', 'Alergia'))
         $("#cadastrar-quadro-clinico").append(criarBotao('quadro_clinico', 'Quadro Clínico'))
+        $("#cadastrar-carteira-vacina").append(criarBotao('carteira_vacina', 'Carteira Vacina'))
     </script>
 
 </body>

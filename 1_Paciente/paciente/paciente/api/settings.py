@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'paciente',
     'quadro_clinico',
+    'carteira_vacina',
     'alergia',
     'rest_framework',
     'corsheaders'
