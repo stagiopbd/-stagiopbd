@@ -106,6 +106,22 @@ services:
     networks:
       - app-network
 
+  #Kafka Consumer
+  kafka_consumer:
+    build:
+      context: ./consumer
+      dockerfile: Dockerfile
+    container_name: consumer
+    restart: unless-stopped
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./consumer/:/app
+    depends_on:
+      - kafka
+    networks:
+      - app-network
+
 #Docker Networks
 networks:
   app-network:
