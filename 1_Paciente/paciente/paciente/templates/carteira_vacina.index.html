@@ -1,0 +1,655 @@
+<html>
+
+<head>
+    <title>Carteira Vacina</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/sweetalert2/6.5.6/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.5.6/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <style>
+        .inputMaterial {
+            font-size: 14px;
+            padding: 10px 10px 8px 5px;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #757575;
+        }
+
+        .inputMaterial:focus {
+            outline: none;
+        }
+
+        .inputMaterial:focus~label,
+        .inputMaterial:valid~label,
+        .inputMaterial[type="email"]:valid~label {
+            top: -15px;
+            font-size: 14px;
+            color: #025AA5;
+        }
+
+        .inputMaterial:focus~.bar:before,
+        .inputMaterial:focus~.bar:after {
+            width: 50%;
+        }
+
+        .inputMaterial:focus~.highlight {
+            -webkit-animation: inputHighlighter 0.3s ease;
+            -moz-animation: inputHighlighter 0.3s ease;
+            animation: inputHighlighter 0.3s ease;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            /* Light grey */
+            border-top: 16px solid #0275d8;
+            /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            margin-left: -60px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        footer.ags-footer,
+        footer.ags-footer--light {
+            background-color: #101010 !important;
+            display: -webkit-box !important;
+            display: -ms-flexbox !important;
+            display: flex !important;
+            -webkit-box-align: center !important;
+            -ms-flex-align: center !important;
+            align-items: center !important;
+            -webkit-box-pack: center !important;
+            -ms-flex-pack: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            padding: 8px !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important
+        }
+
+        footer.ags-footer p.ags-footer__text,
+        footer.ags-footer--light p.ags-footer__text {
+            font-family: Arial, Helvetica, sans-serif !important;
+            font-size: 10px !important;
+            color: #9e9e9e !important;
+            margin: 0 8px !important
+        }
+
+        footer.ags-footer--light {
+            background-color: #eee !important
+        }
+
+        footer.ags-footer--light p.ags-footer__text {
+            color: #616161 !important
+        }
+
+        .ags-form__col {
+            position: relative;
+            padding: 20px 30px
+        }
+
+        @media screen and (min-width:900px) {
+            .ags-form__col {
+                min-height: 100vh !important;
+                padding: 20px 60px !important
+            }
+        }
+
+        @media screen and (min-width:1100px) {
+            .ags-form__col {
+                padding: 20px 80px !important
+            }
+        }
+
+        @media screen and (min-width:1400px) {
+            .ags-form__col {
+                padding: 30px 120px !important
+            }
+        }
+
+        @media screen and (min-width:1600px) {
+            .ags-form__col {
+                padding: 40px 200px !important
+            }
+        }
+
+        .ags-form__col--color {
+            background: #eee
+        }
+
+        @media screen and (max-width:900px) {
+            .ags-form__col--color {
+                padding: 100px 0 40px
+            }
+        }
+
+        .ags-form__col-infos {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            max-width: calc(150px + 36px + 400px);
+            margin: auto
+        }
+
+        .ags-form__col-logo-wrapper {
+            width: 100%;
+            top: 0;
+            left: 0;
+            position: absolute
+        }
+
+        .ags-form__col-logo {
+            max-width: 150px
+        }
+
+        @media screen and (min-width:900px) {
+            .ags-form__col-logo {
+                margin-right: 36px
+            }
+        }
+
+        .ags-form__col-title {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 400
+        }
+
+        .ags-form__col-subtitle {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 36px
+        }
+
+        .ags-top-link,
+        .ags-top-link--white {
+            width: 100%;
+            padding: 30px 15%
+        }
+
+        .ags-top-link a,
+        .ags-top-link--white a {
+            font-weight: 600;
+            text-decoration: none;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            cursor: pointer
+        }
+
+        .ags-top-link--white a {
+            color: #fff
+        }
+
+        .ags-top-link-icon,
+        .ags-top-link-icon--opacity {
+            background: #eee;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            margin-right: 16px;
+            -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .16)
+        }
+
+        .ags-top-link-icon i,
+        .ags-top-link-icon--opacity i {
+            margin: 0;
+            font-size: 18px
+        }
+
+        .ags-top-link-icon--opacity {
+            background: rgba(255, 255, 255, .4);
+            -webkit-box-shadow: none;
+            box-shadow: none
+        }
+
+        .ags-u-flex-center {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap
+        }
+
+        .ags-u-flex-between {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap
+        }
+
+        .ags-u-flex-around {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-pack: distribute;
+            justify-content: space-around;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap
+        }
+
+        .ags-u-light-box-shadow {
+            -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .16)
+        }
+
+        .ags-u-loading:after {
+            width: 0;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+            -webkit-animation: ellipsis steps(4, end) .9s infinite;
+            animation: ellipsis steps(4, end) .9s infinite;
+            content: "\2026"
+        }
+
+        @keyframes ellipsis {
+            to {
+                width: 1.25em
+            }
+        }
+
+        @-webkit-keyframes ellipsis {
+            to {
+                width: 1.25em
+            }
+        }
+
+        option {
+            color: dodgerblue
+        }
+    </style>
+
+    <script type="text/javascript">
+        var URL = '{{ url }}'
+    </script>
+</head>
+
+<body>
+    <div style="padding: 16px" id="home">
+    </div>
+
+
+    <div style="padding: 16px">
+
+        <button class="btn btn-info" id="cadastrar-carteira-vacina">Cadastrar Carteira Vacina</button>
+        <button class="btn btn-secondary" id="visualizar-carteira-vacina">Visualizar Carteiras</button>
+        <button class="btn btn-primary" id="visualizar-carteira-vacina-paciente">Visualizar Carteira Vacina de um
+            Paciente</button>
+    </div>
+
+    <!-- CADASTRAR -->
+    <div style="padding: 16px" id="div-cadastrar">
+        <form id="form-cadastrar">
+            <div class="form-group">
+                <label for="cpf">CPF Paciente</label>
+                <input type="text" class="form-control" id="cpf" maxlength="11">
+            </div>
+            <div class="form-group">
+                <label for="vacina">Vacina</label>
+                <input type="text" class="form-control" id="vacina" maxlength="11">
+            </div>
+            <div class="form-group">
+                <label for="dataAplicacao">Data Aplicação</label>
+                <input type="date" class="form-control" id="dataAplicacao" maxlength="120">
+            </div>
+            <div class="form-group">
+                <label for="dataProximaAplicacao">Data Próxima Aplicação</label>
+                <input type="date" class="form-control" id="dataProximaAplicacao" maxlength="120">
+            </div>
+            <div class="form-group">
+                <label for="lote">Lote</label>
+                <input type="text" class="form-control" id="lote" maxlength="120">
+            </div>
+            <div class="form-group">
+                <label for="dose">Dose</label>
+                <input type="number" class="form-control" id="dose" maxlength="120">
+            </div>
+            <div class="form-group">
+                <label for="responsavel">Responsável</label>
+                <input type="text" class="form-control" id="responsavel" maxlength="120">
+            </div>
+
+        </form>
+        <button class="btn btn-info" id="cadastrar">Cadastrar</button>
+        <button class="btn btn-info" id="atualizar">Atualizar</button>
+    </div>
+
+    <!-- VISUALIZAR TODOS -->
+    <div style="padding: 16px" id="visualizar-todos">
+        <h4 style="text-align: center">Carteiras de Vacina</h4>
+        <table id="table-todos-carteiras">
+            <tr>
+                <th>Paciente CPF</th>
+                <th>Vacina</th>
+                <th>Data Aplicação</th>
+                <th>Data Próxima Aplicação</th>
+                <th>Lote</th>
+                <th>Dose</th>
+                <th>Responsável</th>
+                <th>-</th>
+            </tr>
+        </table>
+    </div>
+
+    <!-- VISUALIZAR PACIENTE -->
+    <div style="padding: 16px" id="visualizar-paciente">
+        <div id="div-buscar">
+            <form>
+                <div class="form-group">
+                    <label for="cpf-busca">CPF Paciente</label>
+                    <input type="text" class="form-control" id="cpf-busca" maxlength="11">
+                </div>
+            </form>
+            <button class="btn btn-info" id="buscar">Buscar</button>
+        </div>
+        <div style="padding: 16px" id="div-table-paciente">
+            <table id="table-carteira-paciente">
+                <tr>
+                    <th>Paciente CPF</th>
+                    <th>Vacina</th>
+                    <th>Data Aplicação</th>
+                    <th>Data Próxima Aplicação</th>
+                    <th>Lote</th>
+                    <th>Dose</th>
+                    <th>Responsável</th>
+                    <th>-</th>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+
+        setarLinkHome()
+
+        function setarLinkHome() {
+            $("#home").empty()
+            aLink = `<a href="${URL}/stagiop_bd" class="btn btn-outline-primary">Home</a>`
+            $("#home").append(aLink)
+        }
+
+        function hide_pages(divs) {
+            divs.map((div) => {
+                $(`#${div}`).hide()
+            })
+        }
+
+
+        $('#form-cadastrar').trigger("reset");
+        hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-paciente', 'div-table-paciente', 'atualizar'])
+
+        $("#cadastrar-carteira-vacina").click(() => {
+            hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente'])
+            $('#form-cadastrar').trigger("reset");
+            $("#cpf").prop("disabled", false);
+            $("#cadastrar").show()
+            $("#atualizar").hide()
+            $("#div-cadastrar").show()
+        })
+
+        function criarBotaoAtualizar(cpf, data) {
+            return `<button class="btn btn-info" id="atualizar-${cpf}" onClick='atualizarPaciente(${data})'>Atualizar</button>`
+        }
+
+        $("#visualizar-carteira-vacina").click(() => {
+            hide_pages(['div-cadastrar', 'visualizar-paciente', 'div-table-paciente'])
+            $("#table-todos-carteiras tr:gt(0)").remove();
+            $("#table-carteira-paciente tr:gt(0)").remove();
+
+            $.ajax({
+                type: "GET",
+                url: `${URL}/stagiop_bd/api/carteira_vacina`,
+                success: function (resultado) {
+                    tableHtml = ''
+                    resultado.forEach(data => {
+                        tableHtml += `<tr>
+                                <td>` + data.vac_cpfpatient + `</td>
+                                <td>` + data.vac_name + `</td>
+                                <td>` + data.vac_date + `</td>
+                                <td>` + data.vac_next + `</td>
+                                <td>` + data.vac_batch + `</td>
+                                <td>` + data.vac_dose + `</td>
+                                <td>` + data.vac_responsible + `</td>
+                                <td>` + criarBotaoAtualizar(data.vac_cpfpatient, JSON.stringify(data)) + `</td>
+                            </tr>`
+                    })
+                    $('#table-todos-carteiras > tbody:last-child').append(tableHtml);
+                    $("#visualizar-todos").show()
+                },
+                error: function (e) {
+                    mostrarErro(e)
+                }
+            });
+
+        })
+
+        $("#visualizar-carteira-vacina-paciente").click(() => {
+            hide_pages(['div-cadastrar', 'visualizar-todos'])
+            $("#table-todos-carteiras tr:gt(0)").remove();
+            $("#table-carteira-paciente tr:gt(0)").remove();
+            $("#visualizar-paciente").show()
+            $("#div-buscar").show()
+            $("#div-table-paciente").hide()
+
+        })
+
+
+        function cadastrarAtualizarPaciente(cpfPaciente) {
+            url = `${URL}/stagiop_bd/api/carteira_vacina`
+            type = 'POST'
+            message = 'Carteira Vacina cadastrada com sucesso!'
+            if (cpfPaciente) {
+                url += `/${cpfPaciente}`
+                type = 'PUT'
+                message = 'Carteira Vacina atualizada com sucesso!'
+            }
+
+            $.ajax({
+                type: type,
+                url: url,
+                data: JSON.stringify({
+                    "vac_name": $("#vacina").val(),
+                    "vac_date": $("#dataAplicacao").val(),
+                    "vac_next": $("#dataProximaAplicacao").val(),
+                    "vac_batch": $("#lote").val(),
+                    "vac_dose": Number($("#dose").val()),
+                    "vac_responsible": $("#responsavel").val(),
+                    "vac_cpfpatient": $("#cpf").val()
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (resultado) {
+                    $("#div-cadastrar").hide()
+                    $("#visualizar-paciente").show()
+                    $("#div-buscar").hide()
+                    mostrarInfoPaciente(resultado)
+                    mostrarSwal('OK', 'success', message)
+                },
+                error: function (e) {
+                    mostrarErro(e)
+                }
+            });
+        }
+
+        $("#cadastrar").click(() => {
+            cadastrarAtualizarPaciente()
+        });
+
+        $("#atualizar").click(() => {
+            cadastrarAtualizarPaciente($("#cpf").val())
+        });
+
+        function mostrarInfoPaciente(data) {
+            $("#table-carteira-paciente tr:gt(0)").remove();
+            tableHtml = `<tr>
+                <td>` + data.vac_cpfpatient + `</td>
+                <td>` + data.vac_name + `</td>
+                <td>` + data.vac_date + `</td>
+                <td>` + data.vac_next + `</td>
+                <td>` + data.vac_batch + `</td>
+                <td>` + data.vac_dose + `</td>
+                <td>` + data.vac_responsible + `</td>
+                <td>` + criarBotaoAtualizar(data.vac_cpfpatient, JSON.stringify(data)) + `</td>
+            </tr>`
+            $('#table-carteira-paciente > tbody:last-child').append(tableHtml);
+            $("#div-table-paciente").show()
+        }
+
+        function atualizarPaciente(data) {
+            $("#table-todos-carteiras tr:gt(0)").remove();
+            $("#table-carteira-paciente tr:gt(0)").remove();
+            $("#div-table-paciente").hide();
+            $("#visualizar-paciente").hide();
+            $("#visualizar-todos").hide();
+
+            $('#form-cadastrar').trigger("reset");
+            $("#div-fuma-frequencia").hide()
+            $("#div-bebe-frequencia").hide()
+            $("#div-atividade-frequencia").hide()
+
+            $("#cadastrar").hide()
+            $("#atualizar").show()
+            setarForm(data)
+            $("#div-cadastrar").show()
+        }
+
+        function setarForm(data) {
+            $("#cpf").val(data.vac_cpfpatient)
+            $("#cpf").prop("disabled", true);
+            $("#vacina").val(data.vac_name)
+            $("#dataAplicacao").val(data.vac_date)
+            $("#dataProximaAplicacao").val(data.vac_next)
+            $("#lote").val(data.vac_batch)
+            $("#dose").val(data.vac_dose)
+            $("#responsavel").val(data.vac_responsible)
+        }
+
+        function mostrarSwal(title, type, text, isHtml) {
+            config = {
+                title: title,
+                type: type,
+                showCloseButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'OK'
+            }
+            if (isHtml) {
+                config.html = text
+            } else {
+                config.text = text
+            }
+            swal(config)
+        }
+
+        function mostrarErro(e) {
+            var text = '';
+            if (e.responseJSON.message) {
+                text += e.responseJSON.message + '<br><br>Erro(s):'
+            }
+            if (e.responseJSON.errors) {
+                text += JSON.stringify(e.responseJSON.errors)
+            }
+            mostrarSwal('Atenção', 'error', text, true)
+        }
+
+        $("#buscar").click(() => {
+            $("#table-carteira-paciente tr:gt(0)").remove();
+
+            const cpfBusca = $("#cpf-busca").val();
+            if (!cpfBusca) {
+                mostrarSwal('Atenção', 'warning', "Favor informar o CPF do paciente!")
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: `${URL}/stagiop_bd/api/carteira_vacina/${cpfBusca}`,
+                    success: function (data) {
+                        if (data.message) {
+                            mostrarSwal('Atenção', 'warning', `Carteira Vacina não encontrado para o paciente ${cpfBusca}`)
+                        } else {
+                            mostrarInfoPaciente(data)
+                        }
+                    },
+                    error: function (e) {
+                        $("#table-carteira-paciente tr:gt(0)").remove();
+                        mostrarErro(e)
+                    }
+                });
+            }
+
+        })
+    </script>
+</body>
+
+</html>

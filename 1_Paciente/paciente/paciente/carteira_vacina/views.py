@@ -50,16 +50,16 @@ class CarteiraVacinaViewSet(ModelViewSet):
         return Response({"message": "Carteira de vacina não encontrada!"}, status.HTTP_404_NOT_FOUND)
 
     # # PUT
-    # def update(self, request, *args, **kwargs):
-    #     element = self.queryset.filter(id=kwargs.get("pk")).first()
-    #     if element:
-    #         serializer = self.serializer_class(
-    #             element, data=request.data, partial=True)
-    #         if serializer.is_valid():
-    #             serializer.save()
-    #             return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #         return Response({
-    #             'errors': serializer.errors,
-    #             'message': 'Preencha todos os campos corretamente!'
-    #         }, status=status.HTTP_400_BAD_REQUEST)
-    #     return Response({"message": "Alergia não encontrada!"}, status.HTTP_404_NOT_FOUND)
+    def update(self, request, *args, **kwargs):
+        element = self.queryset.filter(vac_cpfpatient=kwargs.get("pk")).first()
+        if element:
+            serializer = self.serializer_class(
+                element, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response({
+                'errors': serializer.errors,
+                'message': 'Preencha todos os campos corretamente!'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "Alergia não encontrada!"}, status.HTTP_404_NOT_FOUND)
