@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "jasmine"
+    "test": "jasmine",
+	"doc": "apidoc -i controllers/"
   },
   "dependencies": {
     "alert-node": "^1.2.3",
