@@ -18,7 +18,8 @@ class PacienteTest(TestCase):
                 "nome_completo": "teste teste",
                 "data_nascimento": "1980-01-01",
                 "sexo": "M",
-                "tipo_sanguineo": "A+"
+                "tipo_sanguineo": "A+",
+                "email": "a@a.com"
             })
         self.client = APIClient()
 
@@ -28,7 +29,8 @@ class PacienteTest(TestCase):
             "nome_completo": "teste teste",
             "data_nascimento": "01/01/1980",
             "sexo": "M",
-            "tipo_sanguineo": "A+"
+            "tipo_sanguineo": "A+",
+            "email": "a@a.com"
         }
         response = self.client.post(
             '/stagiop_bd/api/paciente', p, format='json')
@@ -62,7 +64,8 @@ class PacienteTest(TestCase):
             "nome_completo": "teste teste",
             "data_nascimento": "01/01/1980",
             "sexo": "M",
-            "tipo_sanguineo": "A+"
+            "tipo_sanguineo": "A+",
+            "email": "a@a.com"
         }
         response = self.client.post(
             '/stagiop_bd/api/paciente', p, format='json')
