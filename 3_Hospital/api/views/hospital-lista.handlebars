@@ -20,6 +20,7 @@
       <th>Telefone</th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -31,13 +32,21 @@
       <td>{{hsp_address}}</td>
       <td>{{hsp_telephone}}</td>
       <td>
-        <button id={{hsp_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
+        <button id="{{hsp_id}}" type="button" class="btn btn-default btn-sm" 
+        onclick="window.location.href='/hospital/{{hsp_id}}/ala'" alt="Cadastro de Alas" data-toggle="tooltip" data-placement="top" title="Cadastro de Alas">
+          <i class="far fa-list" ></i>
+        </button>
+      </td>
+    
+      <td>
+        <button id="{{hsp_id}}" type="button" class="btn btn-default btn-sm" data-toggle="modal"
           data-target="#mdUpdate{{hsp_id}}">
           <i class="far fa-edit"></i>
         </button>
       </td>
       <td>
         {{#ifEquals hsp_sit_id 1 }}
+        
         <button id="{{hsp_id}}" type="button" class="btn btn-default btn-sm" data-toggle="modal"
           data-target="#mdDelete{{hsp_id}}">
           <i class="fas fa-trash"></i>
@@ -143,5 +152,7 @@
   }) */
   $('.cnpj').mask('99.999.999/9999-99', { reverse: true });
   $('.phone').mask('(99) 9999-9999', { reverse: false });
-
+ $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>

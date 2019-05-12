@@ -16,6 +16,7 @@
       <th>ID</th>
       <th>Ala</th>
       <th>Especialidade</th>
+      <th></th>
 	  <th></th>
 	  <th></th>
     </tr>
@@ -26,6 +27,11 @@
       <td>{{wng_id}}</td>
       <td>{{wng_desc}}</td>
       <td>{{speciality.spc_desc}}</td>
+       <td>
+        <button id={{wng_id}} type="button" class="btn btn-default btn-sm" onclick="window.location.href='/hospital/{{wng_hsp_id}}/ala/{{wng_id}}/leito'" alt="Cadastro de Leitos" data-toggle="tooltip" data-placement="top" title="Cadastro de Leitos">
+          <i class="far fa-list"></i>
+        </button>
+      </td>
       <td>
         <button id={{wng_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
           data-target="#mdUpdate{{wng_id}}">
@@ -44,7 +50,7 @@
     {{/each}}
   </tbody>
 </table>
-
+ <a class="btn btn-primary" href="/hospital" role="button">Voltar</a>
 
 {{#each ala}}
 <!-- Modal Update -->

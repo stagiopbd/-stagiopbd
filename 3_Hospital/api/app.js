@@ -45,7 +45,7 @@ var logger = require('morgan');
   app.use('/hospital', require('./routes/hospital-route')(app));
   app.use('/especialidade', require('./routes/especialidade-route')(app));
   app.use('/hospital/:hsp_id/ala', require('./routes/ala-route')(app));
-
+  app.use('/hospital/:hsp_id/ala/:wng_id/leito', require('./routes/leito-route')(app));
 
 app.use(logger('dev'));
 app.use(express.json());
