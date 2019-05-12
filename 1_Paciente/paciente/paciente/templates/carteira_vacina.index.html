@@ -357,8 +357,9 @@
                 <input type="text" class="form-control" id="cpf" maxlength="11">
             </div>
             <div class="form-group">
-                <label for="vacina">Vacina</label>
-                <input type="text" class="form-control" id="vacina" maxlength="11">
+                <label for="inputVacina">Vacina</label>
+                <select class="custom-select" id="select-vacinas">
+                </select>
             </div>
             <div class="form-group">
                 <label for="dataAplicacao">Data Aplicação</label>
@@ -380,6 +381,7 @@
                 <label for="responsavel">Responsável</label>
                 <input type="text" class="form-control" id="responsavel" maxlength="120">
             </div>
+            <input type="hidden" id="vacinaId">
 
         </form>
         <button class="btn btn-info" id="cadastrar">Cadastrar</button>
@@ -392,12 +394,6 @@
         <table id="table-todos-carteiras">
             <tr>
                 <th>Paciente CPF</th>
-                <th>Vacina</th>
-                <th>Data Aplicação</th>
-                <th>Data Próxima Aplicação</th>
-                <th>Lote</th>
-                <th>Dose</th>
-                <th>Responsável</th>
                 <th>-</th>
             </tr>
         </table>
@@ -417,23 +413,50 @@
         <div style="padding: 16px" id="div-table-paciente">
             <table id="table-carteira-paciente">
                 <tr>
-                    <th>Paciente CPF</th>
-                    <th>Vacina</th>
+                    <th>Nome Vacina</th>
                     <th>Data Aplicação</th>
                     <th>Data Próxima Aplicação</th>
                     <th>Lote</th>
                     <th>Dose</th>
                     <th>Responsável</th>
-                    <th>-</th>
                 </tr>
             </table>
         </div>
-
     </div>
-
+    <input type="hidden" id="vacinas">
     <script>
 
         setarLinkHome()
+
+        function getAllVacinas(callback, dataCallback) {
+            $("#select-vacinas").empty();
+            vacinasHidden = $("#vacinas").val()
+            if (vacinasHidden) {
+                montarSelectVacinas(JSON.parse(vacinasHidden), callback)
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: `${URL}/stagiop_bd/api/medicamento`,
+                    success: function (data) {
+                        $("#vacinas").val(JSON.stringify(data))
+                        montarSelectVacinas(data, callback, dataCallback)
+                    },
+                    error: function (e) {
+                    }
+                });
+            }
+        }
+
+        function montarSelectVacinas(resultado, callback, dataCallback) {
+            var $dropdown = $("#select-vacinas");
+
+            $.each(resultado, function () {
+                $dropdown.append($("<option />").val(this.med_id).text(this.med_product_description));
+            });
+            $("#select-vacinas").show()
+
+            callback(dataCallback)
+        }
 
         function setarLinkHome() {
             $("#home").empty()
@@ -450,18 +473,23 @@
 
         $('#form-cadastrar').trigger("reset");
         hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-paciente', 'div-table-paciente', 'atualizar'])
+        $("#vacinaId").val("")
 
         $("#cadastrar-carteira-vacina").click(() => {
+            getAllVacinas(cadastrarShowInfo)
+        })
+
+        function cadastrarShowInfo() {
             hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente'])
             $('#form-cadastrar').trigger("reset");
             $("#cpf").prop("disabled", false);
             $("#cadastrar").show()
             $("#atualizar").hide()
             $("#div-cadastrar").show()
-        })
+        }
 
-        function criarBotaoAtualizar(cpf, data) {
-            return `<button class="btn btn-info" id="atualizar-${cpf}" onClick='atualizarPaciente(${data})'>Atualizar</button>`
+        function criarBotaoVisualizar(cpf) {
+            return `<button class="btn btn-info" id="visualizar-vacina-${cpf}" onClick='visualizarPaciente(${cpf})'>Visualizar</button>`
         }
 
         $("#visualizar-carteira-vacina").click(() => {
@@ -474,16 +502,15 @@
                 url: `${URL}/stagiop_bd/api/carteira_vacina`,
                 success: function (resultado) {
                     tableHtml = ''
-                    resultado.forEach(data => {
+                    cpfs = resultado.map((data) => {
+                        return data.vac_cpfpatient
+                    })
+                    cpfs = new Set(cpfs)
+
+                    cpfs.forEach(data => {
                         tableHtml += `<tr>
-                                <td>` + data.vac_cpfpatient + `</td>
-                                <td>` + data.vac_name + `</td>
-                                <td>` + data.vac_date + `</td>
-                                <td>` + data.vac_next + `</td>
-                                <td>` + data.vac_batch + `</td>
-                                <td>` + data.vac_dose + `</td>
-                                <td>` + data.vac_responsible + `</td>
-                                <td>` + criarBotaoAtualizar(data.vac_cpfpatient, JSON.stringify(data)) + `</td>
+                                <td>` + data + `</td>
+                                <td>` + criarBotaoVisualizar(data) + `</td>
                             </tr>`
                     })
                     $('#table-todos-carteiras > tbody:last-child').append(tableHtml);
@@ -501,27 +528,29 @@
             $("#table-todos-carteiras tr:gt(0)").remove();
             $("#table-carteira-paciente tr:gt(0)").remove();
             $("#visualizar-paciente").show()
+            $("#cpf-busca").val("")
+            $("#cpf-busca").prop("disabled", false);
             $("#div-buscar").show()
+            $("#buscar").show()
             $("#div-table-paciente").hide()
 
         })
 
 
-        function cadastrarAtualizarPaciente(cpfPaciente) {
+        function cadastrarAtualizarPaciente(cpfPaciente, vacinaId) {
             url = `${URL}/stagiop_bd/api/carteira_vacina`
             type = 'POST'
             message = 'Carteira Vacina cadastrada com sucesso!'
             if (cpfPaciente) {
-                url += `/${cpfPaciente}`
+                url += `/${cpfPaciente}?id=${vacinaId}`
                 type = 'PUT'
                 message = 'Carteira Vacina atualizada com sucesso!'
             }
-
             $.ajax({
                 type: type,
                 url: url,
                 data: JSON.stringify({
-                    "vac_name": $("#vacina").val(),
+                    "vac_medicine": $(`#select-vacinas  option:selected`).val(),
                     "vac_date": $("#dataAplicacao").val(),
                     "vac_next": $("#dataProximaAplicacao").val(),
                     "vac_batch": $("#lote").val(),
@@ -535,7 +564,6 @@
                     $("#div-cadastrar").hide()
                     $("#visualizar-paciente").show()
                     $("#div-buscar").hide()
-                    mostrarInfoPaciente(resultado)
                     mostrarSwal('OK', 'success', message)
                 },
                 error: function (e) {
@@ -549,52 +577,48 @@
         });
 
         $("#atualizar").click(() => {
-            cadastrarAtualizarPaciente($("#cpf").val())
+            cadastrarAtualizarPaciente($("#cpf").val(), $("#vacinaId").val())
         });
 
         function mostrarInfoPaciente(data) {
             $("#table-carteira-paciente tr:gt(0)").remove();
             tableHtml = `<tr>
-                <td>` + data.vac_cpfpatient + `</td>
-                <td>` + data.vac_name + `</td>
+                <td>` + data.med_product_description + `</td>
                 <td>` + data.vac_date + `</td>
                 <td>` + data.vac_next + `</td>
                 <td>` + data.vac_batch + `</td>
                 <td>` + data.vac_dose + `</td>
                 <td>` + data.vac_responsible + `</td>
-                <td>` + criarBotaoAtualizar(data.vac_cpfpatient, JSON.stringify(data)) + `</td>
             </tr>`
             $('#table-carteira-paciente > tbody:last-child').append(tableHtml);
             $("#div-table-paciente").show()
         }
 
-        function atualizarPaciente(data) {
-            $("#table-todos-carteiras tr:gt(0)").remove();
-            $("#table-carteira-paciente tr:gt(0)").remove();
-            $("#div-table-paciente").hide();
-            $("#visualizar-paciente").hide();
-            $("#visualizar-todos").hide();
+        function visualizarPaciente(cpf) {
+            $("#visualizar-todos").hide()
+            $("#visualizar-paciente").show()
+            $("#buscar").hide()
+            $("#cpf-busca").val(cpf)
+            $("#cpf-busca").prop("disabled", true);
+            buscarVacinasPaciente(false, cpf)
+        }
 
-            $('#form-cadastrar').trigger("reset");
-            $("#div-fuma-frequencia").hide()
-            $("#div-bebe-frequencia").hide()
-            $("#div-atividade-frequencia").hide()
-
-            $("#cadastrar").hide()
-            $("#atualizar").show()
-            setarForm(data)
-            $("#div-cadastrar").show()
+        function setSelect(selects, field) {
+            selects.map((select) => {
+                $(`#${select}`).val(field).change();
+            })
         }
 
         function setarForm(data) {
             $("#cpf").val(data.vac_cpfpatient)
             $("#cpf").prop("disabled", true);
-            $("#vacina").val(data.vac_name)
+            setSelect(['select-vacinas'], data.vac_medicine)
             $("#dataAplicacao").val(data.vac_date)
             $("#dataProximaAplicacao").val(data.vac_next)
             $("#lote").val(data.vac_batch)
             $("#dose").val(data.vac_dose)
             $("#responsavel").val(data.vac_responsible)
+            $("#vacinaId").val(data.vac_idvaccine)
         }
 
         function mostrarSwal(title, type, text, isHtml) {
@@ -624,21 +648,39 @@
             mostrarSwal('Atenção', 'error', text, true)
         }
 
-        $("#buscar").click(() => {
-            $("#table-carteira-paciente tr:gt(0)").remove();
-
-            const cpfBusca = $("#cpf-busca").val();
-            if (!cpfBusca) {
-                mostrarSwal('Atenção', 'warning', "Favor informar o CPF do paciente!")
-            } else {
+        function buscarVacinasPaciente(busca, cpf) {
+            let req = true
+            if (busca) {
+                const cpfBusca = $("#cpf-busca").val();
+                if (!cpfBusca) {
+                    mostrarSwal('Atenção', 'warning', "Favor informar o CPF do paciente!")
+                    req = false
+                } else {
+                    cpf = cpfBusca
+                }
+            }
+            if (req) {
                 $.ajax({
                     type: "GET",
-                    url: `${URL}/stagiop_bd/api/carteira_vacina/${cpfBusca}`,
-                    success: function (data) {
-                        if (data.message) {
-                            mostrarSwal('Atenção', 'warning', `Carteira Vacina não encontrado para o paciente ${cpfBusca}`)
+                    url: `${URL}/stagiop_bd/api/carteira_vacina/${cpf}`,
+                    success: function (resultado) {
+                        if (resultado.message) {
+                            mostrarSwal('Atenção', 'warning', `Carteira Vacina não encontrada para o paciente ${cpf}`)
                         } else {
-                            mostrarInfoPaciente(data)
+                            $("#table-carteira-paciente tr:gt(0)").remove();
+                            tableHtml = ''
+                            resultado.forEach(data => {
+                                tableHtml += `<tr>
+                                        <td>` + data.med_product_description + `</td>
+                                        <td>` + data.vac_date + `</td>
+                                        <td>` + data.vac_next + `</td>
+                                        <td>` + data.vac_batch + `</td>
+                                        <td>` + data.vac_dose + `</td>
+                                        <td>` + data.vac_responsible + `</td>
+                                    </tr>`
+                            })
+                            $('#table-carteira-paciente > tbody:last-child').append(tableHtml);
+                            $("#div-table-paciente").show()
                         }
                     },
                     error: function (e) {
@@ -647,7 +689,11 @@
                     }
                 });
             }
+        }
 
+        $("#buscar").click(() => {
+            $("#table-carteira-paciente tr:gt(0)").remove();
+            buscarVacinasPaciente(true)
         })
     </script>
 </body>
