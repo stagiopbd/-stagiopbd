@@ -7,13 +7,13 @@ cd 1_Paciente/paciente/paciente
 if it runs in docker:
     sudo docker-compose up --build -d
     sudo docker exec -ti paciente bash
-    python3 manage.py makemigrations paciente quadro_clinico alergia
+    python3 manage.py makemigrations paciente quadro_clinico alergia carteira_vacina
     python3 manage.py migrate
 else:
     # start mysql
     sudo apt install python3-dev python3-pip
     sudo pip3 install -r requirements.txt
-    python3 manage.py makemigrations paciente quadro_clinico alergia
+    python3 manage.py makemigrations paciente quadro_clinico alergia carteira_vacina
     python3 manage.py migrate
     
 ```
@@ -30,6 +30,7 @@ sudo docker-compose up -d
 http://127.0.0.1:8000/stagiop_bd/api/paciente
 http://127.0.0.1:8000/stagiop_bd/api/alergia
 http://127.0.0.1:8000/stagiop_bd/api/quadro_clinico
+http://127.0.0.1:8000/stagiop_bd/api/carteira_vacina
 ```
 
 ### GUI
@@ -42,6 +43,7 @@ http://127.0.0.1:8000/stagiop_bd
 python3 manage.py test paciente
 python3 manage.py test alergia
 python3 manage.py test quadro_clinico
+python3 manage.py test carteira_vacina
 ```
 
 ### ENVIRONMENTS

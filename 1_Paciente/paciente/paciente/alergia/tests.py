@@ -16,9 +16,9 @@ class AlergiaTest(TestCase):
         for i in range(3):
             a = Alergia.objects.create(**{
                 'id': i+1,
-                'principio_ativo': 'a' * 2,
-                'descricao': 'b' * 2,
-                'grau_risco': randint(1, 5)
+                'principio_ativo': 'a' * (i+1),
+                'descricao': 'b' * (i+1),
+                'grau_risco': 10
             })
             alergias.append(a)
 
@@ -49,7 +49,7 @@ class AlergiaTest(TestCase):
         a = {
             "principio_ativo": "awerkp",
             "descricao": "Alimentar",
-            "grau_risco": 2
+            "grau_risco": 10
         }
         response = self.client.post(
             '/stagiop_bd/api/alergia', a, format='json')
@@ -73,7 +73,7 @@ class AlergiaTest(TestCase):
     def testePut(self):
         response = self.client.put(
             '/stagiop_bd/api/alergia/1', {
-                "grau_risco": 5
+                "grau_risco": 50
             }, format='json')
         self.assertEqual(response.status_code, 201)
 
