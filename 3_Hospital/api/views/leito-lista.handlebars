@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+<br>
+<style>
+	.sit_2 {color: red}
+</style>
+<h3>{{wng.wng_desc}} - Leitos <a href="/Hospital/{{wng.wng_hsp_id}}/ala/{{wng.wng_id}}/leito/New" class="float-right btn btn-primary">Cadastrar novo leito</a></h3>
+<hr>
+
+<table id="listaLeito" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Leito</th>
+      <th>Ala</th>
+	    <th>Paciente (cpf)</th>
+	  <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each leito}}
+    <tr class='bed_{{bed_id}}'>
+      <td>{{bed_id}}</td>
+      <td>{{bed_desc}}</td>
+      <td>{{bed_wng_id}}</td>
+      <td>{{bed_pat_cpf}}</td>
+      <td>
+        <button id={{bed_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
+          data-target="#mdUpdate{{bed_id}}">
+          <i class="far fa-edit"></i>
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+ <a class="btn btn-primary" href="/Hospital/{{wng.wng_hsp_id}}/ala" role="button">Voltar</a>
+
+{{#each leito}}
+<!-- Modal Update -->
+<div class="modal fade bd-example-modal-lg" id="mdUpdate{{bed_id}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel{{bed_id}}"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel{{bed_id}}">Atualizar Leito</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- FORM ATUALIZACAO  -->
+        <form action="/hospital/{{@root.wng.wng_hsp_id}}/ala/{{bed_wng_id}}/leito/Update/{{bed_id}}" method="post">
+	      <div class="form-group">
+	        <label for="inputName">Descri&ccedil;&atilde;o</label>
+	        <input type="text" class="form-control" name="inputName" placeholder="Descri&ccedil;&atilde;o do Leito" value="{{bed_desc}}">
+	      </div>
+         <div class="form-group">
+	        <label for="inputCpf">CPF</label>
+	        <input type="text" class="form-control cpf" name="inputCpf" placeholder="CPF" value="{{bed_pat_cpf}}">
+	      </div>
+          <!--  FIM FORM ATUALIZACAO  --->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Atualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{/each}}
+
+<script>
+  $('.cpf').mask('999.999.999-99', { reverse: true });
+  $(document).ready(function () {
+    $('#listaLeito').DataTable();
+  });
+</script>

@@ -1,0 +1,31 @@
+<br />
+<h3>Novo Hospital</h3>
+<hr>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+<form action="/hospital" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputNome">Nome</label>
+            <input type="text" class="form-control" name="inputNome" placeholder="Raz&atilde;o Social" maxlength="100">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputCnpj">CNPJ</label>
+            <input type="text" class="form-control cnpj" name="inputCnpj" maxlength="18" id="cpfcnpj"  placeholder="99.999.999/9999-99">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputAddress">Endere&ccedil;o</label>
+        <input type="text" class="form-control" name="inputAddress" placeholder="1234 Main St" maxlength="150">
+    </div>
+     <div class="form-group">
+        <label for="inputPhone">Telefone</label>
+        <input type="phone" class="form-control phone" name="inputPhone"
+            placeholder="(11) 00000-0000">
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a class="btn btn-primary" href="/hospital" role="button">Voltar</a>
+</form>
+<script>
+    $('.cnpj').mask('99.999.999/9999-99', {reverse: true});
+    $('.phone').mask('(99) 9999-9999', {reverse: false});
+</script>

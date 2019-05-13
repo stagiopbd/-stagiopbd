@@ -1,0 +1,158 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+<br>
+<style>
+  .sit_2 {color: red}
+</style>
+<h3>Hospitais <a href="/Hospital/New" class="float-right btn btn-primary">Cadastrar novo Hospital</a></h3>
+<hr>
+
+<table id="listaHospital" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>CNPJ</th>
+      <th>Endereco</th>
+      <th>Telefone</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each hsp}}
+    <tr class='sit_{{hsp_sit_id}}'>
+      <td>{{hsp_id}}</td>
+      <td>{{hsp_name}}</td>
+      <td>{{hsp_cnpj}}</td>
+      <td>{{hsp_address}}</td>
+      <td>{{hsp_telephone}}</td>
+      <td>
+        <button id="{{hsp_id}}" type="button" class="btn btn-default btn-sm" 
+        onclick="window.location.href='/hospital/{{hsp_id}}/ala'" alt="Cadastro de Alas" data-toggle="tooltip" data-placement="top" title="Cadastro de Alas">
+          <i class="far fa-list" ></i>
+        </button>
+      </td>
+    
+      <td>
+        <button id="{{hsp_id}}" type="button" class="btn btn-default btn-sm" data-toggle="modal"
+          data-target="#mdUpdate{{hsp_id}}">
+          <i class="far fa-edit"></i>
+        </button>
+      </td>
+      <td>
+        {{#ifEquals hsp_sit_id 1 }}
+        
+        <button id="{{hsp_id}}" type="button" class="btn btn-default btn-sm" data-toggle="modal"
+          data-target="#mdDelete{{hsp_id}}">
+          <i class="fas fa-trash"></i>
+        </button>
+        {{/ifEquals }}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+{{#each hsp}}
+<!-- Modal Update -->
+<div class="modal fade bd-example-modal-lg" id="mdUpdate{{hsp_id}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel{{hsp_id}}"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel{{hsp_id}}">Atualizar Ala</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- FORM ATUALIZACAO  -->
+        <form action="/Hospital/Update/edit/{{hsp_id}}" method="post">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="inputNome">Nome</label>
+              <input type="text" class="form-control" name="inputNome" placeholder="Raz&atilde;o Social" value="{{hsp_name}}">
+            </div>
+            <div class="form-group col-md-12">
+              <label for="inputCnpj">CNPJ</label>
+              <input type="text" class="form-control cnpj" name="inputCnpj" placeholder="CNPJ" value="{{hsp_cnpj}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputAddress">Endere&ccedil;o</label>
+            <input type="text" class="form-control" name="inputAddress" placeholder="1234 Main St" value="{{hsp_address}}">
+          </div>
+          <div class="form-group">
+            <label for="inputPhone">Telefone</label>
+            <input type="phone" class="form-control phone" name="inputPhone" placeholder="(11) 0000-0000" value="{{hsp_telephone}}">
+          </div>
+		  <div class="form-group">
+            <label for="inputSituation">Situa&ccedil;&atilde;o</label>
+            <select class="form-control" name="inputSituation">
+              {{#select hsp_sit_id}}
+
+				  {{#each @root.sit}}
+	              <option value="{{sit_id}}">{{sit_desc}}</option>
+				  {{/each}}
+
+              {{/select}}
+            </select>
+          </div>
+          <!--  FIM FORM ATUALIZACAO  --->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Atualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Delete-->
+<div class="modal fade bd-example-modal-lg" id="mdDelete{{hsp_id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Desativar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Deseja desativar esse registro?
+        Hospital: <span id="info"> {{nome}} </span>
+      </div>
+      <div class="modal-footer">
+        <form action="/Hospital/delete/{{hsp_id}}" method="get">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Desativar</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
+
+<script>
+  $(document).ready(function () {
+    $('#listaHospital').DataTable();
+  });
+/*
+  $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
+  }) */
+  $('.cnpj').mask('99.999.999/9999-99', { reverse: true });
+  $('.phone').mask('(99) 9999-9999', { reverse: false });
+ $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>

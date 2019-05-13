@@ -1,0 +1,109 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+<br>
+<style>
+  .Inativo{color: red}
+</style>
+
+<h3>Especialidades <a href="/Especialidade/New" class="float-right btn btn-primary">Cadastrar nova Especialidade</a></h3>
+<hr>
+
+<table id="listaEspecialidade" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Descri&ccedil;&atilde;o</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each esp}}
+    <tr>
+      <td>{{spc_id}}</td>
+      <td>{{spc_desc}}</td>
+      <td>
+        <button id={{spc_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
+          data-target="#mdUpdate{{spc_id}}">
+          <i class="far fa-edit"></i>
+        </button>
+      </td>
+      <td>
+        <button id={{spc_id}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
+          data-target="#mdDelete{{spc_id}}">
+          <i class="fas fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+{{#each esp}}
+<!-- Modal Update -->
+<div class="modal fade bd-example-modal-lg" id="mdUpdate{{spc_id}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel{{spc_id}}"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel{{spc_id}}">Atualizar Registro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- FORM ATUALIZA&Atilde;‡&Atilde;ƒO  -->
+        <form action="/Especialidade/Update/{{spc_id}}" method="post">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="inputDesc">Descri&ccedil;&atilde;o</label>
+              <input type="text" class="form-control" name="inputDesc" placeholder="Descri&ccedil;&atilde;o da Especialidade" value="{{spc_desc}}">
+            </div>
+          </div>
+          <!--  FIM FORM ATUALIZA&Atilde;‡&Atilde;ƒO  --->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Atualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Delete-->
+<div class="modal fade bd-example-modal-lg" id="mdDelete{{spc_id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Remove</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Deseja remover esse registro?
+        Especialidade: <span id="info"> {{spc_desc}} </span>
+      </div>
+      <div class="modal-footer">
+        <form action="/Especialidade/delete/{{spc_id}}" method="get">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Remover</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
+
+<script>
+  $(document).ready(function () {
+    $('#listaEspecialidade').DataTable();
+  });
+</script>

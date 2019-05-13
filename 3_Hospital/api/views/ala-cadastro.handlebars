@@ -1,0 +1,22 @@
+<br />
+<h3>{{hsp.hsp_name}} - Nova Ala</h3>
+<hr>
+
+<form action="/hospital/{{hsp.hsp_id}}/ala" method="post">
+    <div class="form-group">
+        <label for="inputName">Nome</label>
+        <input type="text" class="form-control" name="inputName" placeholder="Nome da Ala" maxlength="100">
+    </div>
+    <div class="form-group">
+        <label for="inputSpeciality">Especialidade atendida</label>
+		<select class="form-control" name="inputSpeciality">
+			  <option value=""></option>
+			  {{#each @root.spc}}
+			  <option value="{{spc_id}}">{{spc_desc}}</option>
+			  {{/each}}
+
+		</select>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a class="btn btn-primary" href="/hospital/{{hsp.hsp_id}}/ala" role="button">Voltar</a>
+</form>
