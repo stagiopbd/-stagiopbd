@@ -1,0 +1,32 @@
+<br />
+<h3>{{hsp.hsp_name}} - Novo Colaborador</h3>
+<hr>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+<form action="/hospital/{{hsp.hsp_id}}/colaborador" method="post">
+<div class="form-group">
+        <label for="inputCpf">CPF</label>
+        <input type="text" class="form-control cpf" name="inputCpf" placeholder="Documento CPF" maxlength="11">
+    </div>
+    <div class="form-group">
+        <label for="inputName">Nome</label>
+        <input type="text" class="form-control" name="inputName" placeholder="Nome da Colaborador" maxlength="100">
+    </div>
+     <div class="form-group">
+        <label for="inputGenero">Genero</label>
+        <select class="form-control" name="inputGender">
+            <option value="1">Masculino</option>
+            <option value="2">Feminino</option>
+        </select>
+    </div>
+     <div class="form-group">
+        <label for="inputFunction">Função</label>
+        <select class="form-control" name="inputFunction">
+            <option value="1">Enfermeiro</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a class="btn btn-primary" href="/hospital" role="button">Voltar</a>
+</form>
+<script>
+     $('.cpf').mask('999.999.999-99', { reverse: true });
+</script>
