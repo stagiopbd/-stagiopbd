@@ -54,6 +54,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/doc', express.static(path.join(__dirname, 'doc')));
+app.use('/test', express.static(path.join(__dirname, 'spec/results')));
 
 
 // catch 404 and forward to error handler
