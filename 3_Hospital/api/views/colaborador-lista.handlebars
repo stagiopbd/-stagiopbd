@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+<br>
+<style>
+	.sit_2 {color: red}
+</style>
+<h3>{{hsp.hsp_name}} - Colaboradores <a href="/Hospital/{{hsp.hsp_id}}/colaborador/ColaboradorNew" class="float-right btn btn-primary">Cadastrar novo Colaborador</a></h3>
+<hr>
+
+<table id="listaColaborador" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th>Cpf</th>
+      <th>Nome Completo</th>
+      <th>Hospital</th>
+	    <th>Função</th>
+	  <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each colaborador}}
+    <tr class='col_{{col_cpf}}'>
+      <td class="cpf">{{col_cpf}}</td>
+      <td>{{col_name}}</td>
+      <td>{{col_hsp_id}}</td>
+      <td>
+        {{#ifEquals col_function_id 1}}
+          Enfermeiro(a)
+        {{/ifEquals}}
+      </td>
+      <td>
+        <button id={{col_cpf}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
+          data-target="#mdUpdate{{col_cpf}}">
+          <i class="far fa-edit"></i>
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+ <a class="btn btn-primary" href="/Hospital" role="button">Voltar</a>
+
+{{#each colaborador}}
+<!-- Modal Update -->
+<div class="modal fade bd-example-modal-lg" id="mdUpdate{{col_cpf}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel{{bed_id}}"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel{{col_cpf}}">Atualizar Leito</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form action="/hospital/{{col_hsp_id}}/colaborador/Update/{{col_cpf}}" method="post">
+	      <div class="form-group">
+	        <label for="inputName">Nome completo</label>
+	        <input type="text" class="form-control" name="inputName" placeholder="Nome completo" value="{{col_name}}">
+	      </div>
+        <div class="form-group">
+        <label for="inputFunction">Função</label>
+        <select class="form-control" name="inputFunction">
+            <option value="1">Enfermeiro</option>
+        </select>
+        </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Atualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{/each}}
+
+<script>
+  $('.cpf').mask('999.999.999-99', { reverse: true });
+  $(document).ready(function () {
+    $('#listaColaborador').DataTable();
+  });
+</script>

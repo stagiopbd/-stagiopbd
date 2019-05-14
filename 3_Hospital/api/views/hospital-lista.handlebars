@@ -21,6 +21,7 @@
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -31,6 +32,12 @@
       <td>{{hsp_cnpj}}</td>
       <td>{{hsp_address}}</td>
       <td>{{hsp_telephone}}</td>
+      <td>
+      <button id="{{hsp_id}}" type="button" class="btn btn-default btn-sm" 
+        onclick="window.location.href='/hospital/{{hsp_id}}/colaborador'" alt="Cadastro de Colaboradores" data-toggle="tooltip" data-placement="top" title="Cadastro de Colaboradores">
+         <i class="far fa-user-md" ></i>
+        </button>
+      </td>
       <td>
         <button id="{{hsp_id}}" type="button" class="btn btn-default btn-sm" 
         onclick="window.location.href='/hospital/{{hsp_id}}/ala'" alt="Cadastro de Alas" data-toggle="tooltip" data-placement="top" title="Cadastro de Alas">
