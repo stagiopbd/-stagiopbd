@@ -33,7 +33,7 @@
       </td>
       <td>
         <button id={{col_cpf}} type="button" class="btn btn-default btn-sm" data-toggle="modal"
-          data-target="#mdUpdate{{col_cpf}}">
+          data-target="#mdUpdate{{@index}}">
           <i class="far fa-edit"></i>
         </button>
       </td>
@@ -45,7 +45,7 @@
 
 {{#each colaborador}}
 <!-- Modal Update -->
-<div class="modal fade bd-example-modal-lg" id="mdUpdate{{col_cpf}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel{{bed_id}}"
+<div class="modal fade bd-example-modal-lg" id="mdUpdate{{@index}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel{{bed_id}}"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

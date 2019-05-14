@@ -8,7 +8,7 @@ module.exports = function(app) {
     router.get('/', controller.get);
     router.get('/ColaboradorNew', controller.new);
     router.post('/', controller.post);
-    router.post('/Update/:id', controller.update);
-    // router.get('/Delete/:id', controller.delete);
+    router.post('/Update/:cpf', controller.update);
+    // router.get('/Delete/:cpf', controller.delete);
     return router;
 };
