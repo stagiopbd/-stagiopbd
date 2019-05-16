@@ -17,7 +17,7 @@ exports.post = (req, res, next) => {
     var me = req.body;
     leito.create({
         bed_desc: me.inputName,
-        bed_pat_cpf: me.inputCpf,
+        bed_pat_cpf: (me.inputCpf.length > 0?me.inputCpf:null ),
         bed_wng_id: req.params.wng_id
     }).then(function(leito) {
 		res.redirect('/hospital/'+req.params.wng_hsp_id+'/ala/' + req.params.wng_id + '/leito')

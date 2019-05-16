@@ -12,7 +12,7 @@ const leito = db.sequelize.define("bed", {
 		}
 	},
 	bed_wng_id: { type: db.Sequelize.INTEGER },
-	bed_pat_cpf: { type: db.Sequelize.INTEGER }
+	bed_pat_cpf: { type: db.Sequelize.STRING, allowNull: true }
 });
 
 module.exports = leito;
