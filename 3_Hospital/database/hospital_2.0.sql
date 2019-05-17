@@ -124,8 +124,19 @@ CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`bed` (
     FOREIGN KEY (`bed_wng_id`)
     REFERENCES `kiizj5q0n6quilvc`.`wing` (`wng_id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+               
+CREATE TABLE `collaborator` (
+  `col_cpf` varchar(20) NOT NULL,
+  `col_name` varchar(100) NOT NULL,
+  `col_gender` char(1) NOT NULL,
+  `col_function_id` int(11) NOT NULL,
+  `col_hsp_id` int(11) NOT NULL,
+  PRIMARY KEY (`col_cpf`),
+  KEY `col_hsp_id` (`col_hsp_id`),
+  CONSTRAINT `collaborator_ibfk_1` FOREIGN KEY (`col_hsp_id`) REFERENCES `hospital` (`hsp_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;               
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
