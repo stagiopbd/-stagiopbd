@@ -99,7 +99,7 @@ ENGINE = InnoDB;
 -- Table `kiizj5q0n6quilvc`.`PATIENT`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`patient` (
-  `pat_cpf` VARCHAR(11) NOT NULL,
+  `pat_cpf` VARCHAR(20) NOT NULL,
   `pat_name` VARCHAR(200) NOT NULL COMMENT 'Nome do Paciente',
   `pat_gender` VARCHAR(1) NULL COMMENT 'Genero do Paciente',
   `pat_blood_type` VARCHAR(2) NULL COMMENT 'Tipo sanguineo e fator RH do Paciente',
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`bed` (
   `bed_id` INT NOT NULL AUTO_INCREMENT,
   `bed_desc` VARCHAR(45) NOT NULL COMMENT 'Descricao do Leito',
   `bed_wng_id` INT NOT NULL,
-  `bed_pat_cpf` VARCHAR(11) NULL,
+  `bed_pat_cpf` VARCHAR(20) NULL,
   PRIMARY KEY (`bed_id`),
   UNIQUE INDEX `bed_desc_unique` (`bed_wng_id` ASC, `bed_desc` ASC),
   INDEX `fk_bed_wing1_idx` (`bed_wng_id` ASC),
@@ -125,11 +125,6 @@ CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`bed` (
     REFERENCES `kiizj5q0n6quilvc`.`wing` (`wng_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_bed_patient1`
-    FOREIGN KEY (`bed_pat_cpf`)
-    REFERENCES `kiizj5q0n6quilvc`.`patient` (`pat_cpf`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

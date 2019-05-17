@@ -11,13 +11,13 @@ var leito = require('../models/leito-model')
  * @apiDescription Insere informa&ccedil;&otilde;es de um leito no banco de dados.
  * Em caso de sucesso, redirecionao o usu&aacute;rio &agrave; lista de leitos do hospital selecionado.
  * @apiParam {String} inputName  Nome do Leito
- * @apiParam {Number} inputCpf  CPF do paciente que está ocupando a Leito
+ * @apiParam {Number} inputCpf  CPF do paciente que est&aacute; ocupando a Leito
  */
 exports.post = (req, res, next) => {
     var me = req.body;
     leito.create({
         bed_desc: me.inputName,
-        bed_pat_cpf: me.inputCpf,
+        bed_pat_cpf: (me.inputCpf.length > 0?me.inputCpf:null ),
         bed_wng_id: req.params.wng_id
     }).then(function(leito) {
 		res.redirect('/hospital/'+req.params.wng_hsp_id+'/ala/' + req.params.wng_id + '/leito')
@@ -46,7 +46,7 @@ exports.get = (req, res, next) => {
 			required: true
 		}],
 		where: {bed_wng_id: req.params.wng_id}
-		
+
 	}).then(function (leito) {
 		ala.findOne({where : {wng_id : req.params.wng_id}}).then(function (wng) {
 			res.render('leito-lista', { title: 'Lista de Leitos', leito: leito, wng : wng})
@@ -94,4 +94,3 @@ exports.update =  (req, res, next) => {
   		next(err)
   	})
 }
-
