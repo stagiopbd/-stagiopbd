@@ -10,20 +10,17 @@ const { Search } = Input;
 const { Title } = Typography;
 
 const RadioGroup = Radio.Group;
-// const pages = [
-//   {
-//     name: 'Home',
-//     path: '/'
-//   },
-//   {
-//     name: 'List',
-//     path: '/'
-//   },
-//   {
-//     name: 'Path',
-//     path: '/'
-//   }
-// ];
+const pages = [
+  {
+    name: 'Home',
+    path: '/',
+    active: true
+  },
+  {
+    name: 'Screening',
+    path: '/screening'
+  }
+];
 
 export default class About extends Component {
   state = {
@@ -39,8 +36,8 @@ export default class About extends Component {
       findByCode(value)
         .then(diagnosis => this.setState({ diagnosis, loading: false }))
         .catch(ex => {
-          const { statusCode, message } = ex.response.data;
-          const errorMessage = `${statusCode} - ${message}`;
+          const { statusCode, error } = ex.response.data;
+          const errorMessage = `${statusCode} - ${error}`;
           message.error(errorMessage);
           this.setState({ loading: false });
         });
@@ -79,9 +76,8 @@ export default class About extends Component {
 
   render() {
     const { diagnosis, results, type, loading } = this.state;
-    // pages={pages} on Layout
     return (
-      <Layout>
+      <Layout pages={pages}>
         <Title level={2} style={{ textAlign: 'center' }}>
           Medical Diagnosis
         </Title>
