@@ -1,0 +1,15 @@
+1- Definição das integrações:
+
+
+
+2- Definição dos BD:
+- BD Time: 		host="35.237.186.164", port="8082", user="", passwd="", database="", auth_plugin='mysql_native_password'
+- BD Unificado: 	host="35.237.186.164", port="3306", user="root", passwd="stagiopbd2019", database="stagiopbd", auth_plugin='mysql_native_password'
+
+- BD Paciente:		host="35.237.186.164", port="3306", user="paciente", passwd="paciente#123", database="paciente", auth_plugin='mysql_native_password'
+- BD Hosp:
+- BD Forn:
+
+
+
+
