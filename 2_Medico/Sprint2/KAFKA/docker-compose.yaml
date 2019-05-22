@@ -55,17 +55,32 @@ services:
       - NODE_ENV=development
       - PORT=5000
       - TYPEORM_CONNECTION=mysql
-      - TYPEORM_HOST=mysql
-      - TYPEORM_PORT=3326
-      - TYPEORM_USERNAME=stagiop
-      - TYPEORM_PASSWORD=h3lloWorld
-      - TYPEORM_DATABASE=stagiop
+      - TYPEORM_HOST=db-medico
+      ???? - TYPEORM_PORT=3326
+      - TYPEORM_USERNAME=medico
+      - TYPEORM_PASSWORD=medico#123
+      - TYPEORM_DATABASE=medico
       - TYPEORM_SYNCHRONIZE=true
       - TYPEORM_ENTITIES=src/domain/entity/*.js
       - TYPEORM_LOGGING=true
       - MONGODB_URI=${MONGODB_URI}
     ports:
       - 5000:5000
+
+  app:
+    restart: always
+    depends_on:
+      - db-medico
+    build:
+      dockerfile: 
+      context: 
+    volumes:
+    environment:
+    ports:
+      - XXX:XXXX
+
+
+
 
 networks:
   medico_net:
