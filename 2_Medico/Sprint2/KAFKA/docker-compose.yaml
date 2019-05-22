@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
 
@@ -26,7 +26,8 @@ services:
             
   db-medico:
     image: mysql
-    restart: unless-stopped
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
     ports:
       - "8082:3306"
     volumes:
@@ -38,6 +39,33 @@ services:
       - MYSQL_USER=medico
     networks:
       - medico_net
+
+  api:
+    restart: always
+    depends_on:
+      - db-medico
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./api
+    volumes:
+      - .:/ts2/api
+      - /ts2/api/node_modules
+    environment:
+      - HOST=api
+      - NODE_ENV=development
+      - PORT=5000
+      - TYPEORM_CONNECTION=mysql
+      - TYPEORM_HOST=mysql
+      - TYPEORM_PORT=3326
+      - TYPEORM_USERNAME=stagiop
+      - TYPEORM_PASSWORD=h3lloWorld
+      - TYPEORM_DATABASE=stagiop
+      - TYPEORM_SYNCHRONIZE=true
+      - TYPEORM_ENTITIES=src/domain/entity/*.js
+      - TYPEORM_LOGGING=true
+      - MONGODB_URI=${MONGODB_URI}
+    ports:
+      - 5000:5000
 
 networks:
   medico_net:
