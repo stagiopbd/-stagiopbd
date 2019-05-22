@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+
+  medico:
+    # build: ./
+    image: nginx
+    container_name: medico_web
+    restart: unless-stopped
+    environment:
+      - DB_HOST=db-medico
+      - DB_PORT=8082
+      - DB_USER=medico
+      - DB_NAME=medico
+      - DB_PASSWORD=medico#123
+      - URL=http://35.237.186.164:8020
+      - PORT=8000
+    ports:
+      - "8020:8000"
+    links:
+      - db-medico
+    depends_on:
+      - db-medico
+    networks:
+      - medico_net
+            
+  db-medico:
+    image: mysql
+    restart: unless-stopped
+    ports:
+      - "8082:3306"
+    volumes:
+      - db-medico:/var/lib/mysql_medico
+    environment:
+      - MYSQL_ROOT_PASSWORD=medico#12345
+      - MYSQL_PASSWORD=medico#123
+      - MYSQL_DATABASE=medico
+      - MYSQL_USER=medico
+    networks:
+      - medico_net
+
+networks:
+  medico_net:
+    driver: bridge
+
+volumes:
+  db-medico:
