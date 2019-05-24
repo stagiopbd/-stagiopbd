@@ -1,5 +1,11 @@
 version: '3.4'
-
+;Servidor Web - NGINX
+;BD - MYSQL
+;API
+;APP
+;
+;Verificar volumes, para salvar o conteúdo. *API
+;Verificar se é necessária rede Bridge para API e APP para o servidor web.
 services:
 
   medico:
@@ -66,6 +72,8 @@ services:
       - MONGODB_URI=${MONGODB_URI}
     ports:
       - 5000:5000
+    networks:
+      - medico_net
 
   app:
     restart: always
@@ -78,9 +86,8 @@ services:
     environment:
     ports:
       - XXX:XXXX
-
-
-
+    networks:
+      - medico_net
 
 networks:
   medico_net:
