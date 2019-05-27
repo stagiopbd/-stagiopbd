@@ -1,11 +1,11 @@
 version: '3.4'
-;Servidor Web - NGINX
-;BD - MYSQL
-;API
-;APP
-;
-;Verificar volumes, para salvar o conteúdo. *API
-;Verificar se é necessária rede Bridge para API e APP para o servidor web.
+# Servidor Web - NGINX
+# BD - MYSQL
+# API
+# APP
+# 
+# Verificar volumes, para salvar o conteúdo. *API
+# Verificar se é necessária rede Bridge para API e APP para o servidor web.
 services:
 
   medico:
@@ -74,7 +74,7 @@ services:
       - 5000:5000
     networks:
       - medico_net
-
+#Utilizar imagem node ??
   app:
     restart: always
     depends_on:
