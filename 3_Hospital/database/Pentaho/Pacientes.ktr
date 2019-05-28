@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>MassaDeDados</name>
+    <name>Pacientes</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -490,6 +491,61 @@
       </attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>STAGIOP</name>
+    <server>fnx6frzmhxw45qcb.cbetxkdyhwsb.us-east-1.rds.amazonaws.com</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>kiizj5q0n6quilvc</database>
+    <port>3306</port>
+    <username>u8m691gex60b7dqt</username>
+    <password>Encrypted 2dde99ba55ecd95d1ff0cb972d09ff6de</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>3306</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
       <from>CSV file input</from>
@@ -557,8 +613,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Microsoft Excel Input</from>
-      <to>Group by 2</to>
+      <from>Distribuicao Sanguinea</from>
+      <to>Group Blood</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -572,24 +628,24 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Group by 2</from>
+      <from>Group Blood</from>
       <to>Join Rows (cartesian product) 3</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Name Generator</from>
-      <to>Modified Java Script Value</to>
+      <to>Gerador de Data de Nascimento</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Modified Java Script Value</from>
+      <from>Gerador de Data de Nascimento</from>
       <to>Select values</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Select values</from>
       <to>Insert / Update</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
   </order>
   <step>
@@ -946,7 +1002,7 @@ function randomiza(n) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>144</xloc>
+      <xloc>128</xloc>
       <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1102,7 +1158,7 @@ function randomiza(n) {
     </GUI>
   </step>
   <step>
-    <name>Group by 2</name>
+    <name>Group Blood</name>
     <type>GroupBy</type>
     <description/>
     <distribute>Y</distribute>
@@ -1140,6 +1196,68 @@ function randomiza(n) {
     <GUI>
       <xloc>672</xloc>
       <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / Update</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>STAGIOP</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>patient</table>
+      <key>
+        <name>CPF</name>
+        <field>pat_cpf</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>pat_cpf</name>
+        <rename>CPF</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>pat_name</name>
+        <rename>Nome</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>pat_gender</name>
+        <rename>sexo</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>pat_blood_type</name>
+        <rename>sangue</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>pat_birthdate</name>
+        <rename>birthDate</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>2128</xloc>
+      <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1252,7 +1370,7 @@ function randomiza(n) {
     </GUI>
   </step>
   <step>
-    <name>Microsoft Excel Input</name>
+    <name>Distribuicao Sanguinea</name>
     <type>ExcelInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1361,6 +1479,55 @@ function randomiza(n) {
     </GUI>
   </step>
   <step>
+    <name>Gerador de Data de Nascimento</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script here
+
+function randomDate(start, end) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+var birthDate = randomDate(new Date(1940, 0, 1), new Date())</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>birthDate</name>
+        <rename>birthDate</rename>
+        <type>Date</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1904</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Name Generator</name>
     <type>ScriptValueMod</type>
     <description/>
@@ -1446,23 +1613,18 @@ var sexo = grp_sexo.split(',')[index];</jsScript_script>
     <fields>
       <field>
         <name>CPF</name>
-        <rename/>
       </field>
       <field>
         <name>Nome</name>
-        <rename/>
       </field>
       <field>
         <name>sexo</name>
-        <rename/>
       </field>
       <field>
         <name>sangue</name>
-        <rename/>
       </field>
       <field>
         <name>birthDate</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
@@ -1639,117 +1801,6 @@ var sangue = randomEl(tipos);
     <GUI>
       <xloc>880</xloc>
       <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Modified Java Script Value</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>//Script here
-
-function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
-
-var birthDate = randomDate(new Date(1940, 0, 1), new Date())</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>birthDate</name>
-        <rename>birthDate</rename>
-        <type>Date</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1904</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert / Update</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>STAGIOP</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema/>
-      <table>patient</table>
-      <key>
-        <name>CPF</name>
-        <field>pat_cpf</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>pat_cpf</name>
-        <rename>CPF</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>pat_name</name>
-        <rename>Nome</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>pat_gender</name>
-        <rename>sexo</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>pat_blood_type</name>
-        <rename>sangue</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>pat_birthdate</name>
-        <rename>birthDate</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>2128</xloc>
-      <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
