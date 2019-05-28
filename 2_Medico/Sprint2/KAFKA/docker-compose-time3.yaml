@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+  hospital:
+    # build: ./
+    image: fantonios/hospital:2.0
+    container_name: hospital
+    ports:
+      - "8083:3000"
+    command: npm start
