@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=stagiopbd
+      - INFLUXDB_ADMIN_USER=stagiopbd
+      - INFLUXDB_ADMIN_PASSWORD=stagiopbd@2019
+    restart: always
+
+  api:
+    build: ./
+    ports:
+      - '3007:3007'
+    environment:
+      - HYPERLEDGER_URL=http://35.222.210.138:3000
+      - INFLUX_HOST=influxdb
+      - INFLUX_PORT=8086
+      - INFLUX_USERNAME=stagiopbd
+      - INFLUX_PASSWORD=stagiopbd@2019
+      - INFLUX_DB_NAME=stagiopbd
+    links:
+      - influxdb
+    depends_on:
+      - influxdb
+    restart: always
+
+volumes:
+  influxdb-storage:

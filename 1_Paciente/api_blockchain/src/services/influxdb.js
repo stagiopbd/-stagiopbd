@@ -1,0 +1,27 @@
+// sudo docker run -d -p 8086:8086 influxdb
+// influx -host 35.222.210.138 -username stagiopbd -password stagiopbd@2019 -database stagiopbd
+
+const Influx = require('influx'),
+    host = process.env.INFLUX_HOST || '35.222.210.138',
+    port = Number(process.env.INFLUX_PORT) || 8086,
+    username = process.env.INFLUX_USERNAME || 'stagiopbd',
+    password = process.env.INFLUX_PASSWORD || 'stagiopbd@2019',
+    db_name = process.env.INFLUX_DB_NAME || 'stagiopbd';
+
+
+const influx = new Influx.InfluxDB(`http://${username}:${password}@${host}:${port}/${db_name}`)
+
+async function save(measurement, data) {
+    return influx.writePoints([
+        {
+            measurement: measurement,
+            fields: data,
+            timestamp: new Date().getTime(),
+        }
+    ], {
+            database: db_name
+        })
+
+}
+
+module.exports.save = save
