@@ -3,7 +3,7 @@
 
 const Influx = require('influx'),
     host = process.env.INFLUX_HOST || '35.222.210.138',
-    port = Number(process.env.INFLUX_PORT) || 8086,
+    port = Number(process.env.INFLUX_PORT) || 8087,
     username = process.env.INFLUX_USERNAME || 'stagiopbd',
     password = process.env.INFLUX_PASSWORD || 'stagiopbd@2019',
     db_name = process.env.INFLUX_DB_NAME || 'stagiopbd';
