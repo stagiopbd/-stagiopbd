@@ -5,7 +5,7 @@ services:
   influxdb:
     image: influxdb:latest
     ports:
-      - '8086:8086'
+      - '8087:8086'
     volumes:
       - influxdb-storage:/var/lib/influxdb
     environment:
@@ -13,6 +13,19 @@ services:
       - INFLUXDB_ADMIN_USER=stagiopbd
       - INFLUXDB_ADMIN_PASSWORD=stagiopbd@2019
     restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '3006:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana-provisioning/:/etc/grafana/provisioning
+    depends_on:
+      - influxdb
+    environment:
+      - GF_SECURITY_ADMIN_USER=stagiopbd
+      - GF_SECURITY_ADMIN_PASSWORD=stagiopbd
 
   api:
     build: ./
@@ -33,3 +46,4 @@ services:
 
 volumes:
   influxdb-storage:
+  grafana-storage:
