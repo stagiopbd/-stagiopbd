@@ -6,10 +6,13 @@ const Influx = require('influx'),
     port = Number(process.env.INFLUX_PORT) || 8087,
     username = process.env.INFLUX_USERNAME || 'stagiopbd',
     password = process.env.INFLUX_PASSWORD || 'stagiopbd@2019',
-    db_name = process.env.INFLUX_DB_NAME || 'stagiopbd';
+    db_name = process.env.INFLUX_DB_NAME || 'stagiopbd',
 
+    influx_url = `http://${username}:${password}@${host}:${port}/${db_name}`;
 
-const influx = new Influx.InfluxDB(`http://${username}:${password}@${host}:${port}/${db_name}`)
+console.log(influx_url)
+
+const influx = new Influx.InfluxDB(influx_url)
 
 async function save(measurement, data, datetime) {
     return influx.writePoints([
