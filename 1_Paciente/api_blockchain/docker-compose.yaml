@@ -13,6 +13,8 @@ services:
       - INFLUXDB_ADMIN_USER=stagiopbd
       - INFLUXDB_ADMIN_PASSWORD=stagiopbd@2019
     restart: always
+    networks:
+      - data_net
 
   grafana:
     image: grafana/grafana:latest
@@ -26,6 +28,12 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=stagiopbd
       - GF_SECURITY_ADMIN_PASSWORD=stagiopbd
+    networks:
+      - data_net
+
+networks:
+  data_net:
+    driver: bridge
 
 volumes:
   influxdb-storage:

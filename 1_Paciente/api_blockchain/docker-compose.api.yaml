@@ -14,3 +14,9 @@ services:
       - INFLUX_PASSWORD=stagiopbd@2019
       - INFLUX_DB_NAME=stagiopbd
     restart: always
+    networks:
+      - api_net
+
+networks:
+  api_net:
+    driver: bridge
