@@ -31,13 +31,16 @@
 
 ### Clonando e acessando o repositório:
 * git clone  [https://github.com/stagiopbd/ipbl2019.git](https://github.com/stagiopbd/ipbl2019.git)
-* cd stagiop-bd/ipbl2019/1_Paciente/Hyperledger_Docker
+* cd ipbl2019/1_Paciente/Hyperledger_Docker
 
 ### Instalação docker e docker-compose no host
 * entrar na pasta build
 * dar permissão para os arquivos install_docker.sh e install_docker_compose.sh
 * executar os dois arquivos:
 ```sh
+$ cd build
+$ sudo chmod +x install_docker.sh
+$ sudo chmod +x install_docker_compose.sh
 $ sudo ./install_docker.sh
 $ sudo ./install_docker_compose.sh
 ```
@@ -46,7 +49,7 @@ $ sudo ./install_docker_compose.sh
 * como explicado anteriormente, apesar da imagem docker conter todos os requisitos para o hyperledger, o hyperledger fabric deve ser executado no host e não no container.
 * para isso, basta você entrar na pasta build e executar o arquivo install_fabric.sh:
 ```sh
-$ chmod +x install_fabric.sh
+$ sudo chmod +x install_fabric.sh
 $ sudo ./install_fabric.sh
 ```
 * após alguns minutos o hyperledger fabric estara rodando na sua máquina
@@ -102,35 +105,48 @@ $ sudo docker exec -ti c-hyperledger bash
 ```
 * os passos abaixo devem ser executados dentro do container:
 ```sh
-$ mkdir first_business_network && cd first_business_network
+$ mkdir stagiop_bd_network && cd stagiop_bd_network
 $ yo hyperledger-composer:businessnetwork
 ```
 * caso apareça a mensagem "We're constantly looking for ways to make yo better!" apenas digite Y e tecle Enter
 * em seguida:
 ```sh
-			? Business network name: tutorial-network
-			? Description: My First Business Network
-			? Author name: Linus Torvalds
-			? Author email: linus@email.com
+			? Business network name: stagiop_bd_network
+			? Description: stagiop_bd_network
+			? Author name: stagiop
+			? Author email: stagiopbd@gmai.com
 			? License: Apache-2.0
-			? Namespace: org.example.biznet
-			? Do you want to generate an empty template network? No: generate a populated sample network
+			? Namespace: stagiopbd.notification
+			? Do you want to generate an empty template network? Yes: generate an empty template network
 	
-$ cd tutorial-network
+$ cd stagiop_bd_network
+
+$ rm -rf models/stagiopbd.notification.cto
+
+$ cp ~/business_network/model.cto models/stagiopbd.notification.cto
+
+$ mkdir lib
+
+$ cp ~/business_network/logic.js lib/logic.js
+
+$ rm -rf models/permissions.acl
+
+$ cp ~/business_network/permissions.acl models/permissions.acl
 
 $ composer archive create -t dir -n .
 
 $ ~/fabric-dev-servers/createPeerAdminCard.sh
 
-$ composer network install --card PeerAdmin@hlfv1 --archiveFile tutorial-network@0.0.1.bna
+$ composer network install --card PeerAdmin@hlfv1 --archiveFile stagiop_bd_network@0.0.1.bna
 
-$ composer network start --networkName tutorial-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+$ composer network start --networkName stagiop_bd_network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
 
 $ composer card import --file networkadmin.card
 ```
 * após esses passos, você pode verificar pelo comando que a nossa business foi criada e está rodando com sucesso
 ```sh
 $ sudo docker ps
+$ composer network ping --card admin@stagiop_bd_network
 ```
 
 ### Criação de uma API REST
@@ -143,7 +159,7 @@ $ sudo docker exec -ti c-hyperledger bash
 ```	
 * em seguida iremos executar o composer rest server. Altere este arquivo com as informações da sua business network:
 ```sh
-$ chmod +x start_composer_rest_server.sh
+$ sudo chmod +x start_composer_rest_server.sh
 $ ./start_composer_rest_server.sh
 ```
 * agora podemos acessar o browser no endereço [http://localhost:3000/explorer](http://localhost:3000/explorer) para visualizarmos a API REST
