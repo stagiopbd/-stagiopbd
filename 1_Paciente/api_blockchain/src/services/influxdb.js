@@ -11,12 +11,12 @@ const Influx = require('influx'),
 
 const influx = new Influx.InfluxDB(`http://${username}:${password}@${host}:${port}/${db_name}`)
 
-async function save(measurement, data) {
+async function save(measurement, data, datetime) {
     return influx.writePoints([
         {
             measurement: measurement,
             fields: data,
-            timestamp: new Date().getTime(),
+            timestamp: datetime.getTime(),
         }
     ], {
             database: db_name

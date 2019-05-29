@@ -9,17 +9,24 @@ async function create_notification(req, res) {
             res.status(errors.status || 400);
             res.json({ message: errors, success: false })
         } else {
-            console.log("* ENVIANDO AO BLOCKCHAIN")
-            const response = await blockchain.post('stagiopbd.notification.NotificationParticipant', req.body)
-            if (response && response.data) {
-                console.log("** RESPOSTA COM SUCESSO DO BLOCKCHAIN")
-                console.log("*** ENVIANDO AO INFLUXDB")
-                req.body.notificationId = Number(req.body.notificationId)
-                await influx.save("notifications", req.body)
-                console.log("**** RESPOSTA COM SUCESSO DO INFLUXDB")
+            var datetime = validator.validate_date(req.body.datetime)
+            if (datetime) {
+                console.log("* ENVIANDO AO BLOCKCHAIN")
+                const response = await blockchain.post('stagiopbd.notification.NotificationParticipant', req.body)
+                if (response && response.data) {
+                    console.log("** RESPOSTA COM SUCESSO DO BLOCKCHAIN")
+                    console.log("*** ENVIANDO AO INFLUXDB")
+                    req.body.notificationId = Number(req.body.notificationId)
+                    await influx.save("notifications", req.body, datetime)
+                    console.log("**** RESPOSTA COM SUCESSO DO INFLUXDB")
+                }
+                res.status(201);
+                res.json({ message: "Notificação cadastrada com sucesso!", success: true })
+            } else {
+                res.status(400);
+                res.json({ message: "Invalid Date. Send: %d/%m/%Y %H:%M:%S", success: false })
             }
-            res.status(201);
-            res.json({ message: "Notificação cadastrada com sucesso!", success: true })
+
         }
     } catch (error) {
         console.log(error)
