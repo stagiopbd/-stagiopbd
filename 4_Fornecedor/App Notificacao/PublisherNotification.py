@@ -7,37 +7,34 @@ import json
 import re
 
 lastMsg = 0
-# Confirmar se a base existe e se os dados de acesso estão corretos
-cnx = mysql.connector.connect(user='root', password='stagiopbdmysql**', host='localhost', database='stagiopbd_dev2')
 
-# Se cadastra no tópico "det-fornecedor" do servidor Kafka apontado em bootstrap_servers.
-# Demais parâmetros garantem que quando executar novamente irá ler somente mensagens recentes.
-producer = KafkaProducer('det-fornecedor', bootstrap_servers=['localhost:9092'],
-                         auto_offset_reset='earliest', enable_auto_commit=True,
-                         auto_commit_interval_ms=1000, group_id='fornecedor',
-                         value_deserializer=lambda m: json.loads(m.decode('utf-8')))
+# ============================= Configura conexao com MySQL ===========================================================
+# cnx = mysql.connector.connect(user='root', password='stagiopbdmysql**', host='localhost', database='stagiopbd_dev2')
+cnx = mysql.connector.connect(user='stagiopbduser', password='stagiopbdmysql**', host='localhost', database='stagiopbd_dev')
 
 
+#================================= Configura Conexao com Broker Kafka ===========================================
+# producer =  KafkaProducer(bootstrap_servers=['kafka:9093'])
+producer =  KafkaProducer(bootstrap_servers=['localhost:9092'])
 
-#================================= OPCAO de CONFIGURACAO ===========================================
-# producer =  KafkaProducer(bootstrap_servers=['localhost:9092'])
-#===================================================================================================
 
 # Conexão com o banco MySQL
 cursor = cnx.cursor()
 
 # Consulta a tabela de notificacao no banco de dados
-query = ("SELECT * FROM notificacao")
+query = ("SELECT * FROM supplier")
 cursor.execute(query)
 
 # Exibe mensagem por mensagem
 for i in cursor:
     print(i)
-    if i.id > lastMsg: #caso o id da mensagem seja maior que a ultima mensagem enviada ele envia a notificacao
-        producer.send('topico', i)
+#     if i.id > lastMsg: #caso o id da mensagem seja maior que a ultima mensagem enviada ele envia a notificacao
+#         producer.send('topico', i)
 
-#============================= COMENTARIO DE EXEMPLO ================================================
+#============================= Exemplo de Envio de Mensagem JSON ======================================
 # producer.send('fizzbuzz', {'type' : 'notificacao', 'from' : 'supplier', 'to' : '', 'datetime' : '', 'title' : '', 'text' : '', 'protocol' : ''})
+#
+#============================== Exemplo de Mensagem Notificacao =======================================
 # msg = {}
 # msg['type'] = ‘notificacao’
 # msg['from'] = 'patient' or 'physician' or 'hospital' or 'supplier' (Can be 'stagiopbd')
