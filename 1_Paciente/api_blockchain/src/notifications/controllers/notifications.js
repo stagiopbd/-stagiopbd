@@ -31,8 +31,7 @@ async function create_notification(req, res) {
     } catch (error) {
         console.log(error)
         res.status(500);
-        message = error.response.data.error.message || "Ocorreu um erro! Por favor tente novamente!"
-        res.json({ message, success: false })
+        res.json({ message: "Ocorreu um erro! Por favor tente novamente!", success: false })
     }
 }
 
