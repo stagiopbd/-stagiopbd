@@ -5,9 +5,9 @@ echo "STARTING COMPOSER REST SERVER ...  "
 echo "**********************************************"
 echo
 
-# alterar o nome do card pelo o seu card : admin@tutorial-network
+# alterar o nome do card pelo o seu card : admin@stagiop_bd_network
 
-composer-rest-server -c admin@tutorial-network -n "always" -y "No" -a false -w true -t false 
+composer-rest-server -c admin@stagiop_bd_network -n always -w true
 
 echo
 echo "Browse Composer Rest Server at http://localhost:3000"
