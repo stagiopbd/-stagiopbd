@@ -16,7 +16,7 @@ datetime = new Date(old_datetime.replace(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{
 influx.writePoints(
     [
         {
-            measurement: 'notifications',
+            measurement: 'test_notifications',
             tags: { "user": "stagiopbd" },
             fields: {
                 "notificationId": Number('11'),
@@ -28,7 +28,7 @@ influx.writePoints(
                 "text": "ok",
                 "protocol": "extra"
             },
-            timestamp: datetime.getTime(),
+            timestamp: datetime,
         }
     ],
     {

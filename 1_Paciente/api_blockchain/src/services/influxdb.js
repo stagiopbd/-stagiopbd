@@ -19,7 +19,7 @@ async function save(measurement, data, datetime) {
         {
             measurement: measurement,
             fields: data,
-            timestamp: datetime.getTime(),
+            timestamp: datetime,
         }
     ], {
             database: db_name

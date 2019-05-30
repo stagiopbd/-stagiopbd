@@ -2,39 +2,21 @@ version: '2'
 
 services:
 
-  influxdb:
-    image: influxdb:latest
+  api:
+    build: ./
     ports:
-      - '8087:8086'
-    volumes:
-      - influxdb-storage:/var/lib/influxdb
+      - '3007:3007'
     environment:
-      - INFLUXDB_DB=stagiopbd
-      - INFLUXDB_ADMIN_USER=stagiopbd
-      - INFLUXDB_ADMIN_PASSWORD=stagiopbd@2019
+      - HYPERLEDGER_URL=http://35.222.210.138:3000
+      - INFLUX_HOST=35.222.210.138
+      - INFLUX_PORT=8087
+      - INFLUX_USERNAME=stagiopbd
+      - INFLUX_PASSWORD=stagiopbd@2019
+      - INFLUX_DB_NAME=stagiopbd
     restart: always
     networks:
-      - data_net
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - '3006:3000'
-    volumes:
-      - grafana-storage:/var/lib/grafana
-      - ./grafana-provisioning/:/etc/grafana/provisioning
-    depends_on:
-      - influxdb
-    environment:
-      - GF_SECURITY_ADMIN_USER=stagiopbd
-      - GF_SECURITY_ADMIN_PASSWORD=stagiopbd
-    networks:
-      - data_net
+      - api_net
 
 networks:
-  data_net:
+  api_net:
     driver: bridge
-
-volumes:
-  influxdb-storage:
-  grafana-storage:
