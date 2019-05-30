@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+
+  api:
+    build: ./
+    ports:
+      - '3007:3007'
+    environment:
+      - HYPERLEDGER_URL=http://35.222.210.138:3000
+      - INFLUX_HOST=35.222.210.138
+      - INFLUX_PORT=8087
+      - INFLUX_USERNAME=stagiopbd
+      - INFLUX_PASSWORD=stagiopbd@2019
+      - INFLUX_DB_NAME=stagiopbd
+    restart: always
+    networks:
+      - api_net
+
+networks:
+  api_net:
+    driver: bridge
