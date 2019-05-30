@@ -18,20 +18,20 @@ class ConectarNeo4J():
         for record in tx.run(cypher):
             print(record["n"])
 
-    def Area(self, name):
+    def Area(self, id, name):
         tx = self.__graph.begin()
 
         area = Node("Area")
-        # area["id"] = id
+        area["id"] = id
         area["name"] = name
         tx.create(area)
         tx.commit()
 
-    def Zipcode(self, name, street, area):
+    def Zipcode(self, id, name, street, area):
         tx = self.__graph.begin()
 
         zipcode = Node("Zipcode")
-        # zipcode["id"] = id
+        zipcode["id"] = id
         zipcode["name"] = name
         zipcode["street"] = street
         zipcode["area"] = area
@@ -86,17 +86,17 @@ if __name__ == "__main__":
 
     sheet = workbook['area']
     for i in range(2, sheet.max_row + 1):
-        # id = sheet["B" + str(i)].value
+        id = sheet["B" + str(i)].value
         name = sheet["A" + str(i)].value
-        conectar.Area(name)
+        conectar.Area(id, name)
 
     sheet = workbook['zipcode']
     for i in range(2, sheet.max_row + 1):
-        # id = sheet["A" + str(i)].value
+        id = sheet["A" + str(i)].value
         name = sheet["B" + str(i)].value
         street = sheet["C" + str(i)].value
         area = sheet["D" + str(i)].value
-        conectar.Zipcode(name, street, area)
+        conectar.Zipcode(id, name, street, area)
         conectar.HasArea(name, area)
 
     sheet = workbook['address']
