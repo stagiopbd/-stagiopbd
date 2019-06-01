@@ -17,6 +17,11 @@ async function create_notification(req, res) {
                     console.log("** RESPOSTA COM SUCESSO DO BLOCKCHAIN")
                     console.log("*** ENVIANDO AO INFLUXDB")
                     req.body.notificationId = Number(req.body.notificationId)
+                    const controls = {
+                        'SUSPEITO': '1',
+                        'CONFIRMADO': '2'
+                    }
+                    req.body.control = controls[req.body.title.toUpperCase()] || '-'
                     await influx.save("notifications", req.body, datetime)
                     console.log("**** RESPOSTA COM SUCESSO DO INFLUXDB")
                 }
