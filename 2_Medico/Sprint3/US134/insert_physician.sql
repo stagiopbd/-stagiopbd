@@ -1,0 +1,22 @@
+insert into physician (phy_cpf, phy_phone_pro, phy_crm, phy_name, phy_address, phy_gender) values
+(47660842765, +05543991427063, 11831, 'Idalina McDowall', '92036 Veith Way', 'F'),
+(05274344690, +05519985634119, 56259, 'Bird Smithen', '61 Mosinee Trail', 'F'),
+(12671553374, +05515832949899, 41132, 'Bibbie Lorrain', '5 Everett Alley', 'F'),
+(22214413707, +05544833443502, 46191, 'Alister Moreside', '30 Reindahl Plaza', 'M'),
+(16307007540, +05525929498919, 01326, 'Erik Akrigg', '1897 Pierstorff Center', 'M'),
+(26356123583, +05535936623454, 23146, 'Claire Skoyles', '22 Pierstorff Place', 'F'),
+(35122110034, +05510840941034, 15257, 'Luigi Butler', '2 Pierstorff Avenue', 'M'),
+(04425858700, +05541959080141, 12587, 'Lanna Goldis', '9 Packers Court', 'F'),
+(74143476568, +05557860040557, 84629, 'Florinda Kiss', '3 Cardinal Point', 'F'),
+(85107510051, +05551873882896, 21462, 'Helyn Mechell', '6 Esker Place', 'F'),
+(66662816167, +05506971162577, 14521, 'Candie Middis', '82 Lakeland Circle', 'F'),
+(81182544886, +05583800848675, 11522, 'Norbert Borrow', '7 Nova Place', 'M'),
+(31383444536, +05575909911536, 18543, 'Brooks Kyngdon', '0252 Duke Plaza', 'M'),
+(23720647200, +05518864974959, 11544, 'Annelise Stanlick', '8798 Hoepker Avenue', 'F'),
+(85425167539, +05525982306341, 14525, 'Augusta Vasyutochkin', '55 8th Court', 'F'),
+(61007314605, +05519865423149, 14786, 'Brianna Walas', '35237 Green Ridge Crossing', 'F'),
+(41106663330, +05555920115697, 12147, 'Janet Bradburn', '8 Arizona Pass', 'F'),
+(46285227314, +05537939433961, 11238, 'Cesya Papierz', '92117 Reindahl Road', 'F'),
+(42530501580, +05540958989194, 14429, 'Falito Brahan', '9337 Bay Plaza', 'M'),
+(06606128013, +05582817593176, 20654, 'Fran McMylor', '71514 Del Mar Center', 'F')
+;
