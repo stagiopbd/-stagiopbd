@@ -18,33 +18,33 @@ class ConectarNeo4J():
         for record in tx.run(cypher):
             print(record["n"])
 
-    def Area(self, id, name):
+    def Area(self, name, city, state):
         tx = self.__graph.begin()
 
         area = Node("Area")
-        area["id"] = id
         area["name"] = name
+        area["city"] = city
+        area["state"] = state
         tx.create(area)
         tx.commit()
 
-    def Zipcode(self, id, code, street):
+    def Zipcode(self, code, street, lat, long):
         tx = self.__graph.begin()
 
         zipcode = Node("Zipcode")
-        zipcode["id"] = id
-        zipcode["code"] = code
+        zipcode["code"] = str(code)
         zipcode["street"] = street
+        zipcode["lat"] = lat
+        zipcode["long"] = long
         tx.create(zipcode)
         tx.commit()
 
-    def Address(self, id, number, complement):
+    def Address(self, id, number):
         tx = self.__graph.begin()
 
         address = Node("Address")
-        address["id"] = id
-        address["name"] = str(number) + " " + str(complement)
-        address["number"] = number
-        address["complement"] = complement
+        address["id"] = str(id)
+        address["number"] = str(number)
         tx.create(address)
         tx.commit()
 
@@ -63,17 +63,17 @@ class ConectarNeo4J():
 
     def HasArea(self, zipcode, area):
         tx = self.__graph.begin()
-        tx.run("MATCH (z:Zipcode), (a:Area) WHERE z.code = '" + str(zipcode) + "' and a.id = " + str(area) + " CREATE (z)-[h:HAS_AREA]->(a)")
+        tx.run("MATCH (z:Zipcode), (a:Area) WHERE z.code = '" + str(zipcode) + "' and a.name = '" + str(area) + "' CREATE (z)-[h:HAS_AREA]->(a)")
         tx.commit()
 
     def HasZipcode(self, address, zipcode):
         tx = self.__graph.begin()
-        tx.run("MATCH (a:Address), (z:Zipcode) WHERE a.id = " + str(address) + " and z.code = '" + str(zipcode) + "'  CREATE (a)-[h:HAS_ZIPCODE]->(z)")
+        tx.run("MATCH (a:Address), (z:Zipcode) WHERE a.id = '" + str(address) + "' and z.code = '" + str(zipcode) + "'  CREATE (a)-[h:HAS_ZIPCODE]->(z)")
         tx.commit()
 
     def HasAddress(self, patient, address):
         tx = self.__graph.begin()
-        tx.run("MATCH (p:Patient), (a:Address) WHERE p.cpf = '" + str(patient) + "' and a.id = " + str(address) + " CREATE (p)-[h:HAS_ADDRESS]->(a)")
+        tx.run("MATCH (p:Patient), (a:Address) WHERE p.cpf = '" + str(patient) + "' and a.id = '" + str(address) + "' CREATE (p)-[h:HAS_ADDRESS]->(a)")
         tx.commit()
 
 if __name__ == "__main__":
@@ -81,30 +81,31 @@ if __name__ == "__main__":
 
     conectar.limpar()
 
-    workbook = openpyxl.load_workbook("NEO4J-patient.xlsx", True)
+    workbook = openpyxl.load_workbook("graphData.xlsx", True)
 
     sheet = workbook['area']
     for i in range(2, sheet.max_row + 1):
-        id = sheet["B" + str(i)].value
         name = sheet["A" + str(i)].value
-        conectar.Area(id, name)
+        city = sheet["B" + str(i)].value
+        state = sheet["C" + str(i)].value
+        conectar.Area(name, city, state)
 
     sheet = workbook['zipcode']
     for i in range(2, sheet.max_row + 1):
-        id = sheet["A" + str(i)].value
-        code = sheet["B" + str(i)].value
-        street = sheet["C" + str(i)].value
-        area = sheet["D" + str(i)].value
-        conectar.Zipcode(id, code, street)
+        code = sheet["A" + str(i)].value
+        street = sheet["B" + str(i)].value
+        area = sheet["C" + str(i)].value
+        lat = sheet["D" + str(i)].value
+        long = sheet["E" + str(i)].value
+        conectar.Zipcode(code, street, lat, long)
         conectar.HasArea(code, area)
 
     sheet = workbook['address']
     for i in range(2, sheet.max_row + 1):
         id = sheet["A"+str(i)].value
         number = sheet["B"+str(i)].value
-        complement = sheet["C"+str(i)].value
-        zipcode = sheet["D"+str(i)].value
-        conectar.Address(id, number, complement)
+        zipcode = sheet["C"+str(i)].value
+        conectar.Address(id, number)
         conectar.HasZipcode(id, zipcode)
 
     sheet = workbook['patient']
