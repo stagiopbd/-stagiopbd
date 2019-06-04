@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`hospital` (
   `hsp_sit_id` INT(11) NOT NULL,
   PRIMARY KEY (`hsp_id`),
   UNIQUE INDEX `hsp_cnpj_unique` (`hsp_cnpj` ASC),
-  INDEX `fk_hospital_situation_idx` (`hsp_sit_id` ASC),
+  INDEX `fk_hsp_sit_idx` (`hsp_sit_id` ASC),
   CONSTRAINT `fk_hospital_situation`
     FOREIGN KEY (`hsp_sit_id`)
     REFERENCES `kiizj5q0n6quilvc`.`situation` (`sit_id`)
@@ -119,7 +119,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`bed` (
   `bed_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `bed_desc` VARCHAR(45) NOT NULL COMMENT 'Descricao do Leito',
+  `bed_desc` VARCHAR(100) NOT NULL COMMENT 'Descricao do Leito',
   `bed_wng_id` INT(11) NOT NULL,
   `bed_pat_cpf` VARCHAR(20) NULL,
   PRIMARY KEY (`bed_id`),
@@ -142,6 +142,16 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `kiizj5q0n6quilvc`.`function`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`function` (
+  `func_id` INT(11) NOT NULL,
+  `func_descr` VARCHAR(45) NOT NULL COMMENT 'Descriçao da Funcao',
+  PRIMARY KEY (`func_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `kiizj5q0n6quilvc`.`collaborator`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`collaborator` (
@@ -151,14 +161,46 @@ CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`collaborator` (
   `col_function_id` INT(11) NOT NULL,
   `col_hsp_id` INT(11) NOT NULL,
   PRIMARY KEY (`col_cpf`),
-  INDEX `col_hsp_id` (`col_hsp_id` ASC),
+  INDEX `fk_col_hsp_id` (`col_hsp_id` ASC),
+  INDEX `fk_col_func_idx` (`col_function_id` ASC),
   CONSTRAINT `collaborator_ibfk_1`
     FOREIGN KEY (`col_hsp_id`)
-    REFERENCES `kiizj5q0n6quilvc`.`hospital` (`hsp_id`))
+    REFERENCES `kiizj5q0n6quilvc`.`hospital` (`hsp_id`),
+  CONSTRAINT `fk_collaborator_function1`
+    FOREIGN KEY (`col_function_id`)
+    REFERENCES `kiizj5q0n6quilvc`.`function` (`func_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+USE `kiizj5q0n6quilvc` ;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `kiizj5q0n6quilvc`.`hsp_wing`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`hsp_wing` (`hsp_id` INT, `hsp_cnpj` INT, `hsp_name` INT, `hsp_sit_id` INT, `wng_id` INT, `wng_desc` INT, `wng_sit_id` INT, `wng_spc_id` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `kiizj5q0n6quilvc`.`wing_bed`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`wing_bed` (`wng_id` INT, `wng_desc` INT, `wng_hsp_id` INT, `wng_sit_id` INT, `wng_spc_id` INT, `bed_id` INT, `bed_desc` INT, `bed_wng_id` INT, `bed_pat_cpf` INT);
+
+-- -----------------------------------------------------
+-- View `kiizj5q0n6quilvc`.`hsp_wing`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `kiizj5q0n6quilvc`.`hsp_wing`;
+USE `kiizj5q0n6quilvc`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`u8m691gex60b7dqt`@`%` SQL SECURITY DEFINER VIEW `kiizj5q0n6quilvc`.`hsp_wing` AS select `kiizj5q0n6quilvc`.`hospital`.`hsp_id` AS `hsp_id`,`kiizj5q0n6quilvc`.`hospital`.`hsp_cnpj` AS `hsp_cnpj`,`kiizj5q0n6quilvc`.`hospital`.`hsp_name` AS `hsp_name`,`kiizj5q0n6quilvc`.`hospital`.`hsp_sit_id` AS `hsp_sit_id`,`kiizj5q0n6quilvc`.`wing`.`wng_id` AS `wng_id`,`kiizj5q0n6quilvc`.`wing`.`wng_desc` AS `wng_desc`,`kiizj5q0n6quilvc`.`wing`.`wng_sit_id` AS `wng_sit_id`,`kiizj5q0n6quilvc`.`wing`.`wng_spc_id` AS `wng_spc_id` from (`kiizj5q0n6quilvc`.`hospital` join `kiizj5q0n6quilvc`.`wing` on((`kiizj5q0n6quilvc`.`hospital`.`hsp_id` = `kiizj5q0n6quilvc`.`wing`.`wng_hsp_id`)));
+
+-- -----------------------------------------------------
+-- View `kiizj5q0n6quilvc`.`wing_bed`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `kiizj5q0n6quilvc`.`wing_bed`;
+USE `kiizj5q0n6quilvc`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`u8m691gex60b7dqt`@`%` SQL SECURITY DEFINER VIEW `kiizj5q0n6quilvc`.`wing_bed` AS select `kiizj5q0n6quilvc`.`wing`.`wng_id` AS `wng_id`,`kiizj5q0n6quilvc`.`wing`.`wng_desc` AS `wng_desc`,`kiizj5q0n6quilvc`.`wing`.`wng_hsp_id` AS `wng_hsp_id`,`kiizj5q0n6quilvc`.`wing`.`wng_sit_id` AS `wng_sit_id`,`kiizj5q0n6quilvc`.`wing`.`wng_spc_id` AS `wng_spc_id`,`kiizj5q0n6quilvc`.`bed`.`bed_id` AS `bed_id`,`kiizj5q0n6quilvc`.`bed`.`bed_desc` AS `bed_desc`,`kiizj5q0n6quilvc`.`bed`.`bed_wng_id` AS `bed_wng_id`,`kiizj5q0n6quilvc`.`bed`.`bed_pat_cpf` AS `bed_pat_cpf` from (`kiizj5q0n6quilvc`.`wing` join `kiizj5q0n6quilvc`.`bed` on((`kiizj5q0n6quilvc`.`wing`.`wng_id` = `kiizj5q0n6quilvc`.`bed`.`bed_wng_id`)));
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
