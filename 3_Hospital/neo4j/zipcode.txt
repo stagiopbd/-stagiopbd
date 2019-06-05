@@ -1,201 +1,201 @@
-zip_zipcode,zip_street,area,Latitude,Longitude
-12228460,Rua H8A,Campus do CTA,-23,2024,-45,8742
-12228461,Rua H8B,Campus do CTA,-23,2029,-45,8747
-12228462,Rua H8C,Campus do CTA,-23,2039,-45,8746
-12228470,Rua H20B,Campus do CTA,-23,201,-45,8729
-12228480,Rua H23A,Campus do CTA,-23,199,-45,8763
-12228490,Rua H22A,Campus do CTA,-23,2001,-45,8738
-12228500,Rua H19B,Campus do CTA,-23,2016,-45,8717
-12228510,Rua H19A,Campus do CTA,-23,2005,-45,8718
-12228520,Rua H17C,Campus do CTA,-23,1988,-45,8735
-12228530,Rua H17B,Campus do CTA,-23,1982,-45,8731
-12228540,Rua H20A,Campus do CTA,-23,19,-45,8846
-12228550,Rua H 27E,Campus do CTA,-23,2123,-45,7831
-12228560,Rua H25C,Campus do CTA,-23,1973,-45,8723
-12228570,Rua H25D,Campus do CTA,-23,197,-45,8713
-12228580,Rua H32,Campus do CTA,-23,2124,-45,7831
-12228590,Rua H25A,Campus do CTA,-23,1979,-45,8691
-12228600,Rua H25B,Campus do CTA,-23,1974,-45,8685
-12228610,Rua H9A,Campus do CTA,-23,1965,-45,867
-12228611,Rua H9B,Campus do CTA,-23,1961,-45,8675
-12228612,Rua H9C,Campus do CTA,-23,1956,-45,868
-12228613,Rua H13,Campus do CTA,-23,1803,-45,8871
-12228614,Rua H15,Campus do CTA,-23,1803,-45,8871
-12228615,Praça Marechal-do-Ar Eduardo Gomes,Campus do CTA,-23,2055,-45,8823
-12228616,Alameda do Cpor,Campus do CTA,-23,2451,-45,9349
-12228620,Rua H27B,Campus do CTA,-23,19,-45,8846
-12228630,Rua H27C,Campus do CTA,-23,199,-45,8705
-12228640,Rua H27D,Campus do CTA,-23,19,-45,8846
-12228650,Rua H27A,Campus do CTA,-23,1999,-45,8714
-12228660,Rua H26A,Campus do CTA,-23,19,-45,8846
-12228670,Rua H21A,Campus do CTA,-23,202,-45,8706
-12228680,Rua da Granja,Campus do CTA,-23,205,-45,8576
-12228690,Rua H18C,Campus do CTA,-23,2029,-45,8703
-12228700,Rua H18B,Campus do CTA,-23,2034,-45,8708
-12228710,Rua H18A,Campus do CTA,-23,19,-45,8846
-12228720,Rua H10E,Campus do CTA,-23,2237,-45,9009
-12228730,Rua H10B,Campus do CTA,-23,19,-45,8846
-12228740,Rua H30A,Campus do CTA,-23,19,-45,8846
-12228750,Rua H11A,Campus do CTA,-23,2042,-45,865
-12228760,Rua H12A,Campus do CTA,-23,19,-45,8846
-12209520,Rua Professora Maria Luiza Guimarães Medeiros,Centro,-23,1852,-45,8797
-12209525,Rua Antonio Galdino dos Santos Filho,Centro,-23,19,-45,8846
-12209530,Rua José de Alencar,Centro,-23,1835,-45,8784
-12209531,Praça Ayrton Senna da Silva,Centro,-23,1699,-45,7787
-12209532,Travessa Santa Cruz,Centro,-23,1649,-45,8943
-12209535,Rua Desembargador Francisco Murilo Pinto,Centro,-23,1858,-45,8788
-12209540,Rua Conselheiro Rodrigues Alves,Centro,-23,1817,-45,8791
-12209550,Rua Coronel Moraes,Centro,-23,1861,-45,881
-12209560,Rua Alípio da Silva Viana,Centro,-23,1853,-45,882
-12209570,Rua Maurício Diamante,Centro,-23,1851,-45,8811
-12209580,Rua Ana Bonadio,Centro,-23,1843,-45,8804
-12209590,Rua Alberto Consiglio,Centro,-23,1841,-45,8804
-12209600,Rua Áurea,Centro,-23,1844,-45,8802
-12209610,Praça Carlos Maldonado Campoy,Centro,-23,1855,-45,8807
-12209620,Travessa Cândido Portinari,Centro,-23,18,-45,8876
-12209621,Avenida São José - de 651/652 ao fim,Centro,-23,19,-45,8846
-12209630,Rua Doutor Rui Doria,Centro,-23,1994,-45,8859
-12209640,Travessa João Dias,Centro,-23,1822,-45,888
-12209650,Praça Cônego João Marcondes Guimarães,Centro,-23,18,-45,887
-12209660,Travessa Joaquim Freire,Centro,-23,1853,-45,8809
-12209904,Rua José de Alencar, 123,Centro,-23,19,-45,8846
-12209920,Rua Desembargador Francisco Murilo Pinto, 33,Centro,-23,19,-45,8846
-12210000,Rua Vilaça,Centro,-23,1847,-45,884
-12210010,Rua Claudino Pinto,Centro,-23,1883,-45,8831
-12210020,Rua Antônio de Paula Ferreira,Centro,-23,1888,-45,883
-12210030,Avenida Marechal Floriano Peixoto,Centro,-23,1875,-45,8846
-12210031,Largo São Miguel,Centro,-20,5345,-47,3904
-12210040,Rua Antônio Saes,Centro,-23,1857,-45,8824
-12210041,Travessa Lucia Peneluppi,Centro,-23,19,-45,8846
-12210050,Rua das Monções,Centro,-23,187,-45,8815
-12210060,Rua Francisco Rafael,Centro,-23,1818,-45,8834
-12210070,Rua Quinze de Novembro,Centro,-23,183,-45,8869
-12210080,Praça Cônego Lima,Centro,-23,1824,-45,887
-12210090,Praça Afonso Pena,Centro,-23,1843,-45,8872
-12210100,Rua Francisco Paes,Centro,-23,1857,-45,8849
-12210110,Rua Dolzani Ricardo,Centro,-23,1867,-45,8839
-12210120,Praça Doutor Maurício Cury,Centro,-23,1871,-45,8847
-12210130,Avenida Doutor João Guilhermino - lado par,Centro,-23,1893,-45,8867
-12210131,Avenida Doutor João Guilhermino - lado ímpar,Centro,-23,1893,-45,8867
-12210140,Rua Coronel José Monteiro,Centro,-23,1822,-45,8823
-12227001,Avenida Doutor Amin Simão,Jardim da Granja,-23,2263,-45,8549
-12227010,Avenida dos Astronautas - de 1372/1373 ao fim,Jardim da Granja,-23,2039,-45,8612
-12227180,Rua Madre Maria Gema de Jesus,Jardim da Granja,-23,202,-45,8584
-12227190,Rua José Alves Moreira,Jardim da Granja,-23,2013,-45,8579
-12227200,Rua Odete Mimessi,Jardim da Granja,-23,2019,-45,8575
-12227210,Rua Primo Betti,Jardim da Granja,-23,19,-45,8846
-12227220,Rua Carolina Antunes Stetener,Jardim da Granja,-23,2018,-45,8557
-12227230,Praça Hélio Dias,Jardim da Granja,-23,204,-45,8534
-12227240,Rua Orlando Saes,Jardim da Granja,-23,2016,-45,8555
-12227250,Rua Herminio José Friggi,Jardim da Granja,-23,2049,-45,8524
-12227260,Rua Dom Gabriel Paulino Bueno do Couto,Jardim da Granja,-23,2049,-45,8524
-12227270,Rua José Busato,Jardim da Granja,-23,2042,-45,854
-12227280,Rua Centaurus,Jardim da Granja,-23,2041,-45,8549
-12227290,Praça Áquila,Jardim da Granja,-23,2026,-45,858
-12227300,Rua Fênix,Jardim da Granja,-23,2038,-45,8578
-12227310,Rua Sagitarios,Jardim da Granja,-23,2042,-45,856
-12227320,Rua Aquarius,Jardim da Granja,-23,2177,-45,9053
-12227330,Rua Áries,Jardim da Granja,-23,2034,-45,857
-12227340,Rua Taurus,Jardim da Granja,-23,2029,-45,8574
-12227350,Rua Orion,Jardim da Granja,-23,2044,-45,8595
-12227360,Praça Hércules,Jardim da Granja,-23,2054,-45,8603
-12227370,Rua Capricórnio,Jardim da Granja,-23,2053,-45,857
-12227380,Rua Netuno,Jardim da Granja,-23,2052,-45,8555
-12227390,Rua Hidra,Jardim da Granja,-23,2054,-45,859
-12227400,Rua Lupus,Jardim da Granja,-23,2052,-45,8584
-12227410,Rua Lince,Jardim da Granja,-23,2045,-45,8581
-12227420,Rua Vênus,Jardim da Granja,-23,2077,-45,8578
-12227430,Praça Marte,Jardim da Granja,-23,2077,-45,857
-12227440,Rua Plutão,Jardim da Granja,-23,2077,-45,8559
-12227450,Rua Vesta,Jardim da Granja,-23,2067,-45,8558
-12227460,Rua Jupiter,Jardim da Granja,-23,2067,-45,8558
-12227470,Rua Juno,Jardim da Granja,-23,2072,-45,8547
-12227480,Rua Saturno,Jardim da Granja,-23,2079,-45,8544
-12227490,Rua Ceres,Jardim da Granja,-23,2063,-45,8545
-12227500,Rua Palas,Jardim da Granja,-23,2065,-45,8538
-12227510,Praça Columba,Jardim da Granja,-23,2062,-45,8532
-12227520,Rua Urano,Jardim da Granja,-23,2061,-45,856
-12227530,Rua Mercúrio,Jardim da Granja,-23,2069,-45,8577
-12227900,Avenida Brigadeiro Faria Lima, 1758,Jardim da Granja,-23,2163,-45,8408
-12245000,Avenida Engenheiro Francisco José Longo,Jardim São Dimas,-23,1997,-45,889
-12245001,Avenida Engenheiro Francisco José Longo,Jardim São Dimas,-23,2001,-45,889
-12245010,Avenida Doutor Adhemar de Barros,Jardim São Dimas,-23,1998,-45,8921
-12245011,Avenida Doutor Adhemar de Barros,Jardim São Dimas,-23,1998,-45,8921
-12245020,Rua Paraibuna - até 1501 - lado ímpar,Jardim São Dimas,-23,1995,-45,8866
-12245021,Rua Paraibuna - até 1502 - lado par,Jardim São Dimas,-23,2041,-45,8842
-12245022,Viaduto Sérgio Sobral de Oliveira,Jardim São Dimas,-23,2002,-45,8865
-12245030,Avenida Doutor Nelson D'Avila,Jardim São Dimas,31,4834,-91,4061
-12245031,Avenida Doutor Nelson D'Avila,Jardim São Dimas,-23,1949,-45,8857
-12245051,Travessa Darcy de Oliveira,Jardim São Dimas,-23,2971,-45,9271
-12245061,Rua Manoel Ricardo Júnior,Jardim São Dimas,-23,1942,-45,8869
-12245070,Travessa João Friggi,Jardim São Dimas,-23,1937,-45,8862
-12245080,Travessa Rocha Pombo,Jardim São Dimas,-23,1944,-45,8874
-12245100,Rua Doutor Mário Sampaio Martins,Jardim São Dimas,-23,1939,-45,8847
-12245105,Praça Corretor de Imóveis,Jardim São Dimas,-23,2237,-45,9009
-12245110,Rua Arnaldo Ricardo Monteiro,Jardim São Dimas,-23,2046,-45,8928
-12245112,Travessa Manoel da Nóbrega,Jardim São Dimas,-23,1946,-45,8852
-12245120,Rua Antônio da Silva Santos,Jardim São Dimas,-23,1921,-45,885
-12245130,Rua Leonildo Ramos Cruz,Jardim São Dimas,-23,1919,-45,8837
-12245190,Rua Maestro Egydio Pinto,Jardim São Dimas,-23,1955,-45,8887
-12245200,Rua Brigadeiro Osvaldo Nascimento Leal,Jardim São Dimas,-23,2012,-45,8895
-12245230,Avenida Tivoli,Jardim São Dimas,-23,2077,-45,89
-12245280,Avenida Heitor Villa Lobos - de 1450/1451 a 1989/1990,Jardim São Dimas,-23,2041,-45,8935
-12245290,Rua Tufi Simão Filho,Jardim São Dimas,-23,1984,-45,8887
-12245300,Rua Ezra,Jardim São Dimas,-23,1983,-45,8887
-12245310,Rua Helena David Neme,Jardim São Dimas,-23,1973,-45,89
-12245330,Rua Professor Frederico Eyer,Jardim São Dimas,-23,19,-45,8846
-12245340,Praça Elza Ferreira Rahal,Jardim São Dimas,-23,19,-45,8846
-12245360,Praça Melvin Jones,Jardim São Dimas,-23,1965,-45,8896
-12245370,Rua Inconfidência,Jardim São Dimas,-23,197,-45,8881
-12245380,Rua Eliza Costa Santos,Jardim São Dimas,-23,1971,-45,8884
-12245390,Rua Jorge de Moraes Barros,Jardim São Dimas,-23,1949,-45,8891
-12245400,Rua José Antônio Romeno Neme,Jardim São Dimas,-23,1944,-45,8899
-12245410,Rua Maria Francisca Froes,Jardim São Dimas,-23,1998,-45,8873
-12245411,Rua Amin Assad,Jardim São Dimas,-23,2007,-45,8876
-12245420,Travessa Senador Accyoli Filho,Jardim São Dimas,-23,19,-45,8846
-12245430,Rua Ilza Irma Moeller Coppio,Jardim São Dimas,-23,1556,-45,9105
-12245440,Praça Monsenhor Ascânio Brandão,Jardim São Dimas,-23,0152,-45,5551
-12245450,Rua José Mattar,Jardim São Dimas,-23,2371,-45,9098
-12245460,Rua Paulo Setúbal,Jardim São Dimas,-23,1934,-45,8888
-12245903,Avenida Doutor Nelson D'Avila, 1125,Jardim São Dimas,-23,1911,-45,8889
-12230000,Avenida Andrômeda - até 2531 - lado ímpar,Jardim Satélite,-23,2193,-45,8916
-12230001,Avenida Andrômeda - até 2530 - lado par,Jardim Satélite,-23,2193,-45,8916
-12230002,Rodovia Presidente Dutra,Jardim Satélite,-23,2552,-45,9431
-12230010,Avenida Cassiopéia,Jardim Satélite,-23,2293,-45,8857
-12230011,Avenida Cassiopéia,Jardim Satélite,-23,2293,-45,8857
-12230020,Rua Tijuca,Jardim Satélite,-23,2267,-45,8813
-12230021,Rua Leblon,Jardim Satélite,-23,2238,-45,8827
-12230030,Rua Copacabana,Jardim Satélite,-23,2276,-45,8811
-12230040,Rua Arpoador,Jardim Satélite,-23,2259,-45,8819
-12230050,Rua Reverendo Américo de Castro,Jardim Satélite,-23,2239,-45,8838
-12230060,Rua Porto Novo,Jardim Satélite,-23,2234,-45,8848
-12230070,Rua Ipanema,Jardim Satélite,-23,226,-45,8822
-12230075,Rua Pedro Tursi,Jardim Satélite,-23,2224,-45,8857
-12230080,Rua Patrício Santana,Jardim Satélite,-23,2224,-45,8844
-12230100,Rua Maricá,Jardim Satélite,-23,2262,-45,8828
-12230110,Rua Barra Velha,Jardim Satélite,-23,2264,-45,8834
-12230111,Rua Lagoinha,Jardim Satélite,-23,2275,-45,8833
-12230120,Rua das Cigarras,Jardim Satélite,-23,2256,-45,8841
-12230130,Rua Bambui,Jardim Satélite,-23,2266,-45,8839
-12230140,Rua Cisne,Jardim Satélite,-23,2218,-45,8907
-12230150,Rua Sapoti,Jardim Satélite,-23,222,-45,8909
-12230160,Rua Regulus,Jardim Satélite,-23,221,-45,8928
-12230170,Rua Tucuma,Jardim Satélite,-23,2307,-45,8988
-12230180,Rua Gemini,Jardim Satélite,-23,222,-45,8913
-12230190,Rua Procion,Jardim Satélite,-23,2213,-45,8907
-12230200,Rua Arturus,Jardim Satélite,-23,2219,-45,8923
-12230210,Rua Aires,Jardim Satélite,-23,222,-45,8917
-12230220,Rua Libra,Jardim Satélite,-23,2217,-45,8928
-12230230,Rua Altair,Jardim Satélite,-23,2206,-45,8933
-12230240,Rua Polar,Jardim Satélite,-23,2191,-45,8925
-12230250,Rua Antares,Jardim Satélite,-23,2198,-45,895
-12230260,Rua Pegaso,Jardim Satélite,-23,2212,-45,8949
-12230270,Rua Carangola,Jardim Satélite,-23,2203,-45,8967
-12230280,Rua Sirius,Jardim Satélite,-23,2213,-45,8956
-12230290,Rua Andaraí,Jardim Satélite,-23,2193,-45,8968
-12230300,Avenida Doutor Sebastião Henrique da Cunha Pontes,Jardim Satélite,-23,2252,-45,9052
-12230310,Rua Pleiades,Jardim Satélite,-23,2217,-45,8961
-12230320,Rua Castor,Jardim Satélite,-23,2223,-45,893
-12230330,Rua Auriflama,Jardim Satélite,-23,228,-45,8898
-12230340,Rua Gravataí,Jardim Satélite,-23,228,-45,8895
-12230341,Travessa Pirituba,Jardim Satélite,-23,2279,-45,8893
+zip_zipcode	zip_street	area	Latitude	Longitude		
+12228460	Rua H8A	Campus do CTA	-23,2024	-45,8742	-23,2024	-45,8742
+12228461	Rua H8B	Campus do CTA	-23,2029	-45,8747	-23,2029	-45,8747
+12228462	Rua H8C	Campus do CTA	-23,2039	-45,8746	-23,2039	-45,8746
+12228470	Rua H20B	Campus do CTA	-23,201	-45,8729	-23,201	-45,8729
+12228480	Rua H23A	Campus do CTA	-23,199	-45,8763	-23,199	-45,8763
+12228490	Rua H22A	Campus do CTA	-23,2001	-45,8738	-23,2001	-45,8738
+12228500	Rua H19B	Campus do CTA	-23,2016	-45,8717	-23,2016	-45,8717
+12228510	Rua H19A	Campus do CTA	-23,2005	-45,8718	-23,2005	-45,8718
+12228520	Rua H17C	Campus do CTA	-23,1988	-45,8735	-23,1988	-45,8735
+12228530	Rua H17B	Campus do CTA	-23,1982	-45,8731	-23,1982	-45,8731
+12228540	Rua H20A	Campus do CTA	-23,19	-45,8846	-23,19	-45,8846
+12228550	Rua H 27E	Campus do CTA	-23,2123	-45,7831	-23,2123	-45,7831
+12228560	Rua H25C	Campus do CTA	-23,1973	-45,8723	-23,1973	-45,8723
+12228570	Rua H25D	Campus do CTA	-23,197	-45,8713	-23,197	-45,8713
+12228580	Rua H32	Campus do CTA	-23,2124	-45,7831	-23,2124	-45,7831
+12228590	Rua H25A	Campus do CTA	-23,1979	-45,8691	-23,1979	-45,8691
+12228600	Rua H25B	Campus do CTA	-23,1974	-45,8685	-23,1974	-45,8685
+12228610	Rua H9A	Campus do CTA	-23,1965	-45,867	-23,1965	-45,867
+12228611	Rua H9B	Campus do CTA	-23,1961	-45,8675	-23,1961	-45,8675
+12228612	Rua H9C	Campus do CTA	-23,1956	-45,868	-23,1956	-45,868
+12228613	Rua H13	Campus do CTA	-23,1803	-45,8871	-23,1803	-45,8871
+12228614	Rua H15	Campus do CTA	-23,1803	-45,8871	-23,1803	-45,8871
+12228615	Praça Marechal-do-Ar Eduardo Gomes	Campus do CTA	-23,2055	-45,8823	-23,2055	-45,8823
+12228616	Alameda do Cpor	Campus do CTA	-23,2451	-45,9349	-23,2451	-45,9349
+12228620	Rua H27B	Campus do CTA	-23,19	-45,8846	-23,19	-45,8846
+12228630	Rua H27C	Campus do CTA	-23,199	-45,8705	-23,199	-45,8705
+12228640	Rua H27D	Campus do CTA	-23,19	-45,8846	-23,19	-45,8846
+12228650	Rua H27A	Campus do CTA	-23,1999	-45,8714	-23,1999	-45,8714
+12228660	Rua H26A	Campus do CTA	-23,19	-45,8846	-23,19	-45,8846
+12228670	Rua H21A	Campus do CTA	-23,202	-45,8706	-23,202	-45,8706
+12228680	Rua da Granja	Campus do CTA	-23,205	-45,8576	-23,205	-45,8576
+12228690	Rua H18C	Campus do CTA	-23,2029	-45,8703	-23,2029	-45,8703
+12228700	Rua H18B	Campus do CTA	-23,2034	-45,8708	-23,2034	-45,8708
+12228710	Rua H18A	Campus do CTA	-23,19	-45,8846	-23,19	-45,8846
+12228720	Rua H10E	Campus do CTA	-23,2237	-45,9009	-23,2237	-45,9009
+12228730	Rua H10B	Campus do CTA	-23,19	-45,8846	-23,19	-45,8846
+12228740	Rua H30A	Campus do CTA	-23,19	-45,8846	-23,19	-45,8846
+12228750	Rua H11A	Campus do CTA	-23,2042	-45,865	-23,2042	-45,865
+12228760	Rua H12A	Campus do CTA	-23,19	-45,8846	-23,19	-45,8846
+12209520	Rua Professora Maria Luiza Guimarães Medeiros	Centro	-23,1852	-45,8797	-23,1852	-45,8797
+12209525	Rua Antonio Galdino dos Santos Filho	Centro	-23,19	-45,8846	-23,19	-45,8846
+12209530	Rua José de Alencar	Centro	-23,1835	-45,8784	-23,1835	-45,8784
+12209531	Praça Ayrton Senna da Silva	Centro	-23,1699	-45,7787	-23,1699	-45,7787
+12209532	Travessa Santa Cruz	Centro	-23,1649	-45,8943	-23,1649	-45,8943
+12209535	Rua Desembargador Francisco Murilo Pinto	Centro	-23,1858	-45,8788	-23,1858	-45,8788
+12209540	Rua Conselheiro Rodrigues Alves	Centro	-23,1817	-45,8791	-23,1817	-45,8791
+12209550	Rua Coronel Moraes	Centro	-23,1861	-45,881	-23,1861	-45,881
+12209560	Rua Alípio da Silva Viana	Centro	-23,1853	-45,882	-23,1853	-45,882
+12209570	Rua Maurício Diamante	Centro	-23,1851	-45,8811	-23,1851	-45,8811
+12209580	Rua Ana Bonadio	Centro	-23,1843	-45,8804	-23,1843	-45,8804
+12209590	Rua Alberto Consiglio	Centro	-23,1841	-45,8804	-23,1841	-45,8804
+12209600	Rua Áurea	Centro	-23,1844	-45,8802	-23,1844	-45,8802
+12209610	Praça Carlos Maldonado Campoy	Centro	-23,1855	-45,8807	-23,1855	-45,8807
+12209620	Travessa Cândido Portinari	Centro	-23,18	-45,8876	-23,18	-45,8876
+12209621	Avenida São José - de 651/652 ao fim	Centro	-23,19	-45,8846	-23,19	-45,8846
+12209630	Rua Doutor Rui Doria	Centro	-23,1994	-45,8859	-23,1994	-45,8859
+12209640	Travessa João Dias	Centro	-23,1822	-45,888	-23,1822	-45,888
+12209650	Praça Cônego João Marcondes Guimarães	Centro	-23,18	-45,887	-23,18	-45,887
+12209660	Travessa Joaquim Freire	Centro	-23,1853	-45,8809	-23,1853	-45,8809
+12209904	Rua José de Alencar, 123	Centro	-23,19	-45,8846	-23,19	-45,8846
+12209920	Rua Desembargador Francisco Murilo Pinto, 33	Centro	-23,19	-45,8846	-23,19	-45,8846
+12210000	Rua Vilaça	Centro	-23,1847	-45,884	-23,1847	-45,884
+12210010	Rua Claudino Pinto	Centro	-23,1883	-45,8831	-23,1883	-45,8831
+12210020	Rua Antônio de Paula Ferreira	Centro	-23,1888	-45,883	-23,1888	-45,883
+12210030	Avenida Marechal Floriano Peixoto	Centro	-23,1875	-45,8846	-23,1875	-45,8846
+12210031	Largo São Miguel	Centro	-20,5345	-47,3904	-20,5345	-47,3904
+12210040	Rua Antônio Saes	Centro	-23,1857	-45,8824	-23,1857	-45,8824
+12210041	Travessa Lucia Peneluppi	Centro	-23,19	-45,8846	-23,19	-45,8846
+12210050	Rua das Monções	Centro	-23,187	-45,8815	-23,187	-45,8815
+12210060	Rua Francisco Rafael	Centro	-23,1818	-45,8834	-23,1818	-45,8834
+12210070	Rua Quinze de Novembro	Centro	-23,183	-45,8869	-23,183	-45,8869
+12210080	Praça Cônego Lima	Centro	-23,1824	-45,887	-23,1824	-45,887
+12210090	Praça Afonso Pena	Centro	-23,1843	-45,8872	-23,1843	-45,8872
+12210100	Rua Francisco Paes	Centro	-23,1857	-45,8849	-23,1857	-45,8849
+12210110	Rua Dolzani Ricardo	Centro	-23,1867	-45,8839	-23,1867	-45,8839
+12210120	Praça Doutor Maurício Cury	Centro	-23,1871	-45,8847	-23,1871	-45,8847
+12210130	Avenida Doutor João Guilhermino - lado par	Centro	-23,1893	-45,8867	-23,1893	-45,8867
+12210131	Avenida Doutor João Guilhermino - lado ímpar	Centro	-23,1893	-45,8867	-23,1893	-45,8867
+12210140	Rua Coronel José Monteiro	Centro	-23,1822	-45,8823	-23,1822	-45,8823
+12227001	Avenida Doutor Amin Simão	Jardim da Granja	-23,2263	-45,8549	-23,2263	-45,8549
+12227010	Avenida dos Astronautas - de 1372/1373 ao fim	Jardim da Granja	-23,2039	-45,8612	-23,2039	-45,8612
+12227180	Rua Madre Maria Gema de Jesus	Jardim da Granja	-23,202	-45,8584	-23,202	-45,8584
+12227190	Rua José Alves Moreira	Jardim da Granja	-23,2013	-45,8579	-23,2013	-45,8579
+12227200	Rua Odete Mimessi	Jardim da Granja	-23,2019	-45,8575	-23,2019	-45,8575
+12227210	Rua Primo Betti	Jardim da Granja	-23,19	-45,8846	-23,19	-45,8846
+12227220	Rua Carolina Antunes Stetener	Jardim da Granja	-23,2018	-45,8557	-23,2018	-45,8557
+12227230	Praça Hélio Dias	Jardim da Granja	-23,204	-45,8534	-23,204	-45,8534
+12227240	Rua Orlando Saes	Jardim da Granja	-23,2016	-45,8555	-23,2016	-45,8555
+12227250	Rua Herminio José Friggi	Jardim da Granja	-23,2049	-45,8524	-23,2049	-45,8524
+12227260	Rua Dom Gabriel Paulino Bueno do Couto	Jardim da Granja	-23,2049	-45,8524	-23,2049	-45,8524
+12227270	Rua José Busato	Jardim da Granja	-23,2042	-45,854	-23,2042	-45,854
+12227280	Rua Centaurus	Jardim da Granja	-23,2041	-45,8549	-23,2041	-45,8549
+12227290	Praça Áquila	Jardim da Granja	-23,2026	-45,858	-23,2026	-45,858
+12227300	Rua Fênix	Jardim da Granja	-23,2038	-45,8578	-23,2038	-45,8578
+12227310	Rua Sagitarios	Jardim da Granja	-23,2042	-45,856	-23,2042	-45,856
+12227320	Rua Aquarius	Jardim da Granja	-23,2177	-45,9053	-23,2177	-45,9053
+12227330	Rua Áries	Jardim da Granja	-23,2034	-45,857	-23,2034	-45,857
+12227340	Rua Taurus	Jardim da Granja	-23,2029	-45,8574	-23,2029	-45,8574
+12227350	Rua Orion	Jardim da Granja	-23,2044	-45,8595	-23,2044	-45,8595
+12227360	Praça Hércules	Jardim da Granja	-23,2054	-45,8603	-23,2054	-45,8603
+12227370	Rua Capricórnio	Jardim da Granja	-23,2053	-45,857	-23,2053	-45,857
+12227380	Rua Netuno	Jardim da Granja	-23,2052	-45,8555	-23,2052	-45,8555
+12227390	Rua Hidra	Jardim da Granja	-23,2054	-45,859	-23,2054	-45,859
+12227400	Rua Lupus	Jardim da Granja	-23,2052	-45,8584	-23,2052	-45,8584
+12227410	Rua Lince	Jardim da Granja	-23,2045	-45,8581	-23,2045	-45,8581
+12227420	Rua Vênus	Jardim da Granja	-23,2077	-45,8578	-23,2077	-45,8578
+12227430	Praça Marte	Jardim da Granja	-23,2077	-45,857	-23,2077	-45,857
+12227440	Rua Plutão	Jardim da Granja	-23,2077	-45,8559	-23,2077	-45,8559
+12227450	Rua Vesta	Jardim da Granja	-23,2067	-45,8558	-23,2067	-45,8558
+12227460	Rua Jupiter	Jardim da Granja	-23,2067	-45,8558	-23,2067	-45,8558
+12227470	Rua Juno	Jardim da Granja	-23,2072	-45,8547	-23,2072	-45,8547
+12227480	Rua Saturno	Jardim da Granja	-23,2079	-45,8544	-23,2079	-45,8544
+12227490	Rua Ceres	Jardim da Granja	-23,2063	-45,8545	-23,2063	-45,8545
+12227500	Rua Palas	Jardim da Granja	-23,2065	-45,8538	-23,2065	-45,8538
+12227510	Praça Columba	Jardim da Granja	-23,2062	-45,8532	-23,2062	-45,8532
+12227520	Rua Urano	Jardim da Granja	-23,2061	-45,856	-23,2061	-45,856
+12227530	Rua Mercúrio	Jardim da Granja	-23,2069	-45,8577	-23,2069	-45,8577
+12227900	Avenida Brigadeiro Faria Lima, 1758	Jardim da Granja	-23,2163	-45,8408	-23,2163	-45,8408
+12245000	Avenida Engenheiro Francisco José Longo	Jardim São Dimas	-23,1997	-45,889	-23,1997	-45,889
+12245001	Avenida Engenheiro Francisco José Longo	Jardim São Dimas	-23,2001	-45,889	-23,2001	-45,889
+12245010	Avenida Doutor Adhemar de Barros	Jardim São Dimas	-23,1998	-45,8921	-23,1998	-45,8921
+12245011	Avenida Doutor Adhemar de Barros	Jardim São Dimas	-23,1998	-45,8921	-23,1998	-45,8921
+12245020	Rua Paraibuna - até 1501 - lado ímpar	Jardim São Dimas	-23,1995	-45,8866	-23,1995	-45,8866
+12245021	Rua Paraibuna - até 1502 - lado par	Jardim São Dimas	-23,2041	-45,8842	-23,2041	-45,8842
+12245022	Viaduto Sérgio Sobral de Oliveira	Jardim São Dimas	-23,2002	-45,8865	-23,2002	-45,8865
+12245030	Avenida Doutor Nelson D'Avila	Jardim São Dimas	31,4834	-91,4061	31,4834	-91,4061
+12245031	Avenida Doutor Nelson D'Avila	Jardim São Dimas	-23,1949	-45,8857	-23,1949	-45,8857
+12245051	Travessa Darcy de Oliveira	Jardim São Dimas	-23,2971	-45,9271	-23,2971	-45,9271
+12245061	Rua Manoel Ricardo Júnior	Jardim São Dimas	-23,1942	-45,8869	-23,1942	-45,8869
+12245070	Travessa João Friggi	Jardim São Dimas	-23,1937	-45,8862	-23,1937	-45,8862
+12245080	Travessa Rocha Pombo	Jardim São Dimas	-23,1944	-45,8874	-23,1944	-45,8874
+12245100	Rua Doutor Mário Sampaio Martins	Jardim São Dimas	-23,1939	-45,8847	-23,1939	-45,8847
+12245105	Praça Corretor de Imóveis	Jardim São Dimas	-23,2237	-45,9009	-23,2237	-45,9009
+12245110	Rua Arnaldo Ricardo Monteiro	Jardim São Dimas	-23,2046	-45,8928	-23,2046	-45,8928
+12245112	Travessa Manoel da Nóbrega	Jardim São Dimas	-23,1946	-45,8852	-23,1946	-45,8852
+12245120	Rua Antônio da Silva Santos	Jardim São Dimas	-23,1921	-45,885	-23,1921	-45,885
+12245130	Rua Leonildo Ramos Cruz	Jardim São Dimas	-23,1919	-45,8837	-23,1919	-45,8837
+12245190	Rua Maestro Egydio Pinto	Jardim São Dimas	-23,1955	-45,8887	-23,1955	-45,8887
+12245200	Rua Brigadeiro Osvaldo Nascimento Leal	Jardim São Dimas	-23,2012	-45,8895	-23,2012	-45,8895
+12245230	Avenida Tivoli	Jardim São Dimas	-23,2077	-45,89	-23,2077	-45,89
+12245280	Avenida Heitor Villa Lobos - de 1450/1451 a 1989/1990	Jardim São Dimas	-23,2041	-45,8935	-23,2041	-45,8935
+12245290	Rua Tufi Simão Filho	Jardim São Dimas	-23,1984	-45,8887	-23,1984	-45,8887
+12245300	Rua Ezra	Jardim São Dimas	-23,1983	-45,8887	-23,1983	-45,8887
+12245310	Rua Helena David Neme	Jardim São Dimas	-23,1973	-45,89	-23,1973	-45,89
+12245330	Rua Professor Frederico Eyer	Jardim São Dimas	-23,19	-45,8846	-23,19	-45,8846
+12245340	Praça Elza Ferreira Rahal	Jardim São Dimas	-23,19	-45,8846	-23,19	-45,8846
+12245360	Praça Melvin Jones	Jardim São Dimas	-23,1965	-45,8896	-23,1965	-45,8896
+12245370	Rua Inconfidência	Jardim São Dimas	-23,197	-45,8881	-23,197	-45,8881
+12245380	Rua Eliza Costa Santos	Jardim São Dimas	-23,1971	-45,8884	-23,1971	-45,8884
+12245390	Rua Jorge de Moraes Barros	Jardim São Dimas	-23,1949	-45,8891	-23,1949	-45,8891
+12245400	Rua José Antônio Romeno Neme	Jardim São Dimas	-23,1944	-45,8899	-23,1944	-45,8899
+12245410	Rua Maria Francisca Froes	Jardim São Dimas	-23,1998	-45,8873	-23,1998	-45,8873
+12245411	Rua Amin Assad	Jardim São Dimas	-23,2007	-45,8876	-23,2007	-45,8876
+12245420	Travessa Senador Accyoli Filho	Jardim São Dimas	-23,19	-45,8846	-23,19	-45,8846
+12245430	Rua Ilza Irma Moeller Coppio	Jardim São Dimas	-23,1556	-45,9105	-23,1556	-45,9105
+12245440	Praça Monsenhor Ascânio Brandão	Jardim São Dimas	-23,0152	-45,5551	-23,0152	-45,5551
+12245450	Rua José Mattar	Jardim São Dimas	-23,2371	-45,9098	-23,2371	-45,9098
+12245460	Rua Paulo Setúbal	Jardim São Dimas	-23,1934	-45,8888	-23,1934	-45,8888
+12245903	Avenida Doutor Nelson D'Avila, 1125	Jardim São Dimas	-23,1911	-45,8889	-23,1911	-45,8889
+12230000	Avenida Andrômeda - até 2531 - lado ímpar	Jardim Satélite	-23,2193	-45,8916	-23,2193	-45,8916
+12230001	Avenida Andrômeda - até 2530 - lado par	Jardim Satélite	-23,2193	-45,8916	-23,2193	-45,8916
+12230002	Rodovia Presidente Dutra	Jardim Satélite	-23,2552	-45,9431	-23,2552	-45,9431
+12230010	Avenida Cassiopéia	Jardim Satélite	-23,2293	-45,8857	-23,2293	-45,8857
+12230011	Avenida Cassiopéia	Jardim Satélite	-23,2293	-45,8857	-23,2293	-45,8857
+12230020	Rua Tijuca	Jardim Satélite	-23,2267	-45,8813	-23,2267	-45,8813
+12230021	Rua Leblon	Jardim Satélite	-23,2238	-45,8827	-23,2238	-45,8827
+12230030	Rua Copacabana	Jardim Satélite	-23,2276	-45,8811	-23,2276	-45,8811
+12230040	Rua Arpoador	Jardim Satélite	-23,2259	-45,8819	-23,2259	-45,8819
+12230050	Rua Reverendo Américo de Castro	Jardim Satélite	-23,2239	-45,8838	-23,2239	-45,8838
+12230060	Rua Porto Novo	Jardim Satélite	-23,2234	-45,8848	-23,2234	-45,8848
+12230070	Rua Ipanema	Jardim Satélite	-23,226	-45,8822	-23,226	-45,8822
+12230075	Rua Pedro Tursi	Jardim Satélite	-23,2224	-45,8857	-23,2224	-45,8857
+12230080	Rua Patrício Santana	Jardim Satélite	-23,2224	-45,8844	-23,2224	-45,8844
+12230100	Rua Maricá	Jardim Satélite	-23,2262	-45,8828	-23,2262	-45,8828
+12230110	Rua Barra Velha	Jardim Satélite	-23,2264	-45,8834	-23,2264	-45,8834
+12230111	Rua Lagoinha	Jardim Satélite	-23,2275	-45,8833	-23,2275	-45,8833
+12230120	Rua das Cigarras	Jardim Satélite	-23,2256	-45,8841	-23,2256	-45,8841
+12230130	Rua Bambui	Jardim Satélite	-23,2266	-45,8839	-23,2266	-45,8839
+12230140	Rua Cisne	Jardim Satélite	-23,2218	-45,8907	-23,2218	-45,8907
+12230150	Rua Sapoti	Jardim Satélite	-23,222	-45,8909	-23,222	-45,8909
+12230160	Rua Regulus	Jardim Satélite	-23,221	-45,8928	-23,221	-45,8928
+12230170	Rua Tucuma	Jardim Satélite	-23,2307	-45,8988	-23,2307	-45,8988
+12230180	Rua Gemini	Jardim Satélite	-23,222	-45,8913	-23,222	-45,8913
+12230190	Rua Procion	Jardim Satélite	-23,2213	-45,8907	-23,2213	-45,8907
+12230200	Rua Arturus	Jardim Satélite	-23,2219	-45,8923	-23,2219	-45,8923
+12230210	Rua Aires	Jardim Satélite	-23,222	-45,8917	-23,222	-45,8917
+12230220	Rua Libra	Jardim Satélite	-23,2217	-45,8928	-23,2217	-45,8928
+12230230	Rua Altair	Jardim Satélite	-23,2206	-45,8933	-23,2206	-45,8933
+12230240	Rua Polar	Jardim Satélite	-23,2191	-45,8925	-23,2191	-45,8925
+12230250	Rua Antares	Jardim Satélite	-23,2198	-45,895	-23,2198	-45,895
+12230260	Rua Pegaso	Jardim Satélite	-23,2212	-45,8949	-23,2212	-45,8949
+12230270	Rua Carangola	Jardim Satélite	-23,2203	-45,8967	-23,2203	-45,8967
+12230280	Rua Sirius	Jardim Satélite	-23,2213	-45,8956	-23,2213	-45,8956
+12230290	Rua Andaraí	Jardim Satélite	-23,2193	-45,8968	-23,2193	-45,8968
+12230300	Avenida Doutor Sebastião Henrique da Cunha Pontes	Jardim Satélite	-23,2252	-45,9052	-23,2252	-45,9052
+12230310	Rua Pleiades	Jardim Satélite	-23,2217	-45,8961	-23,2217	-45,8961
+12230320	Rua Castor	Jardim Satélite	-23,2223	-45,893	-23,2223	-45,893
+12230330	Rua Auriflama	Jardim Satélite	-23,228	-45,8898	-23,228	-45,8898
+12230340	Rua Gravataí	Jardim Satélite	-23,228	-45,8895	-23,228	-45,8895
+12230341	Travessa Pirituba	Jardim Satélite	-23,2279	-45,8893	-23,2279	-45,8893
