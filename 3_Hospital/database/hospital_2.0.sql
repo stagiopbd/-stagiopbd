@@ -40,6 +40,8 @@ CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`hospital` (
   `hsp_address` VARCHAR(200) NOT NULL COMMENT 'Endereco do Hospital',
   `hsp_telephone` VARCHAR(30) NOT NULL COMMENT 'Telefone do Hospital',
   `hsp_sit_id` INT(11) NOT NULL,
+  `hsp_create` DATETIME NULL,
+  `hsp_update` DATETIME NULL,
   PRIMARY KEY (`hsp_id`),
   UNIQUE INDEX `hsp_cnpj_unique` (`hsp_cnpj` ASC),
   INDEX `fk_hsp_sit_idx` (`hsp_sit_id` ASC),
@@ -177,6 +179,11 @@ DEFAULT CHARACTER SET = utf8;
 USE `kiizj5q0n6quilvc` ;
 
 -- -----------------------------------------------------
+-- Placeholder table for view `kiizj5q0n6quilvc`.`hsp_bed`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`hsp_bed` (`hsp_id` INT, `hsp_name` INT, `wng_desc` INT, `bed_desc` INT, `bed_pat_cpf` INT);
+
+-- -----------------------------------------------------
 -- Placeholder table for view `kiizj5q0n6quilvc`.`hsp_wing`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`hsp_wing` (`hsp_id` INT, `hsp_cnpj` INT, `hsp_name` INT, `hsp_sit_id` INT, `wng_id` INT, `wng_desc` INT, `wng_sit_id` INT, `wng_spc_id` INT);
@@ -185,6 +192,45 @@ CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`hsp_wing` (`hsp_id` INT, `hsp_cnp
 -- Placeholder table for view `kiizj5q0n6quilvc`.`wing_bed`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`wing_bed` (`wng_id` INT, `wng_desc` INT, `wng_hsp_id` INT, `wng_sit_id` INT, `wng_spc_id` INT, `bed_id` INT, `bed_desc` INT, `bed_wng_id` INT, `bed_pat_cpf` INT);
+
+-- -----------------------------------------------------
+-- procedure Internacao
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `kiizj5q0n6quilvc`$$
+CREATE DEFINER=`u8m691gex60b7dqt`@`%` PROCEDURE `Internacao`(in cpf varchar(255),in wingTipo varchar(255))
+BEGIN
+ Declare vHsp int;
+ DECLARE vBed Int;
+ 
+ 
+ if (SELECT count( bed_id) FROM hsp_bed where bed_pat_cpf = cpf) = 0 then
+ 
+	 SELECT min(hsp_id)  FROM hsp_bed
+		where wng_desc = wingTipo
+		and bed_pat_cpf is null
+		into vHsp;
+
+	 select min(bed_id) FROM hsp_bed h
+		where  wng_desc = wingTipo
+		and  hsp_id = vHsp
+		and bed_pat_cpf is null
+		into vBed;
+	 
+	 update bed set bed_pat_cpf = cpf where bed_id =vBed;
+	 
+end if;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- View `kiizj5q0n6quilvc`.`hsp_bed`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `kiizj5q0n6quilvc`.`hsp_bed`;
+USE `kiizj5q0n6quilvc`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`u8m691gex60b7dqt`@`%` SQL SECURITY DEFINER VIEW `kiizj5q0n6quilvc`.`hsp_bed` AS select `h`.`hsp_id` AS `hsp_id`,`h`.`hsp_name` AS `hsp_name`,`w`.`wng_desc` AS `wng_desc`,`b`.`bed_desc` AS `bed_desc`,`b`.`bed_pat_cpf` AS `bed_pat_cpf` from ((`kiizj5q0n6quilvc`.`hospital` `h` join `kiizj5q0n6quilvc`.`wing` `w`) join `kiizj5q0n6quilvc`.`bed` `b`) where ((`h`.`hsp_id` = `w`.`wng_hsp_id`) and (`w`.`wng_id` = `b`.`bed_wng_id`)) order by `h`.`hsp_name`,`w`.`wng_desc`,`b`.`bed_desc`;
 
 -- -----------------------------------------------------
 -- View `kiizj5q0n6quilvc`.`hsp_wing`
@@ -199,6 +245,23 @@ CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`u8m691gex60b7dqt`@`%` SQL SECURI
 DROP TABLE IF EXISTS `kiizj5q0n6quilvc`.`wing_bed`;
 USE `kiizj5q0n6quilvc`;
 CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`u8m691gex60b7dqt`@`%` SQL SECURITY DEFINER VIEW `kiizj5q0n6quilvc`.`wing_bed` AS select `kiizj5q0n6quilvc`.`wing`.`wng_id` AS `wng_id`,`kiizj5q0n6quilvc`.`wing`.`wng_desc` AS `wng_desc`,`kiizj5q0n6quilvc`.`wing`.`wng_hsp_id` AS `wng_hsp_id`,`kiizj5q0n6quilvc`.`wing`.`wng_sit_id` AS `wng_sit_id`,`kiizj5q0n6quilvc`.`wing`.`wng_spc_id` AS `wng_spc_id`,`kiizj5q0n6quilvc`.`bed`.`bed_id` AS `bed_id`,`kiizj5q0n6quilvc`.`bed`.`bed_desc` AS `bed_desc`,`kiizj5q0n6quilvc`.`bed`.`bed_wng_id` AS `bed_wng_id`,`kiizj5q0n6quilvc`.`bed`.`bed_pat_cpf` AS `bed_pat_cpf` from (`kiizj5q0n6quilvc`.`wing` join `kiizj5q0n6quilvc`.`bed` on((`kiizj5q0n6quilvc`.`wing`.`wng_id` = `kiizj5q0n6quilvc`.`bed`.`bed_wng_id`)));
+USE `kiizj5q0n6quilvc`;
+
+DELIMITER $$
+USE `kiizj5q0n6quilvc`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `hospital_BEFORE_INSERT` BEFORE INSERT ON hospital FOR EACH ROW
+BEGIN
+set NEW.hsp_create = NOW();
+END$$
+
+USE `kiizj5q0n6quilvc`$$
+CREATE TRIGGER `hospital_AFTER_UPDATE` BEFORE UPDATE ON hospital FOR EACH ROW
+BEGIN
+set new.hsp_update = NOW();
+END$$
+
+
+DELIMITER ;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
