@@ -1,0 +1,6 @@
+area	city	state
+Campus do CTA	São José dos Campos	SP
+Centro	São José dos Campos	SP
+Jardim da Granja	São José dos Campos	SP
+Jardim São Dimas	São José dos Campos	SP
+Jardim Satélite	São José dos Campos	SP
