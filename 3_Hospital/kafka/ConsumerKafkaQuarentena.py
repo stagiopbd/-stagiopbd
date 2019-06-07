@@ -18,17 +18,13 @@ class ConsumerKafka(object):
 
     def readMessage(self):
         consumer = self.createConsumer()
-        data = {}
         for readMsg in consumer:
             dataRead = readMsg.value
             if dataRead["type"] == "medicalconsultation":
                 if dataRead["cns_stm_id"] == "B05" or dataRead["cns_stm_id"] == "05" or dataRead["cns_stm_id"] == "5" or dataRead["cns_stm_id"] == "Sarampo" or dataRead["cns_stm_id"] == "sarampo" or dataRead["cns_stm_id"] == "B05 Sarampo" or dataRead["cns_stm_id"] == "B05 sarampo":
                     #Todo setar as configurações para a nova tabela
-                    data["type"] = dataRead["type"]
-                    data["cpf"] = dataRead["cns_phy_cpf"]
-                    data["cid"] = dataRead["cns_stm_id"]
-                    print(data)
-                    self.Cursor.execute("INSERT INTO quarantine (cpf, cid) VALUES (%(cpf)s, %(cid)s) ON DUPLICATE KEY UPDATE cpf = %(cpf)s", data)#tabela de teste criada
+                    data = (dataRead["cns_phy_cpf"], "UNIDADE ISOLAMENTO")
+                    self.Cursor.callproc("Internacao", data)
 
             self.DbConnection.commit()
         self.Cursor.close()
