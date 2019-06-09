@@ -87,7 +87,7 @@ class ConectarNeo4J():
         for r in con.getData("SELECT distinct(dig_code_cid) FROM list_patient_has_sarampo"):
             tx = self.__graph.begin()
             disease = Node("Disease")
-            disease['cid'] = r[1] 
+            disease['cid'] = r[0] 
             disease['name'] = "Sarampo"
             tx.create(disease)
             tx.commit()
