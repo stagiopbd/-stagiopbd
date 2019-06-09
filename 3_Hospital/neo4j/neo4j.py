@@ -87,7 +87,7 @@ class ConectarNeo4J():
         for r in con.getData("SELECT distinct(dig_code_cid) FROM list_patient_has_sarampo"):
             tx = self.__graph.begin()
             disease = Node("Disease")
-            disease['cid'] = r[0] 
+            disease['cid'] = r[1] 
             disease['name'] = "Sarampo"
             tx.create(disease)
             tx.commit()
@@ -96,7 +96,7 @@ class ConectarNeo4J():
         con = ConexaoMySQL()
         for r in con.getData("SELECT * FROM list_patient_has_sarampo"):
             tx = self.__graph.begin()
-            tx.run("MATCH (p:Patient), (d:Disease) WHERE p.cpf = '" + str(r[1]) + "' and d.cid = '" + str(r[0]) + "' CREATE (p)-[h:HAS_DISEASE]->(d)")
+            tx.run("MATCH (p:Patient), (d:Disease) WHERE p.cpf = '" + str(r[2]) + "' and d.cid = '" + str(r[1]) + "' CREATE (p)-[h:HAS_DISEASE{date:'"+str(r[0])+"'}]->(d)")
             tx.commit()
 
     def HasArea(self, zipcode, area):
