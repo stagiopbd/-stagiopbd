@@ -82,15 +82,21 @@ class ConectarNeo4J():
         tx.create(patient)
         tx.commit()
 
+    def SarampoDisease(self):
+        con = ConexaoMySQL()
+        for r in con.getData("SELECT distinct(dig_code_cid) FROM list_patient_has_sarampo"):
+            tx = self.__graph.begin()
+            disease = Node("Disease")
+            disease['cid'] = r[0] 
+            disease['name'] = "Sarampo"
+            tx.create(disease)
+            tx.commit()
+
     def PatientHasSarampo(self):
         con = ConexaoMySQL()
-        tx = self.__graph.begin()
         for r in con.getData("SELECT * FROM list_patient_has_sarampo"):
-            sarampo = Node("Sarampo")
-            sarampo['cpf'] = r[0]
-            tx.create(sarampo)
-            tx.commit()
-            tx.run("MATCH (p:Patient), (s:Sarampo) WHERE p.cpf = '" + str(r[0]) + "' and s.cpf = '" + str(r[0]) + "' CREATE (p)-[h:HAS_SARAMPO]->(s)")
+            tx = self.__graph.begin()
+            tx.run("MATCH (p:Patient), (d:Disease) WHERE p.cpf = '" + str(r[1]) + "' and d.cid = '" + str(r[0]) + "' CREATE (p)-[h:HAS_DISEASE]->(d)")
             tx.commit()
 
     def HasArea(self, zipcode, area):
@@ -151,4 +157,6 @@ if __name__ == "__main__":
     #     address = sheet["G"+str(i)].value
     #     conectar.Patient(cpf, name, birthdate, gender, bloodtype, email)
     #     conectar.HasAddress(cpf, address)
+    
+    conectar.SarampoDisease()
     conectar.PatientHasSarampo()
