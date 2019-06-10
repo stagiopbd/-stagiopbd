@@ -1,0 +1,12 @@
+CREATE PROCEDURE export_csv_split ()
+BEGIN
+
+SELECT *
+FROM medicine
+INTO OUTFILE "/tmp/medicine.csv"
+FIELDS ENCLOSED BY '"' 
+TERMINATED BY ';' 
+ESCAPED BY '"' 
+LINES TERMINATED BY '\r\n';
+
+END
