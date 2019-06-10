@@ -50,12 +50,14 @@
                             <span id="underline">Cadastros</span> 
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">                           
-                            <li><a href="#">Usuários</a></li>
-                            <li><a href="{{route('fornecedor.index')}}">Fornecedores</a></li>                                               
-                            <li><a href="{{route('tipoexame.index')}}">Tipos de Exame</a></li>                                              
+                            <li><a href="{{route('exame.index')}}">Exames</a></li>
+                            <li><a href="{{route('fornecedor.index')}}">Fornecedores</a></li>                  
+                            <li><a href="#">Hospital</a></li>  
+                            <li><a href="{{route('mapa.index')}}">Mapa</a></li>                         
                             <li><a href="{{route('medicamento.index')}}">Medicamentos</a></li>                                                
                             <li><a href="#">Médicos</a></li>
                             <li><a href="#">Pacientes</a></li>
+                            <li><a href="{{route('tipoexame.index')}}">Tipos de Exame</a></li>  
                         </ul>
                     </li>
                     <li class="dropdown">

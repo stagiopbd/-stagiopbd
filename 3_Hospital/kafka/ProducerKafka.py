@@ -7,14 +7,14 @@ import json
 class ProducerKafka(object):
     def __init__(self, Topic, User, Password, DataBaseName):
         self.Topic = Topic
-        self.State = "hsp_speciality"
+        self.State = "function"
 
-        self.DbConnection = mysql.connector.connect(user=User, password=Password, host='localhost', database=DataBaseName, auth_plugin='mysql_native_password')
+        self.DbConnection = mysql.connector.connect(user=User, password=Password, host='localhost', database=DataBaseName, auth_plugin='mysql_native_password')#Todo Verificar Fabio
         self.Cursor = self.DbConnection.cursor()
         self.ProduceProcess = Thread(target=self.runThread)
 
     def createProducer(self):
-        producer = KafkaProducer(bootstrap_servers='127.0.0.1:9092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        producer = KafkaProducer(bootstrap_servers='35.237.186.164:9092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
         return producer
 
     #Envia a mensagem para o topic do kafka
@@ -33,29 +33,29 @@ class ProducerKafka(object):
     def getDBMessage(self, TableName):
         sqlCommand = ''
 
-        if TableName == "hsp_speciality":
-            sql = "SELECT `hsp_speciality`.`hms_hsp_seq`,`hsp_speciality`.`hms_msp_code` FROM `stagiopbd`.`hsp_speciality`"
+        if TableName == "speciality":
+            sql = "SELECT `speciality`.`spc_id`,`speciality`.`spc_desc` FROM `speciality`"
 
-        elif TableName == "bed_type":
-            sql = "SELECT `bed_type`.`bdt_seq`,`bed_type`.`bdt_desc` FROM `stagiopbd`.`bed_type`"
+        elif TableName == "function":
+            sql = "SELECT `function`.`func_id`,`function`.`func_descr` FROM `function`"
 
         elif TableName == "bed":
-            sql = "SELECT `bed`.`bed_seq`,`bed`.`bed_hsp_seq`,`bed`.`bed_bdt_seq`,`bed`.`bed_desc`,`bed`.`bed_available` FROM `stagiopbd`.`bed`"
+            sql = "SELECT `bed`.`bed_id`,`bed`.`bed_desc`,`bed`.`bed_wng_id`,`bed`.`bed_pat_cpf` FROM `bed`"
 
-        elif TableName == "hsp_patient":
-            sql = "SELECT `hsp_patient`.`hpt_seq`,`hsp_patient`.`hpt_hsp_seq`,`hsp_patient`.`hpt_id`,`hsp_patient`.`hpt_bed_seq`,`hsp_patient`.`hpt_in_date`,`hsp_patient`.`hpt_out_date` FROM `stagiopbd`.`hsp_patient`"
+        elif TableName == "patient":
+            sql = "SELECT `patient`.`pat_cpf`,`patient`.`pat_name`,`patient`.`pat_gender`,`patient`.`pat_blood_type`,`patient`.`pat_birthdate` FROM `patient`"
 
         elif TableName == "hospital":
-            sql = "SELECT `hospital`.`hsp_seq`,`hospital`.`hsp_id`,`hospital`.`hsp_name`,`hospital`.`hsp_address`,`hospital`.`hsp_phone`,`hospital`.`hsp_stt_seq` FROM `stagiopbd`.`hospital`"
+            sql = "SELECT `hospital`.`hsp_id`,`hospital`.`hsp_cnpj`,`hospital`.`hsp_name`,`hospital`.`hsp_address`,`hospital`.`hsp_telephone`,`hospital`.`hsp_sit_id`,`hospital`.`hsp_create`,`hospital`.`hsp_update` FROM `hospital`"
 
-        elif TableName == "hospital_situation":
-            sql = "SELECT `hospital_situation`.`stt_seq`,`hospital_situation`.`stt_desc` FROM `stagiopbd`.`hospital_situation`"
+        elif TableName == "situation":
+            sql = "SELECT `situation`.`sit_id`,`situation`.`sit_desc` FROM `situation`"
 
-        elif TableName == "medical_speciality":
-            sql = "SELECT `medical_speciality`.`msp_seq`,`medical_speciality`.`msp_desc` FROM `stagiopbd`.`medical_speciality`"
+        elif TableName == "wing":
+            sql = "SELECT `wing`.`wng_id`,`wing`.`wng_desc`,`wing`.`wng_hsp_id`,`wing`.`wng_sit_id`,`wing`.`wng_spc_id` FROM `wing`"
 
-        elif TableName == "hsp_doctor":
-            sql = "SELECT `hsp_doctor`.`hdc_seq`,`hsp_doctor`.`hdc_hsp_seq`,`hsp_doctor`.`hdc_id` FROM `stagiopbd`.`hsp_doctor`;"
+        elif TableName == "collaborator":
+            sql = "SELECT `collaborator`.`col_cpf`,`collaborator`.`col_name`,`collaborator`.`col_gender`,`collaborator`.`col_function_id`,`collaborator`.`col_hsp_id` FROM `collaborator`"
 
         receiveDBData = self.getData(sql)
 
@@ -65,107 +65,113 @@ class ProducerKafka(object):
         msg = {}
         Data = self.getDBMessage(Table)
 
-        if Table == "hsp_speciality":
+        if Table == "function":
             for x in Data:
-                msg['type'] = 'hsp_speciality'
-                msg['hms_hsp_seq'] = x[0]
-                msg['hms_msp_code'] = x[1]
+                msg['type'] = 'function'
+                msg['func_id'] = x[0]
+                msg['func_descr'] = x[1]
                 self.sendMessage(msg)
 
-        elif Table == "bed_type":
+        elif Table == "wing":
             for x in Data:
-                msg['type'] = 'bed_type'
-                msg['bdt_seq'] = x[0]
-                msg['bdt_desc'] = x[1]
+                msg['type'] = 'wing'
+                msg['wng_id'] = x[0]
+                msg['wng_desc'] = x[1]
+                msg['wng_hsp_id'] = x[2]
+                msg['wng_sit_id'] = x[3]
+                msg['wng_spc_id'] = x[4]
                 self.sendMessage(msg)
 
         elif Table == "bed":
             for x in Data:
                 msg['type'] = 'bed'
-                msg['bed_seq'] = x[0]
-                msg['bed_hsp_seq'] = x[1]
-                msg['bed_bdt_seq'] = x[2]
-                msg['bed_desc'] = x[3]
-                msg['bed_available'] = x[4]
+                msg['bed_id'] = x[0]
+                msg['bed_desc'] = x[1]
+                msg['bed_wng_id'] = x[2]
+                msg['bed_pat_cpf'] = x[3]
                 self.sendMessage(msg)
 
-        elif Table == "hsp_patient":
+        elif Table == "patient":
             for x in Data:
-                msg['type'] = 'hsp_patient'
-                msg['hpt_seq'] = x[0]
-                msg['hpt_hsp_seq'] = x[1]
-                msg['hpt_id'] = x[2]
-                msg['hpt_bed_seq'] = x[3]
-                msg['hpt_in_date'] = x[4]
-                msg['hpt_out_date'] = x[5]
+                msg['type'] = 'patient'
+                msg['pat_cpf'] = x[0]
+                msg['pat_name'] = x[1]
+                msg['pat_gender'] = x[2]
+                msg['pat_blood_type'] = x[3]
+                msg['pat_birthdate'] = str(x[4])
                 self.sendMessage(msg)
 
         elif Table == "hospital":
             for x in Data:
                 msg['type'] = 'hospital'
-                msg['hsp_seq'] = x[0]
-                msg['hsp_id'] = x[1]
+                msg['hsp_id'] = x[0]
+                msg['hsp_cnpj'] = x[1]
                 msg['hsp_name'] = x[2]
                 msg['hsp_address'] = x[3]
-                msg['hsp_phone'] = x[4]
-                msg['hsp_stt_seq'] = x[5]
+                msg['hsp_telephone'] = x[4]
+                msg['hsp_sit_id'] = x[5]
+                msg['hsp_create'] = str(x[6])
+                msg['hsp_update'] = str(x[7])
                 self.sendMessage(msg)
 
-        elif Table == "hospital_situation":
+        elif Table == "situation":
             for x in Data:
-                msg['type'] = 'hospital_situation'
-                msg['hsp_seq'] = x[0]
-                msg['hsp_id'] = x[1]
+                msg['type'] = 'situation'
+                msg['sit_id'] = x[0]
+                msg['sit_desc'] = x[1]
                 self.sendMessage(msg)
 
-        elif Table == "medical_speciality":
+        elif Table == "speciality":
             for x in Data:
-                msg['type'] = 'medical_speciality'
-                msg['msp_code'] = x[0]
-                msg['msp_name'] = x[1]
+                msg['type'] = 'speciality'
+                msg['spc_id'] = x[0]
+                msg['spc_desc'] = x[1]
                 self.sendMessage(msg)
 
-        elif Table == "hsp_doctor":
+        elif Table == "collaborator":
             for x in Data:
-                msg['type'] = 'hsp_doctor'
-                msg['hdc_seq'] = x[0]
-                msg['hdc_hsp_seq'] = x[1]
-                msg['hdc_id'] = x[2]
+                msg['type'] = 'collaborator'
+                msg['col_cpf'] = x[0]
+                msg['col_name'] = x[1]
+                msg['col_gender'] = x[2]
+                msg['col_function_id'] = x[3]
+                msg['col_hsp_id'] = x[4]
                 self.sendMessage(msg)
 
     def machineState(self):
 
-        if self.State == "hsp_speciality":
-            self.formatData("hsp_speciality")
-            self.State = "bed_type"
+        if self.State == "function":
+            print()
+            self.formatData("function")
+            self.State = "wing"
 
-        elif self.State == "bed_type":
-            self.formatData("bed_type")
+        elif self.State == "wing":
+            self.formatData("wing")
             self.State = "bed"
 
         elif self.State == "bed":
             self.formatData("bed")
-            self.State = "hsp_patient"
+            self.State = "patient"
 
-        elif self.State == "hsp_patient":
-            self.formatData("hsp_patient")
+        elif self.State == "patient":
+            self.formatData("patient")
             self.State = "hospital"
 
         elif self.State == "hospital":
             self.formatData("hospital")
-            self.State = "hospital_situation"
+            self.State = "situation"
 
-        elif self.State == "hospital_situation":
-            self.formatData("hospital_situation")
-            self.State = "medical_speciality"
+        elif self.State == "situation":
+            self.formatData("situation")
+            self.State = "speciality"
 
-        elif self.State == "medical_speciality":
-            self.formatData("medical_speciality")
-            self.State = "hsp_doctor"
+        elif self.State == "speciality":
+            self.formatData("speciality")
+            self.State = "collaborator"
 
-        elif self.State == "hsp_doctor":
-            self.formatData("hsp_doctor")
-            self.State = "hsp_speciality"
+        elif self.State == "collaborator":
+            self.formatData("collaborator")
+            self.State = "function"
 
 
     def runThread(self):
@@ -175,7 +181,7 @@ class ProducerKafka(object):
 
 if __name__ == "__main__":
     #Lembrar sempre de inicializar as classes com os parÃ¢metros que seram utilizados
-    producer = ProducerKafka('ts3topic','root','admin','stagiopbd')
+    producer = ProducerKafka('det-hospital','root','admin','stagiopbd')#Verificar fabio informaç?es banco
 
     producer.ProduceProcess.start()#Start da Thread do processo
 

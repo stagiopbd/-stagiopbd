@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::resource('mapa','MapaController');
+Route::get('exame/search','RequisicaoExameController@search');
+Route::resource('exame','RequisicaoExameController');
 Route::get('tipoexame/search','TipoExameController@search');
 Route::resource('tipoexame','TipoExameController');
 Route::get('fornecedor/search','FornecedorController@search');

@@ -7,12 +7,12 @@ class ConsumerKafka(object):
     def __init__(self, Topic, User, Password, DataBaseName):
         self.Topic = Topic
 
-        self.DbConnection = mysql.connector.connect(user=User, password=Password, host='localhost', database=DataBaseName, auth_plugin='mysql_native_password')
+        self.DbConnection = mysql.connector.connect(user=User, password=Password, host='35.237.186.164', database=DataBaseName, auth_plugin='mysql_native_password')
         self.Cursor = self.DbConnection.cursor()
         self.ReadProcess = Thread(target=self.readMessage)
 
     def createConsumer(self):
-        consumerKafka = KafkaConsumer(self.Topic, bootstrap_servers=['127.0.0.1:9092'], auto_offset_reset='earliest',
+        consumerKafka = KafkaConsumer(self.Topic, bootstrap_servers=['35.237.186.164:9092'], auto_offset_reset='earliest',
                                       enable_auto_commit=True, auto_commit_interval_ms=1000, value_deserializer=lambda m: json.loads(m.decode('utf-8')))
         return consumerKafka
 
@@ -21,36 +21,40 @@ class ConsumerKafka(object):
         for readMsg in consumer:
             dataRead = readMsg.value
             if dataRead["type"] == "hospital":
-                self.Cursor.execute("INSERT INTO hospital (hsp_seq, hsp_id, hsp_name, hsp_address, hsp_phone, hsp_sst_seq) "
-                                    "VALUES (%(hsp_seq)s, %(hsp_id)s, %(hsp_name)s, %(hsp_address)s, %(hsp_phone)s, %(hsp_sst_seq)s) ON DUPLICATE KEY UPDATE hsp_seq = %(hsp_seq)s", dataRead)
+                if dataRead['hsp_create'] == 'None':
+                    dataRead['hsp_create'] = dataRead['hsp_update']
+                if dataRead['hsp_update'] == 'None':
+                    dataRead['hsp_update'] = dataRead['hsp_create']
+                self.Cursor.execute("INSERT INTO hospital (hsp_id, hsp_cnpj, hsp_name, hsp_address, hsp_telephone, hsp_sit_id, hsp_create, hsp_update) "
+                                    "VALUES (%(hsp_id)s, %(hsp_cnpj)s, %(hsp_name)s, %(hsp_address)s, %(hsp_telephone)s, %(hsp_sit_id)s, %(hsp_create)s, %(hsp_update)s)  ON DUPLICATE KEY UPDATE hsp_id = %(hsp_id)s", dataRead)
 
-            elif dataRead["type"] == "hospital_situation":
-                self.Cursor.execute("INSERT INTO hospital_situation (sst_seq, sst_desc) "
-                                    "VALUES (%(sst_seq)s, %(sst_desc)s) ON DUPLICATE KEY UPDATE sst_seq = %(sst_seq)s", dataRead)
+            elif dataRead["type"] == "situation":
+                self.Cursor.execute("INSERT INTO situation (sit_id, sit_desc) "
+                                    "VALUES (%(sit_id)s, %(sit_desc)s) ON DUPLICATE KEY UPDATE sit_id = %(sit_id)s", dataRead)
 
-            elif dataRead["type"] == "hsp_doctor":
-                self.Cursor.execute("INSERT INTO hsp_doctor (hdc_seq, hdc_hsp_seq, hdc_id) "
-                                    "VALUES (%(hdc_seq)s, %(hdc_hsp_seq)s, %(hdc_id)s) ON DUPLICATE KEY UPDATE hdc_seq = %(hdc_seq)s", dataRead)
+            elif dataRead["type"] == "wing":
+                self.Cursor.execute("INSERT INTO wing (wng_id, wng_desc, wng_hsp_id, wng_sit_id, wng_spc_id) "
+                                    "VALUES (%(wng_id)s, %(wng_desc)s, %(wng_hsp_id)s, %(wng_sit_id)s, %(wng_hsp_id)s) ON DUPLICATE KEY UPDATE wng_id = %(wng_id)s", dataRead)
 
-            elif dataRead["type"] == "medical_speciality":
-                self.Cursor.execute("INSERT INTO medical_speciality (msp_code, msp_name) VALUES (%(msp_code)s, %(msp_name)s) ON DUPLICATE KEY UPDATE msp_code = %(msp_code)s", dataRead)
+            elif dataRead["type"] == "speciality":
+                self.Cursor.execute("INSERT INTO speciality (spc_id, spc_desc) VALUES (%(spc_id)s, %(spc_desc)s) ON DUPLICATE KEY UPDATE spc_id = %(spc_id)s", dataRead)
 
             elif dataRead["type"] == "bed":
-                self.Cursor.execute("INSERT INTO bed (bed_seq, bed_hsp_seq, bed_bdt_seq, bed_desc, bed_available) "
-                                    "VALUES (%(bed_seq)s, %(bed_hsp_seq)s, %(bed_bdt_seq)s, %(bed_desc)s, %(bed_available)s) ON DUPLICATE KEY UPDATE bed_seq = %(bed_seq)s", dataRead)
+                self.Cursor.execute("INSERT INTO bed (bed_id, bed_desc, bed_wng_id, bed_pat_cpf) "
+                                    "VALUES (%(bed_id)s, %(bed_desc)s, %(bed_wng_id)s, %(bed_pat_cpf)s) ON DUPLICATE KEY UPDATE bed_id = %(bed_id)s", dataRead)
 
-            elif dataRead["type"] == "hsp_patient":
-                self.Cursor.execute("INSERT INTO hsp_patient (hpt_seq, hpt_hsp_seq, hpt_id, hpt_bed_seq, hpt_in_date, hpt_out_date) "
-                                    "VALUES (%(hpt_seq)s, %(hpt_hsp_seq)s, %(hpt_id)s, %(hpt_bed_seq)s, %(hpt_in_date)s, %(hpt_out_date)s) "
-                                    "ON DUPLICATE KEY UPDATE hpt_seq = %(hpt_seq)s", dataRead)
+            elif dataRead["type"] == "patient":
+                self.Cursor.execute("INSERT INTO patient (pat_cpf, pat_name, pat_gender, pat_blood_type, pat_birthdate) "
+                                    "VALUES (%(pat_cpf)s, %(pat_name)s, %(pat_gender)s, %(pat_blood_type)s, %(pat_birthdate)s) "
+                                    "ON DUPLICATE KEY UPDATE pat_cpf = %(pat_cpf)s", dataRead)
 
-            elif dataRead["type"] == "hsp_speciality":
-                self.Cursor.execute("INSERT INTO hsp_speciality (hms_hsp_seq, hms_msp_code) "
-                                    "VALUES (%(hms_hsp_seq)s, %(hms_msp_code)s) ON DUPLICATE KEY UPDATE hms_hsp_seq = %(hms_hsp_seq)s", dataRead)
+            elif dataRead["type"] == "collaborator":
+                self.Cursor.execute("INSERT INTO collaborator (col_cpf, col_name, col_gender, col_function_id, col_hsp_id) "
+                                    "VALUES (%(col_cpf)s, %(col_name)s, %(col_gender)s, %(col_function_id)s, %(col_hsp_id)s) ON DUPLICATE KEY UPDATE col_cpf = %(col_cpf)s", dataRead)
 
-            elif dataRead["type"] == "bed_type":
-                self.Cursor.execute("INSERT INTO hsp_speciality (bdt_seq, bdt_desc) "
-                                    "VALUES (%(bdt_seq)s, %(bdt_desc)s) ON DUPLICATE KEY UPDATE bdt_seq = %(bdt_seq)s", dataRead)
+            elif dataRead["type"] == "function":
+                self.Cursor.execute("INSERT INTO function (func_id, func_descr) "
+                                    "VALUES (%(func_id)s, %(func_descr)s) ON DUPLICATE KEY UPDATE func_id = %(func_id)s", dataRead)
 
             self.DbConnection.commit()
         self.Cursor.close()
@@ -58,6 +62,6 @@ class ConsumerKafka(object):
 
 
 if __name__ == "__main__":
-    #Lembrar sempre de inicializar as classes com os parâmetros que seram utilizados
-    Consume = ConsumerKafka('hospital','stagiopbd','stagiopbd2019','stagiopbd') #instancia da classe ConsumerKafka
+    #Lembrar sempre de inicializar as classes com os parâmetros que seram utilizados #TODO Editar informações do tópico Kafka
+    Consume = ConsumerKafka('det-hospital','root','stagiopbd2019','stagiopbd') #instancia da classe ConsumerKafka
     Consume.ReadProcess.start()#Inicio a Thread que irá executar o método readMessage
