@@ -3,6 +3,7 @@
 #install apache kafka: https://www.digitalocean.com/community/tutorials/how-to-install-apache-kafka-on-centos-7
 #on command prompt, set: pip install kafka-python
     #This add Kafka at Python Enviroment.
+import openpyxl
 import json
 import mysql.connector
 from kafka import KafkaProducer
@@ -45,6 +46,19 @@ class ProducerKafka():
         #producer.send(<nome do canal/tópico>, <msg>)
         producer.send("det-paciente", json)
         producer.close()
+
+    def formatPatientXLSX(self, lista):
+        for x in lista:
+            msg = {}
+            msg['type'] = 'patient'
+            msg['pat_cpf'] = str(x[0]) 
+            msg['pat_name'] = str(x[1])
+            msg['pat_birthdate'] = str(x[2])
+            msg['pat_gender'] = str(x[3])
+            msg['pat_bloodtype'] = str(x[4])
+            msg['pat_email'] = str(x[6])
+            self.setMessages(msg)
+            print(msg)
 
     def formatPatient(self):
         con = ConexaoMySQL()
@@ -111,7 +125,22 @@ class ProducerKafka():
 
         self.setMessages(msg)
 
+class Xlsx():
 
+    def insertPatient(self):
+        book = openpyxl.load_workbook("patient_mescled.xlsx", True)
+        sheet = book["patient"]
+        lista = []
+        for i in range(2, sheet.max_row + 1):
+            cpf = sheet["A"+str(i)].value
+            nome = sheet["B"+str(i)].value
+            dataNasc = sheet["C"+str(i)].value
+            gender = sheet["D"+str(i)].value
+            tipoSang = sheet["E"+str(i)].value
+            email = sheet["F"+str(i)].value
+            lista.append([cpf, nome, dataNasc, gender, tipoSang, email])
+
+    
 if __name__ == "__main__":
     producer = ProducerKafka()
     producer.formatPatient()
