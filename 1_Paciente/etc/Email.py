@@ -1,6 +1,7 @@
 import schedule
 import time
 import mysql.connector
+#import smtplib, ssl
 
 class ConexaoMySQL():
     
@@ -30,6 +31,26 @@ class ConexaoMySQL():
 
 
 class Email():
+    # def  __init__(self):
+    #     self.port = 587  # For starttls
+    #     self.smtp_server = "smtp.gmail.com"
+    #     self.sender_email = "stagiopbd@gmail.com"
+    #     #receiver_email = "your@gmail.com"
+    #     self.password = "stagiopbd2019#"
+    #     self.message = """\
+    #     Subject: Penta Vaccine
+
+    #     This message is sent from Python to remember you about Penta's Vaccine."""
+
+    # def email(self, to):
+    #     context = ssl.create_default_context()
+    #     with smtplib.SMTP(self.smtp_server, self.port) as server:
+    #         server.ehlo()  # Can be omitted
+    #         server.starttls(context=context)
+    #         server.ehlo()  # Can be omitted
+    #         server.login(self.sender_email, self.password)
+    #         server.sendmail(self.sender_email, to, self.message)
+
     def callSendEmailForPentaVaccine(self):
         con = ConexaoMySQL()
         result = con.getData("CALL send_email_for_penta_vaccine();")
