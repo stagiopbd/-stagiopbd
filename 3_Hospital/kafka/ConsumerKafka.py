@@ -12,7 +12,7 @@ class ConsumerKafka(object):
         self.ReadProcess = Thread(target=self.readMessage)
 
     def createConsumer(self):
-        consumerKafka = KafkaConsumer(self.Topic, bootstrap_servers=['127.0.0.1:9092'], auto_offset_reset='earliest',
+        consumerKafka = KafkaConsumer(self.Topic, bootstrap_servers=['35.237.186.164:9092'], auto_offset_reset='earliest',
                                       enable_auto_commit=True, auto_commit_interval_ms=1000, value_deserializer=lambda m: json.loads(m.decode('utf-8')))
         return consumerKafka
 
@@ -21,8 +21,12 @@ class ConsumerKafka(object):
         for readMsg in consumer:
             dataRead = readMsg.value
             if dataRead["type"] == "hospital":
+                if dataRead['hsp_create'] == 'None':
+                    dataRead['hsp_create'] = dataRead['hsp_update']
+                if dataRead['hsp_update'] == 'None':
+                    dataRead['hsp_update'] = dataRead['hsp_create']
                 self.Cursor.execute("INSERT INTO hospital (hsp_id, hsp_cnpj, hsp_name, hsp_address, hsp_telephone, hsp_sit_id, hsp_create, hsp_update) "
-                                    "VALUES (%(hsp_id)s, %(hsp_cnpj)s, %(hsp_name)s, %(hsp_address)s, %(hsp_phone)s, %(hsp_sit_id)s, %(hsp_create)s, %(hsp_update)s) ON DUPLICATE KEY UPDATE hsp_id = %(hsp_id)s", dataRead)
+                                    "VALUES (%(hsp_id)s, %(hsp_cnpj)s, %(hsp_name)s, %(hsp_address)s, %(hsp_telephone)s, %(hsp_sit_id)s, %(hsp_create)s, %(hsp_update)s)  ON DUPLICATE KEY UPDATE hsp_id = %(hsp_id)s", dataRead)
 
             elif dataRead["type"] == "situation":
                 self.Cursor.execute("INSERT INTO situation (sit_id, sit_desc) "
@@ -59,5 +63,5 @@ class ConsumerKafka(object):
 
 if __name__ == "__main__":
     #Lembrar sempre de inicializar as classes com os parâmetros que seram utilizados #TODO Editar informações do tópico Kafka
-    Consume = ConsumerKafka('hospital','root','stagiopbd2019','stagiopbd') #instancia da classe ConsumerKafka
+    Consume = ConsumerKafka('det-hospital','root','stagiopbd2019','stagiopbd') #instancia da classe ConsumerKafka
     Consume.ReadProcess.start()#Inicio a Thread que irá executar o método readMessage
