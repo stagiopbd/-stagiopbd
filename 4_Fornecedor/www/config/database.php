@@ -87,6 +87,28 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'mysql_prod' => [
+            'driver'    => env('DB_CONNECTION_PROD'),
+            'host'      => env('DB_HOST_PROD'),
+            'port'      => env('DB_PORT_PROD'),
+            'database'  => env('DB_DATABASE_PROD'),
+            'username'  => env('DB_USERNAME_PROD'),
+            'password'  => env('DB_PASSWORD_PROD'),
+            'charset'     => 'utf8mb4',
+            'collation'   => 'utf8mb4_unicode_ci',
+            'prefix'      => '',
+            'strict'      => true,
+            'engine'      => null,
+            'modes'       => [
+                'ONLY_FULL_GROUP_BY',
+                'STRICT_TRANS_TABLES',
+                'NO_ZERO_IN_DATE',
+                'NO_ZERO_DATE',
+                'ERROR_FOR_DIVISION_BY_ZERO',
+                'NO_ENGINE_SUBSTITUTION',
+            ],
+        ],
+
     ],
 
     /*

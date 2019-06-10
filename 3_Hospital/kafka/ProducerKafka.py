@@ -7,14 +7,14 @@ import json
 class ProducerKafka(object):
     def __init__(self, Topic, User, Password, DataBaseName):
         self.Topic = Topic
-        self.State = "hsp_speciality"
+        self.State = "function"
 
-        self.DbConnection = mysql.connector.connect(user=User, password=Password, host='localhost', database=DataBaseName, auth_plugin='mysql_native_password')
+        self.DbConnection = mysql.connector.connect(user=User, password=Password, host='localhost', database=DataBaseName, auth_plugin='mysql_native_password')#Todo Verificar Fabio
         self.Cursor = self.DbConnection.cursor()
         self.ProduceProcess = Thread(target=self.runThread)
 
     def createProducer(self):
-        producer = KafkaProducer(bootstrap_servers='127.0.0.1:9092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        producer = KafkaProducer(bootstrap_servers='35.237.186.164:9092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
         return producer
 
     #Envia a mensagem para o topic do kafka
@@ -98,7 +98,7 @@ class ProducerKafka(object):
                 msg['pat_name'] = x[1]
                 msg['pat_gender'] = x[2]
                 msg['pat_blood_type'] = x[3]
-                msg['pat_birthdate'] = x[4]
+                msg['pat_birthdate'] = str(x[4])
                 self.sendMessage(msg)
 
         elif Table == "hospital":
@@ -110,15 +110,15 @@ class ProducerKafka(object):
                 msg['hsp_address'] = x[3]
                 msg['hsp_telephone'] = x[4]
                 msg['hsp_sit_id'] = x[5]
-                msg['hsp_create'] = x[6]
-                msg['hsp_update'] = x[7]
+                msg['hsp_create'] = str(x[6])
+                msg['hsp_update'] = str(x[7])
                 self.sendMessage(msg)
 
         elif Table == "situation":
             for x in Data:
                 msg['type'] = 'situation'
                 msg['sit_id'] = x[0]
-                msg['sit_description'] = x[1]
+                msg['sit_desc'] = x[1]
                 self.sendMessage(msg)
 
         elif Table == "speciality":
@@ -134,13 +134,14 @@ class ProducerKafka(object):
                 msg['col_cpf'] = x[0]
                 msg['col_name'] = x[1]
                 msg['col_gender'] = x[2]
-                msg['col_function'] = x[3]
+                msg['col_function_id'] = x[3]
                 msg['col_hsp_id'] = x[4]
                 self.sendMessage(msg)
 
     def machineState(self):
 
         if self.State == "function":
+            print()
             self.formatData("function")
             self.State = "wing"
 
@@ -180,7 +181,7 @@ class ProducerKafka(object):
 
 if __name__ == "__main__":
     #Lembrar sempre de inicializar as classes com os parÃ¢metros que seram utilizados
-    producer = ProducerKafka('ts3topic','root','admin','stagiopbd')
+    producer = ProducerKafka('det-hospital','root','admin','stagiopbd')#Verificar fabio informaç?es banco
 
     producer.ProduceProcess.start()#Start da Thread do processo
 

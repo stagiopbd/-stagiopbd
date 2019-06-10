@@ -6,3 +6,13 @@ Username:			u8m691gex60b7dqt
 Password:			cq4m4jg54uwbnm9d	
 Port:				3306	
 Schema Database:	kiizj5q0n6quilvc
+
+
+
+
+
+Host:				35.237.186.164 
+Username:			root	
+Password:			stagiopbd2019	
+Port:				3306
+Schema Database:	stagiopbd
