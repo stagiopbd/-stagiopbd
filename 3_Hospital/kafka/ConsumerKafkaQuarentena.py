@@ -11,7 +11,7 @@ class ConsumerKafka(object):
         self.ContCasos = 0
         self.Topic = Topic
 
-        self.DbConnection = mysql.connector.connect(user=User, password=Password, host='35.237.186.164', database=DataBaseName, auth_plugin='mysql_native_password')
+        self.DbConnection = mysql.connector.connect(user=User, password=Password, host='localhost', database=DataBaseName, auth_plugin='mysql_native_password')
         self.Cursor = self.DbConnection.cursor()
         self.ReadProcess = Thread(target=self.readMessage)
 
@@ -86,5 +86,5 @@ class ConsumerKafka(object):
 
 if __name__ == "__main__":
     #Lembrar sempre de inicializar as classes com os parâmetros que seram utilizados
-    Consume = ConsumerKafka('detmedico','root','stagiopbd2019','stagiopbd') #instancia da classe ConsumerKafka que escuta tópico medico para detectar casos de sarampo
+    Consume = ConsumerKafka('detmedico','root','123','kiizj5q0n6quilvc') #instancia da classe ConsumerKafka que escuta tópico medico para detectar casos de sarampo
     Consume.ReadProcess.start()#Inicio a Thread que irá executar o método readMessage

@@ -181,7 +181,7 @@ class ProducerKafka(object):
 
 if __name__ == "__main__":
     #Lembrar sempre de inicializar as classes com os parÃ¢metros que seram utilizados
-    producer = ProducerKafka('det-hospital','root','admin','stagiopbd')#Verificar fabio informaç?es banco
+    producer = ProducerKafka('det-hospital','root','123','kiizj5q0n6quilvc')#Verificar fabio informaç?es banco
 
     producer.ProduceProcess.start()#Start da Thread do processo
 
