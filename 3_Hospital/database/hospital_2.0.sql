@@ -106,9 +106,9 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `kiizj5q0n6quilvc`.`patient`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`patient` (
-  `pat_cpf` VARCHAR(20) NOT NULL,
+  `pat_cpf` VARCHAR(11) NOT NULL,
   `pat_name` VARCHAR(200) NOT NULL COMMENT 'Nome do Paciente',
-  `pat_gender` VARCHAR(1) NULL DEFAULT NULL COMMENT 'Genero do Paciente',
+  `pat_gender` VARCHAR(10) NULL DEFAULT NULL COMMENT 'Genero do Paciente',
   `pat_blood_type` VARCHAR(3) NULL DEFAULT NULL COMMENT 'Tipo sanguineo e fator RH do Paciente',
   `pat_birthdate` DATE NULL DEFAULT NULL COMMENT 'Data de Nascimento',
   PRIMARY KEY (`pat_cpf`))
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`bed` (
   `bed_id` INT(11) NOT NULL AUTO_INCREMENT,
   `bed_desc` VARCHAR(100) NOT NULL COMMENT 'Descricao do Leito',
   `bed_wng_id` INT(11) NOT NULL,
-  `bed_pat_cpf` VARCHAR(20) NULL,
+  `bed_pat_cpf` VARCHAR(11) NULL,
   PRIMARY KEY (`bed_id`),
   UNIQUE INDEX `bed_desc_unique` (`bed_wng_id` ASC, `bed_desc` ASC),
   INDEX `fk_bed_wing1_idx` (`bed_wng_id` ASC),
@@ -157,9 +157,9 @@ ENGINE = InnoDB;
 -- Table `kiizj5q0n6quilvc`.`collaborator`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`collaborator` (
-  `col_cpf` VARCHAR(20) NOT NULL,
+  `col_cpf` VARCHAR(11) NOT NULL,
   `col_name` VARCHAR(100) NOT NULL,
-  `col_gender` CHAR(1) NOT NULL,
+  `col_gender` VARCHAR(10) NOT NULL,
   `col_function_id` INT(11) NOT NULL,
   `col_hsp_id` INT(11) NOT NULL,
   PRIMARY KEY (`col_cpf`),
@@ -181,7 +181,7 @@ USE `kiizj5q0n6quilvc` ;
 -- -----------------------------------------------------
 -- Placeholder table for view `kiizj5q0n6quilvc`.`hsp_bed`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`hsp_bed` (`hsp_id` INT, `hsp_name` INT, `wng_desc` INT, `bed_desc` INT, `bed_pat_cpf` INT);
+CREATE TABLE IF NOT EXISTS `kiizj5q0n6quilvc`.`hsp_bed` (`hsp_id` INT, `hsp_name` INT, `wng_desc` INT, `bed_id` INT, `bed_desc` INT, `bed_pat_cpf` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `kiizj5q0n6quilvc`.`hsp_wing`
@@ -205,7 +205,7 @@ BEGIN
  DECLARE vBed Int;
  
  
- if (SELECT count( bed_id) FROM hsp_bed where bed_pat_cpf = cpf) = 0 then
+ if (SELECT count( bed_id) FROM wing_bed where bed_pat_cpf = cpf) = 0 then
  
 	 SELECT min(hsp_id)  FROM hsp_bed
 		where wng_desc = wingTipo
@@ -230,7 +230,7 @@ DELIMITER ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `kiizj5q0n6quilvc`.`hsp_bed`;
 USE `kiizj5q0n6quilvc`;
-CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`u8m691gex60b7dqt`@`%` SQL SECURITY DEFINER VIEW `kiizj5q0n6quilvc`.`hsp_bed` AS select `h`.`hsp_id` AS `hsp_id`,`h`.`hsp_name` AS `hsp_name`,`w`.`wng_desc` AS `wng_desc`,`b`.`bed_desc` AS `bed_desc`,`b`.`bed_pat_cpf` AS `bed_pat_cpf` from ((`kiizj5q0n6quilvc`.`hospital` `h` join `kiizj5q0n6quilvc`.`wing` `w`) join `kiizj5q0n6quilvc`.`bed` `b`) where ((`h`.`hsp_id` = `w`.`wng_hsp_id`) and (`w`.`wng_id` = `b`.`bed_wng_id`)) order by `h`.`hsp_name`,`w`.`wng_desc`,`b`.`bed_desc`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`u8m691gex60b7dqt`@`%` SQL SECURITY DEFINER VIEW `kiizj5q0n6quilvc`.`hsp_bed` AS select `h`.`hsp_id` AS `hsp_id`,`h`.`hsp_name` AS `hsp_name`,`w`.`wng_desc` AS `wng_desc`,`b`.`bed_id` AS `bed_id`,`b`.`bed_desc` AS `bed_desc`,`b`.`bed_pat_cpf` AS `bed_pat_cpf` from ((`kiizj5q0n6quilvc`.`hospital` `h` join `kiizj5q0n6quilvc`.`wing` `w`) join `kiizj5q0n6quilvc`.`bed` `b`) where ((`h`.`hsp_id` = `w`.`wng_hsp_id`) and (`w`.`wng_id` = `b`.`bed_wng_id`)) order by `h`.`hsp_name`,`w`.`wng_desc`,`b`.`bed_desc`;
 
 -- -----------------------------------------------------
 -- View `kiizj5q0n6quilvc`.`hsp_wing`
@@ -266,4 +266,3 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
