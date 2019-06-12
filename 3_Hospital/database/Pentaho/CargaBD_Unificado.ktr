@@ -430,7 +430,7 @@
     <created_date>2019/06/09 22:36:07.186</created_date>
     <modified_user>-</modified_user>
     <modified_date>2019/06/09 22:36:07.186</modified_date>
-    <key_for_session_key/>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -547,12 +547,12 @@
   </connection>
   <order>
     <hop>
-      <from>Table input</from>
+      <from>Table hospital</from>
       <to>Table output</to>
       <enabled>N</enabled>
     </hop>
     <hop>
-      <from>Table input 2</from>
+      <from>Table situation</from>
       <to>Table output 2</to>
       <enabled>N</enabled>
     </hop>
@@ -562,12 +562,12 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Table input 3</from>
+      <from>Table collaborator</from>
       <to>Table output 3</to>
       <enabled>N</enabled>
     </hop>
     <hop>
-      <from>Table input 4</from>
+      <from>Table speciality</from>
       <to>Table output 4</to>
       <enabled>N</enabled>
     </hop>
@@ -589,401 +589,34 @@
     <hop>
       <from>Table bed</from>
       <to>Modified Java Script Value 2</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Modified Java Script Value 2</from>
       <to>Insert / Update</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Table collaborator 2</from>
+      <to>Modified Java Script Value 3</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Modified Java Script Value 3</from>
+      <to>Insert / Update 2</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Table patient 2</from>
+      <to>Modified Java Script Value 4</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Modified Java Script Value 4</from>
+      <to>Insert / Update 3</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
-  <step>
-    <name>Table input</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>STAGIOP</connection>
-    <sql>SELECT
-  hsp_id
-, hsp_cnpj
-, hsp_name
-, hsp_address
-, hsp_telephone
-, hsp_sit_id
-, hsp_create
-, hsp_update
-FROM hospital
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>96</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table output</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>stagiopbd_BdUnificado</connection>
-    <schema/>
-    <table>hospital</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>hsp_id</column_name>
-        <stream_name>hsp_id</stream_name>
-      </field>
-      <field>
-        <column_name>hsp_cnpj</column_name>
-        <stream_name>hsp_cnpj</stream_name>
-      </field>
-      <field>
-        <column_name>hsp_name</column_name>
-        <stream_name>hsp_name</stream_name>
-      </field>
-      <field>
-        <column_name>hsp_address</column_name>
-        <stream_name>hsp_address</stream_name>
-      </field>
-      <field>
-        <column_name>hsp_telephone</column_name>
-        <stream_name>hsp_telephone</stream_name>
-      </field>
-      <field>
-        <column_name>hsp_sit_id</column_name>
-        <stream_name>hsp_sit_id</stream_name>
-      </field>
-      <field>
-        <column_name>hsp_create</column_name>
-        <stream_name>hsp_create</stream_name>
-      </field>
-      <field>
-        <column_name>hsp_update</column_name>
-        <stream_name>hsp_update</stream_name>
-      </field>
-    </fields>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>432</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table input 2</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>STAGIOP</connection>
-    <sql>SELECT
-  sit_id
-, sit_desc
-FROM situation
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>96</xloc>
-      <yloc>144</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table output 2</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>stagiopbd_BdUnificado</connection>
-    <schema/>
-    <table>situation</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>sit_id</column_name>
-        <stream_name>sit_id</stream_name>
-      </field>
-      <field>
-        <column_name>sit_desc</column_name>
-        <stream_name>sit_desc</stream_name>
-      </field>
-    </fields>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>432</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table input 3</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>STAGIOP</connection>
-    <sql>SELECT
-  col_cpf
-, col_name
-, col_gender
-, col_function_id
-, col_hsp_id
-FROM collaborator
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>80</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table output 3</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>stagiopbd_BdUnificado</connection>
-    <schema/>
-    <table>collaborator</table>
-    <commit>2</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>col_cpf</column_name>
-        <stream_name>col_cpf</stream_name>
-      </field>
-      <field>
-        <column_name>col_name</column_name>
-        <stream_name>col_name</stream_name>
-      </field>
-      <field>
-        <column_name>col_gender</column_name>
-        <stream_name>col_gender</stream_name>
-      </field>
-      <field>
-        <column_name>col_function_id</column_name>
-        <stream_name>col_function_id</stream_name>
-      </field>
-      <field>
-        <column_name>col_hsp_id</column_name>
-        <stream_name>col_hsp_id</stream_name>
-      </field>
-    </fields>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>432</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table input 4</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>STAGIOP</connection>
-    <sql>SELECT *
-FROM speciality
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>96</xloc>
-      <yloc>352</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table output 4</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>stagiopbd_BdUnificado</connection>
-    <schema/>
-    <table>speciality</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>spc_id</column_name>
-        <stream_name>spc_id</stream_name>
-      </field>
-      <field>
-        <column_name>spc_desc</column_name>
-        <stream_name>spc_desc</stream_name>
-      </field>
-    </fields>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>416</xloc>
-      <yloc>352</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>Dummy (do nothing)</name>
     <type>Dummy</type>
@@ -1009,41 +642,8 @@ FROM speciality
     </GUI>
   </step>
   <step>
-    <name>Table wing</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>STAGIOP</connection>
-    <sql>SELECT *
-FROM wing
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>640</xloc>
-      <yloc>48</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table output 5</name>
-    <type>TableOutput</type>
+    <name>Insert / Update</name>
+    <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1053,44 +653,38 @@ FROM wing
       <schema_name/>
     </partitioning>
     <connection>stagiopbd_BdUnificado</connection>
-    <schema/>
-    <table>wing</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>wng_id</column_name>
-        <stream_name>wng_id</stream_name>
-      </field>
-      <field>
-        <column_name>wng_desc</column_name>
-        <stream_name>wng_desc</stream_name>
-      </field>
-      <field>
-        <column_name>wng_hsp_id</column_name>
-        <stream_name>wng_hsp_id</stream_name>
-      </field>
-      <field>
-        <column_name>wng_sit_id</column_name>
-        <stream_name>wng_sit_id</stream_name>
-      </field>
-      <field>
-        <column_name>wng_spc_id</column_name>
-        <stream_name>wng_spc_id</stream_name>
-      </field>
-    </fields>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>bed</table>
+      <key>
+        <name>bed_id</name>
+        <field>bed_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>bed_id</name>
+        <rename>bed_id</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>bed_desc</name>
+        <rename>bed_desc</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>bed_wng_id</name>
+        <rename>bed_wng_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>bed_pat_cpf</name>
+        <rename>bed_pat_cpf</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
     <cluster_schema/>
     <remotesteps>
       <input>
@@ -1099,137 +693,8 @@ FROM wing
       </output>
     </remotesteps>
     <GUI>
-      <xloc>976</xloc>
-      <yloc>48</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table patient</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>STAGIOP</connection>
-    <sql>SELECT * 
-FROM patient
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>652</xloc>
-      <yloc>166</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table output 6</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>stagiopbd_BdUnificado</connection>
-    <schema/>
-    <table>patient</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>pat_cpf</column_name>
-        <stream_name>pat_cpf</stream_name>
-      </field>
-      <field>
-        <column_name>pat_name</column_name>
-        <stream_name>pat_name</stream_name>
-      </field>
-      <field>
-        <column_name>pat_gender</column_name>
-        <stream_name>pat_gender</stream_name>
-      </field>
-      <field>
-        <column_name>pat_blood_type</column_name>
-        <stream_name>pat_blood_type</stream_name>
-      </field>
-      <field>
-        <column_name>pat_birthdate</column_name>
-        <stream_name>pat_birthdate</stream_name>
-      </field>
-    </fields>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1040</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table bed</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>STAGIOP</connection>
-    <sql>SELECT *
-FROM bed
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>999</xloc>
-      <yloc>313</yloc>
+      <xloc>1376</xloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1344,7 +809,704 @@ if (bed_pat_cpf != null){
     </GUI>
   </step>
   <step>
-    <name>Insert / Update</name>
+    <name>Table bed</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>STAGIOP</connection>
+    <sql>SELECT *
+FROM bed
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>999</xloc>
+      <yloc>313</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table hospital</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>STAGIOP</connection>
+    <sql>SELECT
+  hsp_id
+, hsp_cnpj
+, hsp_name
+, hsp_address
+, hsp_telephone
+, hsp_sit_id
+, hsp_create
+, hsp_update
+FROM hospital
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>96</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table situation</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>STAGIOP</connection>
+    <sql>SELECT
+  sit_id
+, sit_desc
+FROM situation
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>96</xloc>
+      <yloc>144</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table collaborator</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>STAGIOP</connection>
+    <sql>SELECT
+  col_cpf
+, col_name
+, col_gender
+, col_function_id
+, col_hsp_id
+FROM collaborator
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>80</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table speciality</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>STAGIOP</connection>
+    <sql>SELECT *
+FROM speciality
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>96</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table output</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>stagiopbd_BdUnificado</connection>
+    <schema/>
+    <table>hospital</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>hsp_id</column_name>
+        <stream_name>hsp_id</stream_name>
+      </field>
+      <field>
+        <column_name>hsp_cnpj</column_name>
+        <stream_name>hsp_cnpj</stream_name>
+      </field>
+      <field>
+        <column_name>hsp_name</column_name>
+        <stream_name>hsp_name</stream_name>
+      </field>
+      <field>
+        <column_name>hsp_address</column_name>
+        <stream_name>hsp_address</stream_name>
+      </field>
+      <field>
+        <column_name>hsp_telephone</column_name>
+        <stream_name>hsp_telephone</stream_name>
+      </field>
+      <field>
+        <column_name>hsp_sit_id</column_name>
+        <stream_name>hsp_sit_id</stream_name>
+      </field>
+      <field>
+        <column_name>hsp_create</column_name>
+        <stream_name>hsp_create</stream_name>
+      </field>
+      <field>
+        <column_name>hsp_update</column_name>
+        <stream_name>hsp_update</stream_name>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>432</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table output 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>stagiopbd_BdUnificado</connection>
+    <schema/>
+    <table>situation</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>sit_id</column_name>
+        <stream_name>sit_id</stream_name>
+      </field>
+      <field>
+        <column_name>sit_desc</column_name>
+        <stream_name>sit_desc</stream_name>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>432</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table output 3</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>stagiopbd_BdUnificado</connection>
+    <schema/>
+    <table>collaborator</table>
+    <commit>2</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>col_cpf</column_name>
+        <stream_name>col_cpf</stream_name>
+      </field>
+      <field>
+        <column_name>col_name</column_name>
+        <stream_name>col_name</stream_name>
+      </field>
+      <field>
+        <column_name>col_gender</column_name>
+        <stream_name>col_gender</stream_name>
+      </field>
+      <field>
+        <column_name>col_function_id</column_name>
+        <stream_name>col_function_id</stream_name>
+      </field>
+      <field>
+        <column_name>col_hsp_id</column_name>
+        <stream_name>col_hsp_id</stream_name>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>432</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table output 4</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>stagiopbd_BdUnificado</connection>
+    <schema/>
+    <table>speciality</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>spc_id</column_name>
+        <stream_name>spc_id</stream_name>
+      </field>
+      <field>
+        <column_name>spc_desc</column_name>
+        <stream_name>spc_desc</stream_name>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>416</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table output 5</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>stagiopbd_BdUnificado</connection>
+    <schema/>
+    <table>wing</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>wng_id</column_name>
+        <stream_name>wng_id</stream_name>
+      </field>
+      <field>
+        <column_name>wng_desc</column_name>
+        <stream_name>wng_desc</stream_name>
+      </field>
+      <field>
+        <column_name>wng_hsp_id</column_name>
+        <stream_name>wng_hsp_id</stream_name>
+      </field>
+      <field>
+        <column_name>wng_sit_id</column_name>
+        <stream_name>wng_sit_id</stream_name>
+      </field>
+      <field>
+        <column_name>wng_spc_id</column_name>
+        <stream_name>wng_spc_id</stream_name>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>976</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table output 6</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>stagiopbd_BdUnificado</connection>
+    <schema/>
+    <table>patient</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>pat_cpf</column_name>
+        <stream_name>pat_cpf</stream_name>
+      </field>
+      <field>
+        <column_name>pat_name</column_name>
+        <stream_name>pat_name</stream_name>
+      </field>
+      <field>
+        <column_name>pat_gender</column_name>
+        <stream_name>pat_gender</stream_name>
+      </field>
+      <field>
+        <column_name>pat_blood_type</column_name>
+        <stream_name>pat_blood_type</stream_name>
+      </field>
+      <field>
+        <column_name>pat_birthdate</column_name>
+        <stream_name>pat_birthdate</stream_name>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1040</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table patient</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>STAGIOP</connection>
+    <sql>SELECT * 
+FROM patient
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>652</xloc>
+      <yloc>166</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table wing</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>STAGIOP</connection>
+    <sql>SELECT *
+FROM wing
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>640</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table collaborator 2</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>stagiopbd_BdUnificado</connection>
+    <sql>SELECT
+  col_cpf
+, col_name
+, col_gender
+, col_function_id
+, col_hsp_id
+FROM collaborator
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>128</xloc>
+      <yloc>576</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Modified Java Script Value 3</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script here
+
+var cpf = col_cpf.replace('.','').replace('-','').replace('.','');
+
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>cpf</name>
+        <rename>new_cpf</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>354</xloc>
+      <yloc>578</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / Update 2</name>
     <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
@@ -1359,31 +1521,16 @@ if (bed_pat_cpf != null){
     <update_bypassed>N</update_bypassed>
     <lookup>
       <schema/>
-      <table>bed</table>
+      <table>collaborator</table>
       <key>
-        <name>bed_id</name>
-        <field>bed_id</field>
+        <name>col_cpf</name>
+        <field>col_cpf</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>bed_id</name>
-        <rename>bed_id</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>bed_desc</name>
-        <rename>bed_desc</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>bed_wng_id</name>
-        <rename>bed_wng_id</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>bed_pat_cpf</name>
-        <rename>bed_pat_cpf</rename>
+        <name>col_cpf</name>
+        <rename>new_cpf</rename>
         <update>Y</update>
       </value>
     </lookup>
@@ -1395,8 +1542,142 @@ if (bed_pat_cpf != null){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1376</xloc>
-      <yloc>304</yloc>
+      <xloc>592</xloc>
+      <yloc>576</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Modified Java Script Value 4</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script here
+
+var cpf = pat_cpf.replace('.','').replace('-','').replace('.','');
+
+var gender = "Male";
+
+if (pat_gender == 'F'){
+	gender = "Female";
+}</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>cpf</name>
+        <rename>new_cpf</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>gender</name>
+        <rename>pat_gender</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>976</xloc>
+      <yloc>544</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table patient 2</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>STAGIOP</connection>
+    <sql>SELECT * 
+FROM patient
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>766</xloc>
+      <yloc>547</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / Update 3</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>STAGIOP</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>patient</table>
+      <key>
+        <name>pat_cpf</name>
+        <field>pat_cpf</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>pat_cpf</name>
+        <rename>new_cpf</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1184</xloc>
+      <yloc>544</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
