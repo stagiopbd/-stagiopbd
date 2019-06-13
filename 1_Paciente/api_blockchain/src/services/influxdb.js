@@ -1,8 +1,8 @@
 // sudo docker run -d -p 8086:8086 influxdb
-// influx -host 35.222.210.138 -username stagiopbd -password stagiopbd@2019 -database stagiopbd
+// influx -host 35.193.151.136 -username stagiopbd -password stagiopbd@2019 -database stagiopbd
 
 const Influx = require('influx'),
-    host = process.env.INFLUX_HOST || '35.222.210.138',
+    host = process.env.INFLUX_HOST || '35.193.151.136',
     port = Number(process.env.INFLUX_PORT) || 8087,
     username = process.env.INFLUX_USERNAME || 'stagiopbd',
     password = process.env.INFLUX_PASSWORD || 'stagiopbd@2019',

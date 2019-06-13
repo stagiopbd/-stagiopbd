@@ -1,7 +1,7 @@
 const Influx = require('influx')
 
 
-const host = '35.222.210.138'
+const host = '35.193.151.136'
 const port = 8087
 const username = 'stagiopbd'
 const password = 'stagiopbd@2019'
