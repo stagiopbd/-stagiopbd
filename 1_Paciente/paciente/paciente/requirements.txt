@@ -2,7 +2,7 @@ numpy==1.16.2
 Django==2.1.7
 django-filter==1.1.0
 drf-yasg==1.4.3
-djangorestframework==3.9.2
+djangorestframework==3.11.2
 django-cors-headers
 mysqlclient
 gunicorn==19.7.1
